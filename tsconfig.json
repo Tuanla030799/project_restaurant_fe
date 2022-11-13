@@ -14,7 +14,8 @@
       "@/providers": ["providers"],
       "@/public/*": ["public/*"],
       "@/styles/*": ["styles/*"],
-      "@/utils": ["utils"]
+      "@/utils": ["utils"],
+      "@/config": ["config"],
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

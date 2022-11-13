@@ -1,0 +1,35 @@
+export const styles = {
+  base: 'inline-flex justify-center items-center whitespace-nowrap',
+  border: {
+    base: 'border-white shadow-sm',
+    xs: 'border-px',
+    sm: 'border-px',
+    md: 'border-px',
+    lg: 'border-2',
+    xl: 'border-2',
+    '2xl': 'border-2',
+    '3xl': 'border-[3px]',
+    '4xl': 'border-4',
+    '5xl': 'border-[5px]',
+  },
+  variants: {
+    circular: 'rounded-full',
+    rounded: 'rounded',
+    square: '',
+  },
+  sizes: {
+    xs: 'w-6 h-6 text-xs',
+    sm: 'w-8 h-8 text-sm',
+    md: 'w-10 h-10 text-md',
+    lg: 'w-12 h-12 text-lg',
+    xl: 'w-14 h-14 text-xl',
+    '2xl': 'w-16 h-16 text-display-xs',
+    '3xl': 'w-[72px] h-[72px] text-display-sm',
+    '4xl': 'w-24 h-24 text-display-md',
+    '5xl': 'w-40 h-40 text-display-xl',
+  },
+  status: {
+    online: 'bg-green-500',
+    offline: 'bg-red-500',
+  },
+}

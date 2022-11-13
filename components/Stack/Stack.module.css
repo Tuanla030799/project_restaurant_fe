@@ -1,0 +1,101 @@
+.stack {
+  --stack-spacing: var(--xs-stack-spacing);
+  display: flex;
+  gap: var(--stack-spacing);
+}
+
+.row {
+  flex-direction: row;
+}
+
+.row-reverse {
+  flex-direction: row-reverse;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.column-reverse {
+  flex-direction: column-reverse;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.nowrap {
+  flex-wrap: nowrap;
+}
+
+.wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
+.center {
+  justify-content: center;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.space-evenly {
+  justify-content: space-evenly;
+}
+
+.align-flex-start {
+  align-items: flex-start;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-flex-end {
+  align-items: flex-end;
+}
+
+.align-stretch {
+  align-items: stretch;
+}
+
+.align-baseline {
+  align-items: baseline;
+}
+
+@media screen and (min-width: 536px) {
+  .stack {
+    --stack-spacing: var(--sm-stack-spacing);
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .stack {
+    --stack-spacing: var(--md-stack-spacing);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .stack {
+    --stack-spacing: var(--lg-stack-spacing);
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .stack {
+    --stack-spacing: var(--xl-stack-spacing);
+  }
+}
