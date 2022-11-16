@@ -1,1 +1,1 @@
-export { default as EdxLogo } from './EdxLogo'
+export { default as Logo } from './Logo'
