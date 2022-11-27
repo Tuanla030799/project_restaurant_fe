@@ -2,11 +2,11 @@ export const routes = {
   home: {
     generatePath: () => '/',
   },
-  detailCourse: {
-    generatePath: (id: number) => `/course/${id}`,
+  detailFood: {
+    generatePath: (slug: string) => `/food/${slug}`,
   },
-  listCourse: {
-    generatePath: (status: string) => `/courses/${status}`,
+  listFood: {
+    generatePath: () => `/foods`,
   },
   explore: {
     generatePath: () => '/explore',

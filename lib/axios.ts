@@ -1,10 +1,10 @@
 import Axios, { AxiosRequestConfig } from 'axios';
 
 import { API_URL } from '@/config';
-// import { useNotificationStore } from '@/stores/notifications';
 import storage from '../utils/storage';
 
 function authRequestInterceptor(config: AxiosRequestConfig) {
+  config.headers = config.headers ?? {};
   const token = storage.getToken();
   if (token) {
     config.headers.authorization = `${token}`;
@@ -24,12 +24,7 @@ axios.interceptors.response.use(
   },
   (error) => {
     const message = error.response?.data?.message || error.message;
-    // useNotificationStore.getState().addNotification({
-    //   type: 'error',
-    //   title: 'Error',
-    //   message,
-    // });
-
+    console.log(message)
     return Promise.reject(error);
   }
 );

@@ -1,0 +1,133 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "slug": "lau",
+      "title": "Lẩu",
+      "thumbnail": "https://pastaxi-manager.onepas.vn//Upload/DanhMucHienThi/Avatar/638036438488453397-lau-pasgo.vn.png"
+    },
+    {
+      "id": 2,
+      "slug": "nuong",
+      "title": "Nướng",
+      "thumbnail": "https://pastaxi-manager.onepas.vn//Upload/DanhMucHienThi/Avatar/638036438381109666-nuong-pasgo.vn.png"
+    },
+    {
+      "id": 3,
+      "slug": "buffet",
+      "title": "Buffet",
+      "thumbnail": "https://pastaxi-manager.onepas.vn//Upload/DanhMucHienThi/Avatar/638011835542960712-Buffet-Pasgo.png"
+    },
+    {
+      "id": 4,
+      "slug": "hai-san",
+      "title": "Hải Sản",
+      "thumbnail": "https://pastaxi-manager.onepas.vn//Upload/DanhMucHienThi/Avatar/638036438488453397-lau-pasgo.vn.png"
+    },
+    {
+      "id": 5,
+      "slug": "nhau",
+      "title": "Đồ nhậu",
+      "thumbnail": "https://pastaxi-manager.onepas.vn//Upload/DanhMucHienThi/Avatar/638011851008641451-quan-nhau-pasgo.png"
+    },
+    {
+      "id": 6,
+      "slug": "mon-nhat",
+      "title": "Món Nhật",
+      "thumbnail": "https://pastaxi-manager.onepas.vn//Upload/DanhMucHienThi/Avatar/638011867970619295-mon-nhat-ban-pasgo.png"
+    },
+    {
+      "id": 7,
+      "slug": "mon-viet",
+      "title": "Món Việt",
+      "thumbnail": "https://pastaxi-manager.onepas.vn//Upload/DanhMucHienThi/Avatar/638011878657732280-mon-viet-pasgo.png"
+    },
+    {
+      "id": 8,
+      "slug": "mon-chay",
+      "title": "Món Chay",
+      "thumbnail": "https://pastaxi-manager.onepas.vn//Upload/DanhMucHienThi/Avatar/638011884827831221-mon-chay-pasgo.png"
+    }
+  ],
+
+  "foods": [
+    {
+      "id": 1,
+      "slug": "bo-sot-tieu-den-kem-com-chay",
+      "name": "Bò sốt tiêu đen ăn kèm cơm cháy",
+      "summary": "Mở được hơn 5 năm, món ăn đầy đủ màu sắc của Bắc - Trung - Nam, đầu bếp kinh nghiệm lâu năm không đổi vị, món ăn tươi sống không làm đồ đông lạnh, đầy đủ các món nhậu, nướng, lẩu.",
+      "content": "Menu của Quán Nhỏ 11 Ngọc Khánh cũng khá đa dạng, chủ yếu là các món nhậu và lẩu được chế biến từ những nguyên liệu sạch, được tuyển chọn kỹ lưỡng. Các món ăn cũng được trang trí rất đẹp, mang lại cảm giác bắt mắt, ngon miệng đến thực khách. Có thể kể đến một số món đặc sản nhà Quán Nhỏ như: Bò thiết bản sốt tiêu đen ăn kèm cơm cháy, Ngan cháy tỏi, Tôm sú nướng muối ớt, Tôm tắm sốt Thái, Tràng heo cháy tỏi, Lẩu bò tứ quý, Lẩu chim câu… Ngoài ra, quán còn có những loại rượu thơm chất lượng, tự làm, mang một hương vị riêng mà bạn không thể tìm đâu khác.",
+      "discount": 10,
+      "rating": 4,
+      "image": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "thumbnail": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "type": 1,
+      "price": "250000"
+    },
+    {
+      "id": 2,
+      "slug": "bun-dau-lang-vong",
+      "name": "Bò sốt tiêu đen ăn kèm cơm cháy",
+      "summary": "Mở được hơn 5 năm, món ăn đầy đủ màu sắc của Bắc - Trung - Nam, đầu bếp kinh nghiệm lâu năm không đổi vị, món ăn tươi sống không làm đồ đông lạnh, đầy đủ các món nhậu, nướng, lẩu.",
+      "content": "Menu của Quán Nhỏ 11 Ngọc Khánh cũng khá đa dạng, chủ yếu là các món nhậu và lẩu được chế biến từ những nguyên liệu sạch, được tuyển chọn kỹ lưỡng. Các món ăn cũng được trang trí rất đẹp, mang lại cảm giác bắt mắt, ngon miệng đến thực khách. Có thể kể đến một số món đặc sản nhà Quán Nhỏ như: Bò thiết bản sốt tiêu đen ăn kèm cơm cháy, Ngan cháy tỏi, Tôm sú nướng muối ớt, Tôm tắm sốt Thái, Tràng heo cháy tỏi, Lẩu bò tứ quý, Lẩu chim câu… Ngoài ra, quán còn có những loại rượu thơm chất lượng, tự làm, mang một hương vị riêng mà bạn không thể tìm đâu khác.",
+      "discount": 10,
+      "rating": 4,
+      "image": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "thumbnail": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "type": 1,
+      "price": "250000"
+    },
+    {
+      "id": 3,
+      "slug": "chan-ga-xa-ot",
+      "name": "Bò sốt tiêu đen ăn kèm cơm cháy",
+      "summary": "Mở được hơn 5 năm, món ăn đầy đủ màu sắc của Bắc - Trung - Nam, đầu bếp kinh nghiệm lâu năm không đổi vị, món ăn tươi sống không làm đồ đông lạnh, đầy đủ các món nhậu, nướng, lẩu.",
+      "content": "Menu của Quán Nhỏ 11 Ngọc Khánh cũng khá đa dạng, chủ yếu là các món nhậu và lẩu được chế biến từ những nguyên liệu sạch, được tuyển chọn kỹ lưỡng. Các món ăn cũng được trang trí rất đẹp, mang lại cảm giác bắt mắt, ngon miệng đến thực khách. Có thể kể đến một số món đặc sản nhà Quán Nhỏ như: Bò thiết bản sốt tiêu đen ăn kèm cơm cháy, Ngan cháy tỏi, Tôm sú nướng muối ớt, Tôm tắm sốt Thái, Tràng heo cháy tỏi, Lẩu bò tứ quý, Lẩu chim câu… Ngoài ra, quán còn có những loại rượu thơm chất lượng, tự làm, mang một hương vị riêng mà bạn không thể tìm đâu khác.",
+      "discount": 10,
+      "rating": 4,
+      "image": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "thumbnail": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "type": 1,
+      "price": "250000"
+    },
+    {
+      "id": 4,
+      "slug": "thit-bo-xong-khoi",
+      "name": "Bò sốt tiêu đen ăn kèm cơm cháy",
+      "summary": "Mở được hơn 5 năm, món ăn đầy đủ màu sắc của Bắc - Trung - Nam, đầu bếp kinh nghiệm lâu năm không đổi vị, món ăn tươi sống không làm đồ đông lạnh, đầy đủ các món nhậu, nướng, lẩu.",
+      "content": "Menu của Quán Nhỏ 11 Ngọc Khánh cũng khá đa dạng, chủ yếu là các món nhậu và lẩu được chế biến từ những nguyên liệu sạch, được tuyển chọn kỹ lưỡng. Các món ăn cũng được trang trí rất đẹp, mang lại cảm giác bắt mắt, ngon miệng đến thực khách. Có thể kể đến một số món đặc sản nhà Quán Nhỏ như: Bò thiết bản sốt tiêu đen ăn kèm cơm cháy, Ngan cháy tỏi, Tôm sú nướng muối ớt, Tôm tắm sốt Thái, Tràng heo cháy tỏi, Lẩu bò tứ quý, Lẩu chim câu… Ngoài ra, quán còn có những loại rượu thơm chất lượng, tự làm, mang một hương vị riêng mà bạn không thể tìm đâu khác.",
+      "discount": 10,
+      "rating": 4,
+      "image": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "thumbnail": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "type": 1,
+      "price": "250000"
+    },
+    {
+      "id": 5,
+      "slug": "vit-quay-bac-kinh",
+      "name": "Bò sốt tiêu đen ăn kèm cơm cháy",
+      "summary": "Mở được hơn 5 năm, món ăn đầy đủ màu sắc của Bắc - Trung - Nam, đầu bếp kinh nghiệm lâu năm không đổi vị, món ăn tươi sống không làm đồ đông lạnh, đầy đủ các món nhậu, nướng, lẩu.",
+      "content": "Menu của Quán Nhỏ 11 Ngọc Khánh cũng khá đa dạng, chủ yếu là các món nhậu và lẩu được chế biến từ những nguyên liệu sạch, được tuyển chọn kỹ lưỡng. Các món ăn cũng được trang trí rất đẹp, mang lại cảm giác bắt mắt, ngon miệng đến thực khách. Có thể kể đến một số món đặc sản nhà Quán Nhỏ như: Bò thiết bản sốt tiêu đen ăn kèm cơm cháy, Ngan cháy tỏi, Tôm sú nướng muối ớt, Tôm tắm sốt Thái, Tràng heo cháy tỏi, Lẩu bò tứ quý, Lẩu chim câu… Ngoài ra, quán còn có những loại rượu thơm chất lượng, tự làm, mang một hương vị riêng mà bạn không thể tìm đâu khác.",
+      "discount": 10,
+      "rating": 4,
+      "image": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "thumbnail": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "type": 1,
+      "price": "250000"
+    },
+    {
+      "id": 6,
+      "slug": "chan-ga-xa-ot",
+      "name": "Bò sốt tiêu đen ăn kèm cơm cháy",
+      "summary": "Mở được hơn 5 năm, món ăn đầy đủ màu sắc của Bắc - Trung - Nam, đầu bếp kinh nghiệm lâu năm không đổi vị, món ăn tươi sống không làm đồ đông lạnh, đầy đủ các món nhậu, nướng, lẩu.",
+      "content": "Menu của Quán Nhỏ 11 Ngọc Khánh cũng khá đa dạng, chủ yếu là các món nhậu và lẩu được chế biến từ những nguyên liệu sạch, được tuyển chọn kỹ lưỡng. Các món ăn cũng được trang trí rất đẹp, mang lại cảm giác bắt mắt, ngon miệng đến thực khách. Có thể kể đến một số món đặc sản nhà Quán Nhỏ như: Bò thiết bản sốt tiêu đen ăn kèm cơm cháy, Ngan cháy tỏi, Tôm sú nướng muối ớt, Tôm tắm sốt Thái, Tràng heo cháy tỏi, Lẩu bò tứ quý, Lẩu chim câu… Ngoài ra, quán còn có những loại rượu thơm chất lượng, tự làm, mang một hương vị riêng mà bạn không thể tìm đâu khác.",
+      "discount": 10,
+      "rating": 4,
+      "image": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "thumbnail": "https://pasgo.vn/Upload/anh-chi-tiet/quan-nho-tran-ngoc-khanh-1-normal-1915927950029.jpg",
+      "type": 1,
+      "price": "250000"
+    }
+  ]
+}
