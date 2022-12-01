@@ -1,10 +1,23 @@
 import React from 'react'
 import { CategoryCard, Typography, Container } from '@/components'
 import Wrapper from 'components/Wrapper'
+import { axios } from '@/lib/axios'
+import { getProfile, login } from '@/apis'
 
 const Home = () => {
+  const handleLogin = async () => {
+    const data = {
+      email: 'user@email.com',
+      password: 'secret',
+    }
+
+    await login(data)
+    const profile = await getProfile()
+    console.log(profile)
+  }
+
   return (
-    <div className='pt-1 bg-gray-100 h-screen'>
+    <div className="pt-1 bg-gray-100 h-screen">
       <Container>
         <Wrapper className="px-2 pb-12">
           <Typography
@@ -31,6 +44,7 @@ const Home = () => {
               />
             ))}
           </div>
+          <button onClick={handleLogin}> test </button>
         </Wrapper>
       </Container>
     </div>

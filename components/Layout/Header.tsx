@@ -96,7 +96,7 @@ const Header = () => {
       label: t('header.accounts_dropdown.my_courses'),
       icon: BookBookmark,
     },
-    profile?.is_manager && {
+    {
       url: '',
       label: t('header.accounts_dropdown.management'),
       icon: House,
@@ -230,7 +230,7 @@ const Header = () => {
               }
             >
               <div className="cursor-pointer flex items-center gap-4">
-                <span className="font-medium">{profile?.name}</span>
+                <span className="font-medium">{`${profile?.firstName} ${profile?.lastName}`}</span>
                 <Avatar
                   className="select-none"
                   src={profile?.avatar || AvatarImgDefault.src}
