@@ -1,6 +1,6 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Layout, Seo } from '@/components'
-import { Home } from '@/page-components/User/Home'
+import { Home } from '@/page-components/Customer/Home'
 
 const HomePage = () => {
   return (

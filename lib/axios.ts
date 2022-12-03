@@ -25,6 +25,7 @@ axios.interceptors.response.use(
     if(error.response.data.statusCode === 401 || error.response.data.message === 'Unauthorized') {
       // window.location.href = './login'
     }
-    return error.response
+    // return error.response
+    return Promise.reject(error)
   }
 )

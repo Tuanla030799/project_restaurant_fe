@@ -25,6 +25,8 @@ import {
   DotsNine,
   GearSix,
   House,
+  LockKeyOpen,
+  SignIn,
   SignOut,
   User,
 } from 'phosphor-react'
@@ -32,6 +34,7 @@ import { getUrlFromNestedObject } from '@/utils'
 import { routes } from '@/constants/routes'
 import AvatarImgDefault from 'public/images/avatar.png'
 import { useHeaderData } from '@/lib/header'
+import Link from 'next/link'
 
 const SearchInputWithFilter = () => {
   const [inputSearch, setInputSearch] = useState<string>()
@@ -45,10 +48,9 @@ const SearchInputWithFilter = () => {
   const router = useRouter()
 
   const options = [
-    { value: 'title', label: t('filter.course_name') },
-    { value: 'instructors_name', label: t('filter.instructor') },
-    { value: 'categories_name', label: t('filter.category') },
-    { value: 'level_name', label: t('filter.level') },
+    { value: 'title', label: t('filter.foodName') },
+    { value: 'food_type', label: t('filter.foodType') },
+    { value: 'categories_name', label: t('filter.category') }
   ]
 
   const defaultOption =
@@ -71,7 +73,7 @@ const SearchInputWithFilter = () => {
   }
   return (
     <SearchInput
-      size="lg"
+      size="md"
       placeholder={t('header.search')}
       hasFilter
       value={inputSearch}
@@ -89,26 +91,43 @@ const Header = () => {
   const { profile } = useHeaderData()
 
   const router = useRouter()
-  const subMenuAccounts = [
-    { url: '', label: t('header.accounts_dropdown.profile'), icon: User },
-    {
-      url: '',
-      label: t('header.accounts_dropdown.my_courses'),
-      icon: BookBookmark,
-    },
-    {
-      url: '',
-      label: t('header.accounts_dropdown.management'),
-      icon: House,
-    },
-    {
-      url: '',
-      label: t('header.accounts_dropdown.dashboard'),
-      icon: ChartLine,
-    },
-    { url: '', label: t('header.accounts_dropdown.settings'), icon: GearSix },
-    { url: '', label: t('header.accounts_dropdown.logout'), icon: SignOut },
-  ]
+  const subMenuAccounts = profile
+    ? [
+        { url: '/', label: t('header.accounts_dropdown.profile'), icon: User },
+        {
+          url: '/',
+          label: t('header.accounts_dropdown.my_courses'),
+          icon: BookBookmark,
+        },
+        {
+          url: '/',
+          label: t('header.accounts_dropdown.management'),
+          icon: House,
+        },
+        {
+          url: '/',
+          label: t('header.accounts_dropdown.dashboard'),
+          icon: ChartLine,
+        },
+        {
+          url: '/',
+          label: t('header.accounts_dropdown.settings'),
+          icon: GearSix,
+        },
+        { url: '/', label: t('header.accounts_dropdown.logout'), icon: SignOut },
+      ]
+    : [
+        {
+          url: '/login',
+          label: t('header.sign_in'),
+          icon: SignIn,
+        },
+        {
+          url: '/register',
+          label: t('header.sign_up'),
+          icon: LockKeyOpen,
+        },
+      ]
 
   const onSubmit = (data) => {
     const { query, filter_by } = data
@@ -199,44 +218,55 @@ const Header = () => {
               preventClose={false}
               overlay={
                 <Menu className="mt-[10px]" maxWidth={240}>
-                  <div className="flex gap-2.5 items-center px-[16px] py-[12px]">
-                    <Avatar
-                      className="select-none relative flex-none"
-                      src={profile?.avatar || AvatarImgDefault.src}
-                      size="sm"
-                      status="online"
-                    />
-                    <div>
-                      <h6 className="font-medium text-sm">
-                        {t('header.user_name')}
-                      </h6>
-                      <span className="text-xs text-gray-500 line-clamp-3">
-                        {profile?.email}
-                      </span>
+                  {profile ? (
+                    <div className="flex gap-2.5 items-center px-[16px] py-[12px]">
+                      <Avatar
+                        className="select-none relative flex-none"
+                        src={profile?.avatar || AvatarImgDefault.src}
+                        size="sm"
+                        status="online"
+                      />
+                      <div>
+                        <h6 className="font-medium text-sm">
+                          {t('header.user_name')}
+                        </h6>
+                        <span className="text-xs text-gray-500 line-clamp-3">
+                          {profile?.email}
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="flex gap-2.5 items-center px-[16px] py-[12px]"></div>
+                  )}
                   <MenuDivider className="my-[0px]" />
                   {subMenuAccounts
                     .filter(Boolean)
-                    .map(({ label, icon: Icon }, index) => (
+                    .map(({ url, label, icon: Icon }, index) => (
                       <MenuItem className="cursor-pointer" key={index}>
-                        <div className="flex gap-4 justify-start items-center">
-                          <Icon size={20} />
-                          <span className="text-sm">{label}</span>
-                        </div>
+                        <Link href={url}>
+                          <a className="flex gap-4 justify-start items-center">
+                            <Icon size={20} />
+                            <span className="text-sm">{label}</span>
+                          </a>
+                        </Link>
                       </MenuItem>
                     ))}
                 </Menu>
               }
             >
-              <div className="cursor-pointer flex items-center gap-4">
-                <span className="font-medium">{`${profile?.firstName} ${profile?.lastName}`}</span>
+              <div className="cursor-pointer flex items-center gap-2">
                 <Avatar
                   className="select-none"
                   src={profile?.avatar || AvatarImgDefault.src}
-                  size="sm"
+                  size="xs"
                 />
-                <CaretDown size={17} />
+
+                {profile ? (
+                  <span className="font-medium">{`${profile?.firstName} ${profile?.lastName}`}</span>
+                ) : (
+                  <span className="font-medium"> Tài khoản </span>
+                )}
+                <CaretDown size={16} />
               </div>
             </Dropdown>
           </div>

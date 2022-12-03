@@ -12,7 +12,8 @@ export interface Profile {
   updatedAt: string,
   roles: {
     data : Role[]
-  }
+  },
+  avatar?: string
 }
 
 export interface Role {

@@ -1,5 +1,24 @@
 {
   "header": {
-    
+    "search": "Search by food, category,...",
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up",
+    "user_name": "Username",
+    "accounts_dropdown": {
+      "profile": "Profile",
+      "my_courses": "My courses",
+      "management": "Management",
+      "dashboard": "Dashboard",
+      "settings": "Settings",
+      "logout": "Logout"
+    }
+  },
+  "filter": {
+    "foodName": "Food name",
+    "category": "Category",
+    "foodType": "Food type",
+    "no_result": "No result found",
+    "total_result_one": "About {{count}} result",
+    "total_result_other": "About {{count}} results"
   }
 }
