@@ -4,8 +4,10 @@ export interface LoginPayload {
 }
 
 export interface RegisterPayload {
-  email: "string",
-  password: "string",
-  firstName: "string",
-  lastName: "string",
+  email: string
+  password: string
+  username: string
+  firstName: string
+  lastName: string
+  status?: string
 }

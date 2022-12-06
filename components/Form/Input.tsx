@@ -91,7 +91,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
         {label && (
           <Typography
             weight="medium"
-            fontSize="text-md"
+            fontSize="text-sm"
             className="mb-1.5 text-gray-700"
           >
             {label}

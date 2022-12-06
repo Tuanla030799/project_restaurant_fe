@@ -11,12 +11,17 @@ const login = async (payload: LoginPayload) => {
   return response
 }
 
-const register = (payload: RegisterPayload) => {
-  return axios.post('auth/register', payload)
+const signUp = async (payload: RegisterPayload) => {
+  const response = await axios.post('auth/register', payload)
+  const token = response?.data?.token
+  if (token) {
+    Cookies.set('jwt_token', token)
+  }
+  return response
 }
 
 const logout = () => {
   return axios.post('auth/logout')
 }
 
-export { login, logout, register }
+export { login, logout, signUp }

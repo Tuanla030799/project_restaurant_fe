@@ -12,20 +12,23 @@ import { routes } from '@/constants/routes'
 import Wrapper from 'components/Wrapper'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { Eye, EyeSlash, House, Info } from 'phosphor-react'
+import { House } from 'phosphor-react'
 import { object, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import InstructionBooking from 'components/InstructionBooking'
-import { login } from '@/apis'
+import { signUp } from '@/apis'
 import { useLoading, useToast } from '@/lib/store'
 import { useRouter } from 'next/router'
 import { slowLoading } from '@/utils'
-import { LoginPayload } from '@/models'
+import { RegisterPayload } from '@/models'
 
-const INITIAL_VAL_LOGIN_FORM = {
+const INITIAL_VAL_REGISTER_FORM = {
   email: '',
   password: '',
+  username: '',
+  firstName: '',
+  lastName: '',
 }
 
 const validationSchema = object().shape({
@@ -36,9 +39,13 @@ const validationSchema = object().shape({
   password: string()
     .required('Please enter password')
     .min(6, 'Password is required to have at least 6 characters'),
+
+  username: string()
+    .required('Please enter username')
+    .min(3, 'username is required to have at least 3 characters'),
 })
 
-const Login = () => {
+const Register = () => {
   const { t } = useTranslation(['common', 'auth'])
   const { loading, setLoading } = useLoading()
   const { setToast } = useToast()
@@ -48,15 +55,16 @@ const Login = () => {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<LoginPayload>({
+  } = useForm<RegisterPayload>({
     mode: 'onSubmit',
-    defaultValues: INITIAL_VAL_LOGIN_FORM,
+    defaultValues: INITIAL_VAL_REGISTER_FORM,
     resolver: yupResolver(validationSchema),
   })
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: RegisterPayload) => {
     try {
-      await login(data)
+      data["status"] = "ACTIVE";
+      await signUp(data)
 
       setToast({
         color: 'success',
@@ -68,10 +76,9 @@ const Login = () => {
       await slowLoading(500)
 
       await router.push({
-        pathname: routes.home.generatePath()
+        pathname: routes.home.generatePath(),
       })
-
-    } catch (error : any) {
+    } catch (error: any) {
       setToast({
         color: 'error',
         title: error?.response?.data?.message as string || t('login.message.error', {
@@ -79,7 +86,7 @@ const Login = () => {
         }),
       })
     } finally {
-      setLoading('login', false)
+      setLoading('register', false)
     }
   }
 
@@ -96,7 +103,9 @@ const Login = () => {
                       <House weight="fill" size={20} />
                     </a>
                   </Link>
-                  <Typography>{t('login.login', { ns: 'auth' })}</Typography>
+                  <Typography>
+                    {t('register.register', { ns: 'auth' })}
+                  </Typography>
                 </Breadcrumbs>
                 <Typography
                   variant="h1"
@@ -106,76 +115,74 @@ const Login = () => {
                   gutter
                   className="mt-7"
                 >
-                  {t('login.title', { ns: 'auth' })}
+                  {t('register.title', { ns: 'auth' })}
                 </Typography>
                 <Form
                   onSubmit={handleSubmit(onSubmit)}
                   className="flex justify-center"
                 >
                   <div className="flex py-4 flex-col px-4 mb-10 gap-6 w-[624px]">
-                    <div>
-                      <Input
-                        label={t('label.email', { ns: 'auth' })}
-                        type="email"
-                        placeholder={t('placeholder.email', { ns: 'auth' })}
-                        error={
-                          errors.email && (errors.email?.message as string)
-                        }
-                        // isUsedInForm={false}
-                        isRequired
-                        {...register('email')}
-                      />
-                    </div>
+                    <Input
+                      label={t('label.email', { ns: 'auth' })}
+                      type="email"
+                      placeholder={t('placeholder.email', { ns: 'auth' })}
+                      error={errors.email && (errors.email?.message as string)}
+                      // isUsedInForm={false}
+                      isRequired
+                      {...register('email')}
+                    />
 
-                    <div>
-                      <Input
-                        label={t('label.password', { ns: 'auth' })}
-                        type="password"
-                        placeholder={t('placeholder.password', { ns: 'auth' })}
-                        // isUsedInForm={false}
-                        error={
-                          errors.password &&
-                          (errors.password?.message as string)
-                        }
-                        isRequired
-                        {...register('password')}
-                      />
-                    </div>
+                    <Input
+                      label={t('label.password', { ns: 'auth' })}
+                      type="password"
+                      placeholder={t('placeholder.password', { ns: 'auth' })}
+                      // isUsedInForm={false}
+                      error={
+                        errors.password && (errors.password?.message as string)
+                      }
+                      isRequired
+                      {...register('password')}
+                    />
+
+                    <Input
+                      label={t('label.username', { ns: 'auth' })}
+                      type="text"
+                      placeholder={t('placeholder.username', { ns: 'auth' })}
+                      error={
+                        errors.username && (errors.username?.message as string)
+                      }
+                      // isUsedInForm={false}
+                      isRequired
+                      {...register('username')}
+                    />
+
+                    <Input
+                      label={t('label.firstName', { ns: 'auth' })}
+                      type="text"
+                      placeholder={t('placeholder.firstName', { ns: 'auth' })}
+                      // isUsedInForm={false}
+                      isRequired
+                      {...register('firstName')}
+                    />
+
+                    <Input
+                      label={t('label.lastName', { ns: 'auth' })}
+                      type="text"
+                      placeholder={t('placeholder.lastName', { ns: 'auth' })}
+                      // isUsedInForm={false}
+                      isRequired
+                      {...register('lastName')}
+                    />
 
                     <Button
                       size="sm"
                       type="submit"
                       disabled={isSubmitting}
                       className="mt-2"
-                      loading={loading['login']}
+                      loading={loading['register']}
                     >
-                      {t('login.login', { ns: 'auth' })}
+                      {t('register.register', { ns: 'auth' })}
                     </Button>
-
-                    <Link href="/forgot-password">
-                      <a>
-                        <Typography
-                          className="text-red-500 hover:text-red-600"
-                          weight="semibold"
-                          align="center"
-                          fontSize="text-sm"
-                        >
-                          {t('forgot_pass', { ns: 'auth' })}
-                        </Typography>
-                      </a>
-                    </Link>
-                    <Link href="/register">
-                      <a>
-                        <Typography
-                          className="text-red-500 hover:text-red-600"
-                          weight="semibold"
-                          align="center"
-                          fontSize="text-sm"
-                        >
-                          {t('register_member', { ns: 'auth' })}
-                        </Typography>
-                      </a>
-                    </Link>
                   </div>
                 </Form>
               </Container>
@@ -190,4 +197,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register

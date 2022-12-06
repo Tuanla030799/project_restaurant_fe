@@ -12,8 +12,6 @@ const Home = () => {
     }
 
     await login(data)
-    const profile = await getProfile()
-    console.log(profile)
   }
 
   return (
