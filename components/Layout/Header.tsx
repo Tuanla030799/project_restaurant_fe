@@ -170,10 +170,10 @@ const Header = () => {
             </CustomLink>
             <CustomLink
               type="underlined"
-              href="/collection"
+              href="/foods"
               className="hover:text-red-500"
             >
-              Collection
+              Foods
             </CustomLink>
             <CustomLink
               type="underlined"

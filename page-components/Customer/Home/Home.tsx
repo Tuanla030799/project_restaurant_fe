@@ -1,8 +1,10 @@
 import React from 'react'
-import { CategoryCard, Typography, Container } from '@/components'
+import { CategoryCard, Typography, Container, FoodCard } from '@/components'
 import Wrapper from 'components/Wrapper'
 import { axios } from '@/lib/axios'
 import { getProfile, login } from '@/apis'
+import { ArrowRight, CaretRight } from 'phosphor-react'
+import Link from 'next/link'
 
 const Home = () => {
   const handleLogin = async () => {
@@ -15,9 +17,9 @@ const Home = () => {
   }
 
   return (
-    <div className="pt-1 bg-gray-100 h-screen">
+    <div className="pt-1 bg-gray-100">
       <Container>
-        <Wrapper className="px-2 pb-12">
+        <Wrapper className="px-7 pb-12">
           <Typography
             transform="capitalize"
             weight="semibold"
@@ -42,7 +44,41 @@ const Home = () => {
               />
             ))}
           </div>
-          <button onClick={handleLogin}> test </button>
+        </Wrapper>
+        <Wrapper className="mt-2 px-7 pb-12">
+          <div className="flex justify-between items-center mt-7 mb-3   ">
+            <Typography
+              weight="semibold"
+              variant="h6"
+              fontSize="text-lg"
+              align="center"
+              className="flex items-center"
+            >
+              Mới nhất trên FatFood <CaretRight size={16} weight="bold" />
+            </Typography>
+
+            <Link href="/collection">
+              <a>
+                <Typography
+                  className="text-red-500 hover:text-red-600 flex items-center"
+                  align="center"
+                  fontSize="text-sm"
+                >
+                  Xem tất cả <ArrowRight size={16} />
+                </Typography>
+              </a>
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <FoodCard />
+            <FoodCard />
+            <FoodCard />
+            <FoodCard />
+            <FoodCard />
+            <FoodCard />
+            <FoodCard />
+            <FoodCard />
+          </div>
         </Wrapper>
       </Container>
     </div>

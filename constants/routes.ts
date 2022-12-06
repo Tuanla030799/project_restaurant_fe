@@ -6,7 +6,7 @@ export const routes = {
     generatePath: (slug: string) => `/food/${slug}`,
   },
   listFood: {
-    generatePath: () => `/foods`,
+    generatePath: (status: string) => `/foods/${status}`,
   },
   explore: {
     generatePath: () => '/explore',

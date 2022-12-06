@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 export type RatingPrecisions = 'full' | 'half'
 
-export type RatingSizes = 'sm' | 'md' | 'lg'
+export type RatingSizes = 'xs' | 'sm' | 'md' | 'lg'
 
 export type RatingProps = {
   defaultValue?: number
