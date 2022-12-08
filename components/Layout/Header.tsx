@@ -262,7 +262,7 @@ const Header = () => {
                 />
 
                 {profile ? (
-                  <span className="font-medium">{`${profile?.firstName} ${profile?.lastName}`}</span>
+                  <span className="font-medium">{`${profile.username}`}</span>
                 ) : (
                   <span className="font-medium"> Tài khoản </span>
                 )}

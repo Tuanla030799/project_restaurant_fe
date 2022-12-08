@@ -22,6 +22,7 @@ import { useLoading, useToast } from '@/lib/store'
 import { useRouter } from 'next/router'
 import { slowLoading } from '@/utils'
 import { LoginPayload } from '@/models'
+import { useHeaderData } from '@/lib/header'
 
 const INITIAL_VAL_LOGIN_FORM = {
   email: '',
@@ -39,6 +40,7 @@ const validationSchema = object().shape({
 })
 
 const Login = () => {
+  const { mutate } = useHeaderData()
   const { t } = useTranslation(['common', 'auth'])
   const { loading, setLoading } = useLoading()
   const { setToast } = useToast()
@@ -67,16 +69,19 @@ const Login = () => {
 
       await slowLoading(500)
 
-      await router.push({
-        pathname: routes.home.generatePath()
-      })
+      await mutate()
 
-    } catch (error : any) {
+      await router.push({
+        pathname: routes.home.generatePath(),
+      })
+    } catch (error: any) {
       setToast({
         color: 'error',
-        title: error?.response?.data?.message as string || t('login.message.error', {
-          ns: 'auth',
-        }),
+        title:
+          (error?.response?.data?.message as string) ||
+          t('login.message.error', {
+            ns: 'auth',
+          }),
       })
     } finally {
       setLoading('login', false)

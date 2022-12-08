@@ -1,15 +1,15 @@
-import { axios } from '@/lib/axios';
-import { Profile } from '@/models';
+import { axios } from '@/lib/axios'
+import { Profile } from '@/models'
 import useSWR from 'swr'
 // import { fetcher } from '../fetcher'
 
 export const useHeaderData = () => {
-  const { data, error } = useSWR<any, any>(
+  const { data, error, mutate } = useSWR<{ data: Profile }, any>(
     `${process.env.NEXT_PUBLIC_API_URL}/profile`,
     axios
   )
 
-  const profile: Profile = data?.data
+  const profile = data?.data
 
-  return { profile, error }
+  return { profile, error, mutate }
 }

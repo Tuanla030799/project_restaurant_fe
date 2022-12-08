@@ -4,6 +4,8 @@ export interface Profile {
   firstName: string,
   lastName: string,
   status: string,
+  phone: string,
+  username: string,
   socketId: number | null,
   verified: boolean,
   verifiedAt: string | null,
