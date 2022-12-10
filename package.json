@@ -19,6 +19,7 @@
     "react": "18.2.0",
     "react-datepicker": "^4.8.0",
     "react-dom": "18.2.0",
+    "react-easy-swipe": "^0.0.22",
     "react-number-format": "^4.5.5"
   },
   "devDependencies": {

@@ -148,7 +148,7 @@ const Header = () => {
   }
 
   return (
-    <header className="h-header bg-white px-8 py-4 border-b border-gray-300">
+    <header className="fixed h-header w-full z-50 bg-white px-8 py-4 border-b border-gray-300 opacity-90">
       <div className="flex items-center justify-between">
         <div className="flex  grow pr-4 items-center">
           <Logo className="mr-12" />

@@ -9,9 +9,9 @@ export interface Profile {
   socketId: number | null,
   verified: boolean,
   verifiedAt: string | null,
-  deletedAt: string | null,
-  createdAt: string,
-  updatedAt: string,
+  deletedAt?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
   roles: {
     data : Role[]
   },

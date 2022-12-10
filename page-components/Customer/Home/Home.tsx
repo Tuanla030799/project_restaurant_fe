@@ -1,24 +1,48 @@
 import React from 'react'
-import { CategoryCard, Typography, Container, FoodCard } from '@/components'
+import {
+  CategoryCard,
+  Typography,
+  Container,
+  FoodCard,
+  Skeleton,
+  AspectRatio,
+  Carousel,
+} from '@/components'
 import Wrapper from 'components/Wrapper'
-import { axios } from '@/lib/axios'
-import { getProfile, login } from '@/apis'
 import { ArrowRight, CaretRight } from 'phosphor-react'
 import Link from 'next/link'
+import { useCategories } from '@/lib/category'
+import { Category, Food } from '@/models'
+import { getUrlFromNestedObject } from '@/utils'
+import { useFoods } from '@/lib/food'
+import Banner from '@/public/images/Banner.jpg'
+import Banner2 from '@/public/images/Banner2.jpg'
+
+const initialParams = {
+  page: 1,
+  perPage: 8,
+}
 
 const Home = () => {
-  const handleLogin = async () => {
-    const data = {
-      email: 'user@email.com',
-      password: 'secret',
-    }
+  const { data: { data: categories } = {}, isValidating } = useCategories()
 
-    await login(data)
-  }
+  const { data: { data: foods } = {}, isValidating: isValidatingFood } =
+    useFoods(getUrlFromNestedObject(initialParams))
 
   return (
-    <div className="pt-1 bg-gray-100">
+    <div className="bg-gray-100">
       <Container>
+        <Wrapper className="mb-3">
+          {/* <AspectRatio ratio={16 / 7} className="relative"> */}
+            {/* <Image
+              layout="fill"
+              src={Banner}
+              alt={'banner'}
+              className="object-cover"
+            /> */}
+            <Carousel images={[Banner, Banner2]}/>
+          {/* </AspectRatio> */}
+        </Wrapper>
         <Wrapper className="px-7 pb-12">
           <Typography
             transform="capitalize"
@@ -31,21 +55,21 @@ const Home = () => {
             Danh Mục
           </Typography>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {[...Array(8)].map((_, index) => (
-              <CategoryCard
-                key={index}
-                {...{
-                  id: 1,
-                  slug: '123',
-                  title: 'Đồ nhậu',
-                  thumbnail:
-                    '	https://pastaxi-manager.onepas.vn//Upload/DanhMucHienThi/Avatar/638036438488453397-lau-pasgo.vn.png',
-                }}
-              />
-            ))}
+            {!categories && isValidating
+              ? [...Array(10)].map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    variant="rounded"
+                    width={'100%'}
+                    height={134}
+                  />
+                ))
+              : categories?.map((category: Category) => (
+                  <CategoryCard key={category.id} {...category} />
+                ))}
           </div>
         </Wrapper>
-        <Wrapper className="mt-2 px-7 pb-12">
+        <Wrapper className="mt-3 px-7 pb-12">
           <div className="flex justify-between items-center mt-7 mb-3   ">
             <Typography
               weight="semibold"
@@ -70,14 +94,15 @@ const Home = () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <FoodCard />
-            <FoodCard />
-            <FoodCard />
-            <FoodCard />
-            <FoodCard />
-            <FoodCard />
-            <FoodCard />
-            <FoodCard />
+            {!foods && isValidatingFood
+              ? [...Array(8)].map((_, index) => (
+                  <AspectRatio ratio={316 / 420} key={index}>
+                    <Skeleton variant="rounded" width={'100%'} />
+                  </AspectRatio>
+                ))
+              : foods?.map((food: Food) => (
+                  <FoodCard key={food.id} {...food} />
+                ))}
           </div>
         </Wrapper>
       </Container>
