@@ -8,7 +8,7 @@ export const COURSES_PER_REQUEST = 10
 
 export const EXPLORE_COURSES_PER_PAGE = 12
 
-export const MY_COURSES_PER_PAGE = 6
+export const MY_FOODS_PER_PAGE = 8
 
 export const MANAGER_COURSES_PER_PAGE = 8
 

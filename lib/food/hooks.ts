@@ -3,7 +3,8 @@ import { Food } from '@/models'
 import useSWR from 'swr'
 
 type response = {
-  data: Food[]
+  data: Food[],
+  meta?: any
 }
 
 export const useFoods = (params) => {

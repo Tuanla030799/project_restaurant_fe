@@ -1,0 +1,19 @@
+{
+  "title_page": "List Food",
+  "food_type": {
+    "all": "All",
+    "drink": "Drink",
+    "food": "Food",
+    "fast": "Fast",
+    "snack": "Snack"
+  },
+  "filter": {
+    "title": "Filter",
+    "total_result": "About {{count}} results",
+    "search": "Search",
+    "label_category": "Category",
+    "add_filters": "Add filters",
+    "reset": "Reset",
+    "apply": "Apply"
+  }
+}

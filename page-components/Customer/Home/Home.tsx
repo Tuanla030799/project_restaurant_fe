@@ -17,6 +17,7 @@ import { getUrlFromNestedObject } from '@/utils'
 import { useFoods } from '@/lib/food'
 import Banner from '@/public/images/Banner.jpg'
 import Banner2 from '@/public/images/Banner2.jpg'
+import Banner3 from '@/public/images/Banner3.jpg'
 
 const initialParams = {
   page: 1,
@@ -40,7 +41,7 @@ const Home = () => {
               alt={'banner'}
               className="object-cover"
             /> */}
-            <Carousel images={[Banner, Banner2]}/>
+            <Carousel images={[Banner, Banner2, Banner3]}/>
           {/* </AspectRatio> */}
         </Wrapper>
         <Wrapper className="px-7 pb-12">
