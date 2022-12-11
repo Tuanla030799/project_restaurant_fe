@@ -1,0 +1,18 @@
+{
+  "title": "Management",
+  "users": {
+    "title": "Users"
+  },
+  "orders": {
+    "title": "Orders"
+  },
+  "foots": {
+    "title": "Foots"
+  },
+  "blogs": {
+    "title": "Blogs"
+  },
+  "seats": {
+    "title": "Seats"
+  }
+}

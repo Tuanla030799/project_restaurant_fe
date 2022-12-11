@@ -6,7 +6,7 @@ export const routes = {
     generatePath: (slug: string) => `/food/${slug}`,
   },
   listFood: {
-    generatePath: (status: string) => `/foods/${status}`,
+    generatePath: (slug: string) => `/foods/${slug}`,
   },
   explore: {
     generatePath: () => '/explore',
@@ -33,26 +33,20 @@ export const routes = {
     generatePath: (id: number) => `/manager/course/new/${id}/content`,
   },
   manager: {
-    dashboard: {
-      generatePath: () => '/manager/dashboard',
+    orders: {
+      generatePath: () => '/manager/orders',
     },
-    courses: {
-      generatePath: () => '/manager/courses',
+    listFood: {
+      generatePath: () => `/manager/foods`,
     },
-    enrollment: {
-      generatePath: () => '/manager/enrollment',
+    users: {
+      generatePath: () => `/manager/users`,
     },
-    exams: {
-      generatePath: () => '/manager/exams',
+    seats: {
+      generatePath: () => `/manager/seats`,
     },
-    examsSetting: {
-      generatePath: (id: number) => `/manager/exams/${id}/settings`,
-    },
-    createNewSource: {
-      generatePath: () => '/manager/source/new',
-    },
-    questions: {
-      generatePath: () => '/manager/questions',
+    blogs: {
+      generatePath: () => `/manager/blogs`,
     },
   },
   auth: {
@@ -64,6 +58,6 @@ export const routes = {
     },
     forgot_pass: {
       generatePath: () => '/forgot-password',
-    }
-  }
+    },
+  },
 }

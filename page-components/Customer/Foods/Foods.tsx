@@ -20,12 +20,13 @@ import { useRouter } from 'next/router'
 import { MY_FOODS_PER_PAGE } from '@/constants/paginate'
 import { KEY_PREVIOUS_PAGE } from '@/constants/keyLocalStorage'
 import update from 'immutability-helper'
-import { getUrlFromNestedObject } from '@/utils'
+import { getCategoryItems, getUrlFromNestedObject } from '@/utils'
 import { useFoods } from '@/lib/food'
 import { motion } from 'framer-motion'
 import clsx from 'clsx'
 import { Food } from '@/models'
 import FilterForm from './FilterForm'
+import { useCategories } from '@/lib/category'
 
 type TPage = {
   title: string
@@ -53,45 +54,23 @@ const Foods = () => {
     isValidating: isValidatingFood,
   } = useFoods(getUrlFromNestedObject(params))
 
+  const { data: { data: categories } = {} } = useCategories()
+
   const titles = useMemo(() => {
     return {
       all: t('food_type.all', { ns: 'food' }),
-      food: t('food_type.food', { ns: 'food' }),
-      fast: t('food_type.fast', { ns: 'food' }),
-      drink: t('food_type.drink', { ns: 'food' }),
-      snack: t('food_type.snack', { ns: 'food' }),
+      ...categories?.reduce((acc, crr) => {
+        return { ...acc, ...{ [crr.slug]: crr.name } }
+      }, {}),
     }
-  }, [])
+  }, [!!categories])
 
   const navItems = useMemo(() => {
     return [
-      {
-        label: t('food_type.all', { ns: 'food' }),
-        status: [],
-        href: 'all',
-      },
-      {
-        label: t('food_type.food', { ns: 'food' }),
-        status: [0],
-        href: 'food',
-      },
-      {
-        label: t('food_type.fast', { ns: 'food' }),
-        status: [4],
-        href: 'fast',
-      },
-      {
-        label: t('food_type.drink', { ns: 'food' }),
-        status: [1],
-        href: 'drink',
-      },
-      {
-        label: t('food_type.snack', { ns: 'food' }),
-        status: [2],
-        href: 'snack',
-      },
+      { id: 0, label: t('food_type.all', { ns: 'food' }), href: 'all' },
+      ...getCategoryItems(categories),
     ]
-  }, [])
+  }, [!!categories])
 
   const [_, setPreviousPage] = useLocalStorage<TPage>(KEY_PREVIOUS_PAGE, {
     title: '',
@@ -115,36 +94,41 @@ const Foods = () => {
   }, [currentPage])
 
   useEffect(() => {
-    const query = (router.query.all as any)[0]
-    const allValidSubUrls = ['all', 'food', 'fast', 'drink', 'snack']
-    const isValidUrl =
-      allValidSubUrls.some((url) => url === query) &&
-      (router.query.all as any).length === 1
+    if (categories?.length) {
+      const query = (router.query.all as any)[0]
+      const allValidSubUrls = [
+        'all',
+        ...categories.map((category) => category.slug),
+      ]
+      const isValidUrl =
+        allValidSubUrls.some((url) => url === query) &&
+        (router.query.all as any).length === 1
 
-    if (!isValidUrl) {
-      shallowRouting('/all')
-      handlePaginate(1)
-      return
-    }
+      if (!isValidUrl) {
+        shallowRouting('/all')
+        handlePaginate(1)
+        return
+      }
 
-    const navItem = navItems.find(({ href }) => href === query)
-    const courseStatus = navItem?.href
+      const navItem = navItems.find(({ href }) => href === query)
+      const hrefSelected = navItem?.href
 
-    setTabSelected(courseStatus as string)
-    setTabHeading(titles[courseStatus as string])
+      setTabSelected(hrefSelected as string)
+      setTabHeading(titles[hrefSelected as string])
 
-    navItem &&
-      setParams(
-        update(params, {
-          $merge: {
-            q: {
-              ...params.q,
-              attendees_status_in: navItem.status as any,
+      navItem &&
+        setParams(
+          update(params, {
+            $merge: {
+              q: {
+                ...params.q,
+                attendees_status_in: navItem.id,
+              },
             },
-          },
-        })
-      )
-  }, [router.query])
+          })
+        )
+    }
+  }, [router.query, !!categories])
 
   const shallowRouting = (url) => {
     router.push(
@@ -156,14 +140,14 @@ const Foods = () => {
     )
   }
 
-  const onChangeTab = ({ status, href }) => {
+  const onChangeTab = ({ id, href }) => {
     shallowRouting(href)
     setParams(
       update(params, {
         $merge: {
           q: {
             ...params.q,
-            attendees_status_in: [status] as any,
+            attendees_status_in: [id] as any,
           },
         },
       })
@@ -210,9 +194,9 @@ const Foods = () => {
       </div>
       <Container className="pt-4">
         <Form onSubmit={onSubmit}>
-          <div className="flex items-stretch justify-between pt-4">
-            <div className="flex gap-3">
-              {navItems.map(({ label, status, href }) => (
+          <div className="flex flex-wrap gap-y-3 items-stretch justify-between pt-4">
+            <div className="flex flex-wrap gap-3">
+              {navItems.map(({ label, id, href }) => (
                 <span
                   role="button"
                   key={href}
@@ -222,7 +206,7 @@ const Foods = () => {
                       ? 'text-gray-700 bg-gray-100'
                       : 'text-gray-400 hover:bg-gray-50'
                   )}
-                  onClick={() => onChangeTab({ status, href })}
+                  onClick={() => onChangeTab({ id, href })}
                 >
                   {label}
                 </span>

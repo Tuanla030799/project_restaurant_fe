@@ -1,19 +1,16 @@
-import { AdminLayout } from '@/components'
 import React from 'react'
+import { AdminLayout } from '@/components'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { routes } from '@/constants/routes'
-import { useRouter } from 'next/router'
+import Users from '@/page-components/Manager/Users/Users'
 
-const MainPage = () => {
-  const router = useRouter()
-  router.push({
-    pathname: routes.manager.orders.generatePath(),
-  })
-  return <></>
+const UsersPage = () => {
+  return (
+    <Users />
+  )
 }
 
-MainPage.getLayout = function getLayout(page) {
+UsersPage.getLayout = function getLayout(page) {
   return <AdminLayout>{page}</AdminLayout>
 }
 
@@ -29,4 +26,5 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => {
   }
 }
 
-export default MainPage
+
+export default UsersPage

@@ -8,7 +8,7 @@ const Categories = forwardRef<HTMLDivElement, CategoriesProps>(
   ({ id, slug, name, thumbnail, ...rest }, ref) => {
     return (
       <div className='border rounded-md transition duration-150 ease-out hover:ease-in hover:shadow-xl hover:border-none p-6'>
-        <CustomLink href={routes.detailFood.generatePath(slug)}>
+        <CustomLink href={routes.listFood.generatePath(slug)}>
           <div
             className="h-full flex flex-col"
             ref={ref}

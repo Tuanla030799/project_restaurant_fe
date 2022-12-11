@@ -12,6 +12,18 @@ export const getSelectOptions = (
     : []
 }
 
+export const getCategoryItems = (
+  arr
+): { id: number , href: string; label: string }[] | [] => {
+  return arr
+    ? arr.map(({ id, name, title, slug }) => ({
+        id,
+        label: name || title,
+        href: slug
+      }))
+    : []
+}
+
 export const getSelectOptionsFromConst = (
   obj
 ): { value: string; label: string }[] | [] => {
