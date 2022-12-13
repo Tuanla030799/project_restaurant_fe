@@ -13,6 +13,15 @@
     "title": "Blogs"
   },
   "seats": {
-    "title": "Seats"
+    "title": "Seats",
+    "action": {
+      "change_status": "Update status",
+      "edit": "Edit"
+    },
+    "position": "Position",
+    "status": {
+      "available": "Available",
+      "full": "Full"
+    }
   }
 }
