@@ -139,7 +139,7 @@ const Header = () => {
     }
 
     router.push(
-      routes.explore.generatePath() + '?' + getUrlFromNestedObject(params),
+      routes.listFood.generatePath('all') + '?' + getUrlFromNestedObject(params),
       undefined,
       {
         shallow: true,
@@ -163,14 +163,14 @@ const Header = () => {
           <Stack spacing={16} wrap="nowrap" className="md:flex hidden">
             <CustomLink
               type="underlined"
-              href="/"
+              href={routes.home.generatePath()}
               className="hover:text-red-500"
             >
               Home
             </CustomLink>
             <CustomLink
               type="underlined"
-              href="/foods"
+              href={routes.listFood.generatePath('all')}
               className="hover:text-red-500"
             >
               Foods

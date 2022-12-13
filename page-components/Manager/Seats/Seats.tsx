@@ -7,13 +7,27 @@ import { useTranslation } from 'next-i18next'
 import { useSeats } from '@/lib/seat'
 import { Seat } from '@/models'
 import { updateSeatStatus } from '@/apis'
+import { useToast } from '@/lib/store'
 
 const Seats = () => {
   const { t } = useTranslation(['manager'])
-  const { data: { data: seats } = {}, isValidating } = useSeats()
+  const { setToast } = useToast()
+  const { data: { data: seats } = {}, mutate } = useSeats()
 
   const handleUpdateStatus = async (id: number, status: boolean) => {
-    await updateSeatStatus(id, status)
+    try {
+      await updateSeatStatus(id, status)
+      await mutate()
+      setToast({
+        color: 'success',
+        title: t('seats.message.status.success', { ns: 'manager' }),
+      })
+    } catch (error) {
+      setToast({
+        color: 'error',
+        title: t('seats.message.status.error', { ns: 'manager' }),
+      })
+    }
   }
 
   return (

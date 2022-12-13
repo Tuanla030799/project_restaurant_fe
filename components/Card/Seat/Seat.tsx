@@ -75,12 +75,14 @@ const Seat = forwardRef<HTMLDivElement, SeatProps>(
         <div className="absolute right-2 top-3">
           <Dropdown
             className="inline-flex flex-shrink-0"
-            preventClose={false}
             overlay={
               <Menu maxWidth={172} placement="bottom-right">
                 {seatActions.map((item, index) => (
                   <div key={index}>
-                    <MenuItem className="text-gray-700" onClick={item.onClick}>
+                    <MenuItem
+                      className="text-gray-700"
+                      onClick={item.onClick}
+                    >
                       {item.label}
                     </MenuItem>
                   </div>

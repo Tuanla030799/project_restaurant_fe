@@ -22,6 +22,12 @@
     "status": {
       "available": "Available",
       "full": "Full"
+    },
+    "message": {
+      "status": {
+        "success": "Update status success",
+        "error": "Update status failed"
+      }
     }
   }
 }

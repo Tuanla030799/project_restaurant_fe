@@ -1,0 +1,29 @@
+{
+  "orders": "Orders",
+  "title": "Booking table",
+  "list_food": "List Food",
+  "info_booking": "Info Booking",
+  "order_food": "Order food",
+  "no_food": "Have not ordered yet, for a better restaurant experience, please choose more dishes (optional)",
+  "form_order": {
+    "instruction": "Please fill in the information above, the reservation date is up to 2 days in advance and should be 30 minutes apart",
+    "label": {
+      "amount": "Number of people",
+      "note": "Note",
+      "phone": "Phone",
+      "name": "Name",
+      "order_date": "Booking date"
+    },
+    "placeholder": {
+      "name": "Enter your name",
+      "note": "Enter your note",
+      "amount": "Enter your amount:"
+    }
+  },
+  "action": {
+    "order": "Order",
+    "booking_table": "Booking table",
+    "apply": "Apply",
+    "cancel": "Cancel"
+  }
+}

@@ -8,8 +8,8 @@ export const routes = {
   listFood: {
     generatePath: (slug: string) => `/foods/${slug}`,
   },
-  explore: {
-    generatePath: () => '/explore',
+  orders: {
+    generatePath: () => '/orders',
   },
   courseType: {
     generatePath: () => '/manager/course/type',

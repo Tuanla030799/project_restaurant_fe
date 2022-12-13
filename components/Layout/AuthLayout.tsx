@@ -26,7 +26,7 @@ const AuthLayout = ({ children }: TAuthLayoutProps) => {
   return (
     <div className="flex flex-col items-stretch min-w-full min-h-screen">
       <Header />
-      <main className="flex flex-col items-stretch grow">{children}</main>
+      <main className="mt-[96px] flex flex-col items-stretch grow">{children}</main>
       <Footer />
     </div>
   )

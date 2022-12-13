@@ -144,6 +144,7 @@ const Food = forwardRef<HTMLDivElement, FoodProps>(
               size="xs"
               variant="contained"
               className="rounded-3xl"
+              href={routes.orders.generatePath()}
             >
               <Typography fontSize="text-xs" align="center">
                 Đặt bàn ngay

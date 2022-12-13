@@ -1,3 +1,4 @@
+import { routes } from '@/constants/routes'
 import { AspectRatio } from 'components/AspectRatio'
 import { Button } from 'components/Button'
 import { Typography } from 'components/Typography'
@@ -88,6 +89,7 @@ export default function Carousel({ images }) {
           color="success"
           variant="contained"
           className="rounded animate-bounce"
+          href={routes.orders.generatePath()}
         >
           <Typography fontSize="text-sm" align="center" weight="semibold">
             Đặt bàn ngay

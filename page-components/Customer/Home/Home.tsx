@@ -4,6 +4,7 @@ import {
   Typography,
   Container,
   FoodCard,
+  FoodRangeCard,
   Skeleton,
   AspectRatio,
   Carousel,
