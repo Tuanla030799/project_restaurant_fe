@@ -7,4 +7,5 @@ export const styles = {
       lg: 'mt-3',
     },
   },
+  disabled: 'cursor-not-allowed bg-gray-50',
 }

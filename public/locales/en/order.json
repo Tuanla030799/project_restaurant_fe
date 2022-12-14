@@ -10,6 +10,7 @@
     "label": {
       "amount": "Number of people",
       "note": "Note",
+      "time": "Time",
       "phone": "Phone",
       "name": "Name",
       "order_date": "Booking date"
@@ -17,7 +18,9 @@
     "placeholder": {
       "name": "Enter your name",
       "note": "Enter your note",
-      "amount": "Enter your amount:"
+      "amount": "Enter your amount:",
+      "select_date": "Select date",
+      "select_time": "Select time"
     }
   },
   "action": {

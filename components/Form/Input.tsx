@@ -18,6 +18,7 @@ interface IInputProps extends React.HTMLAttributes<HTMLInputElement> {
   value?: string
   placeholder?: string
   className?: string
+  classNameLabel?: string
   error?: string
   maxLength?: number
   readOnly?: boolean
@@ -41,6 +42,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
       label,
       placeholder,
       className,
+      classNameLabel,
       error,
       maxLength = MAX_LENGTH_INPUT,
       readOnly = false,
@@ -87,11 +89,11 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
     }
 
     return (
-      <label className="block w-full">
+      <label className={clsx('block w-full', classNameLabel)}>
         {label && (
           <Typography
             weight="medium"
-            fontSize="text-sm"
+            fontSize="text-md"
             className="mb-1.5 text-gray-700"
           >
             {label}

@@ -10,6 +10,7 @@ import {
   getBlockStyle,
   styleMap,
   Link,
+  blockRenderMap,
 } from 'components/Form/RichEditor'
 
 const RichEditorReadOnly = ({ rawContent }) => {
@@ -26,6 +27,7 @@ const RichEditorReadOnly = ({ rawContent }) => {
 
   return (
     <Editor
+      blockRenderMap={blockRenderMap}
       blockStyleFn={getBlockStyle}
       customStyleMap={styleMap}
       editorState={editorState}

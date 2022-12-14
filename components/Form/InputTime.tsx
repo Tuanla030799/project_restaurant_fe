@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { Clock } from 'phosphor-react'
 import parse from 'date-fns/parse'
 import isValid from 'date-fns/isValid'
+import { Typography } from '..'
 
 type Props = {
   onChange: (event: { target: { name: string; value: Date } }) => void
@@ -11,7 +12,7 @@ type Props = {
   value: string
   onBlur?: () => void
   className?: string
-  error?: boolean
+  error?: boolean | string
 }
 
 const TIME_LENGTH = 4
@@ -29,8 +30,10 @@ const InputTime = React.forwardRef<NumberFormat<Props>, Props>((props, ref) => {
   }
 
   const handleBlur = () => {
-    const parseValue = parse(rest?.value, 'HH:mm', new Date())
-    onChange({ target: { name: props?.name, value: parseValue } })
+    if (rest?.value) {
+      const parseValue = parse(rest?.value, 'HH:mm', new Date())
+      onChange({ target: { name: props?.name, value: parseValue } })
+    }
   }
 
   return (
@@ -50,6 +53,11 @@ const InputTime = React.forwardRef<NumberFormat<Props>, Props>((props, ref) => {
         format={'##:##'}
         placeholder={'00:00'}
       />
+      {error && typeof error === 'string' && (
+        <Typography fontSize="text-sm" className="mt-1.5 text-red-600">
+          {error}
+        </Typography>
+      )}
     </div>
   )
 })

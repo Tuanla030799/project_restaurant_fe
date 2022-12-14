@@ -39,7 +39,9 @@ const Radio = forwardRef<HTMLInputElement, IRadioProps>(
     ref
   ) => {
     const handleChange = (event) => {
-      onChange && onChange(event)
+      if (!disabled) {
+        onChange && onChange(event)
+      }
     }
 
     return (

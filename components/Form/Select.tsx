@@ -52,6 +52,7 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
     const [showClear, setShowClear] = useState<boolean>(false)
     const [hasVerticalScrollbar, setHasVerticalScrollbar] =
       useState<boolean>(false)
+    const [searchValue, setSearchValue] = useState<string>('')
     const selectRef = useRef<HTMLDivElement>(null)
     const dropdownRef = useRef<HTMLUListElement>(null)
     const checkpointRef = useRef<HTMLLIElement>(null)
@@ -193,12 +194,14 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
         <input
           name={name}
           type="text"
-          className="bg-transparent outline-none placeholder:text-gray-500"
+          className="bg-transparent outline-none placeholder:text-gray-500 w-full"
           placeholder={placeholder}
           ref={inputSearchRef}
+          value={searchValue}
           onChange={(e) => {
             if (!onSearch) return
             hasVerticalScrollbar && setHasVerticalScrollbar(false)
+            setSearchValue(e.target.value)
             onSearch(e)
           }}
           autoComplete="off"
@@ -238,7 +241,7 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
               <Typography
                 weight="medium"
                 fontSize="text-md"
-                className="text-gray-700"
+                className="text-gray-700 w-max"
               >
                 {label}
                 {isRequired && <span className="text-red-500 ml-0.5">*</span>}
@@ -309,7 +312,10 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
           )}
           <button
             type="button"
-            className={clsx('pointer-events-none', styles.trailing[size])}
+            className={styles.trailing[size]}
+            onClick={() => {
+              setShowOptions(!disabled && !showOptions)
+            }}
           >
             {!disabled && showOptions ? (
               <CaretUp size={20} />

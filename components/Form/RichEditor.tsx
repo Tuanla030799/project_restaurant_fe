@@ -52,6 +52,26 @@ export const styleMap = {
   },
 }
 
+export const blockRenderMap = Map({
+  blockquote: {
+    element: 'blockquote',
+  },
+  'code-block': {
+    element: 'div',
+  },
+  'ordered-list-item': {
+    element: 'li',
+    wrapper: <ol />,
+  },
+  'unordered-list-item': {
+    element: 'li',
+    wrapper: <ul />,
+  },
+  unstyled: {
+    element: 'div',
+  },
+})
+
 export const getBlockStyle = (block) => {
   switch (block.getType()) {
     case 'left':
@@ -150,6 +170,18 @@ const RichEditor = ({
     }
   }
 
+  const isValidHttpUrl = (string) => {
+    let url
+
+    try {
+      url = new URL(string)
+    } catch (_) {
+      return false
+    }
+
+    return url.protocol === 'http:' || url.protocol === 'https:'
+  }
+
   const promptForLink = (event) => {
     event.preventDefault()
     const selection = editorState.getSelection()
@@ -176,11 +208,12 @@ const RichEditor = ({
   const confirmLink = (event) => {
     event.preventDefault()
     const contentState = editorState.getCurrentContent()
+    const url = isValidHttpUrl(urlValue) ? urlValue : '//' + urlValue
 
     const contentStateWithEntity = contentState.createEntity(
       'LINK',
       'MUTABLE',
-      { url: urlValue }
+      { url }
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
 
@@ -244,26 +277,6 @@ const RichEditor = ({
   const toggleInlineStyle = (inlineStyle) => {
     onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle))
   }
-
-  const blockRenderMap = Map({
-    blockquote: {
-      element: 'blockquote',
-    },
-    'code-block': {
-      element: 'div',
-    },
-    'ordered-list-item': {
-      element: 'li',
-      wrapper: 'ol',
-    },
-    'unordered-list-item': {
-      element: 'li',
-      wrapper: 'ol',
-    },
-    unstyled: {
-      element: 'div',
-    },
-  })
 
   return (
     <div>

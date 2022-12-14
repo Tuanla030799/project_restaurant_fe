@@ -42,7 +42,9 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
     ref
   ) => {
     const handleChange = (event) => {
-      onChange && onChange(event)
+      if (!disabled) {
+        onChange && onChange(event)
+      }
     }
 
     return (

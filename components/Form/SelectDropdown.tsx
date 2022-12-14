@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import { CaretUp, CaretDown, Check } from 'phosphor-react'
 import { useOnClickOutside } from '@/hooks'
@@ -6,7 +6,7 @@ import { styles } from './SelectDropdown.styled'
 
 type TOption = {
   label: string
-  value: string
+  value: string | number
 }
 
 type TSelectDropdownSizes = 'sm' | 'md' | 'lg'
@@ -18,6 +18,7 @@ interface ISelectDropdownProps {
   className?: string
   dropdownMenuClassName?: string
   onChange: any
+  disabled?: boolean
 }
 
 const SelectDropdown = ({
@@ -27,13 +28,18 @@ const SelectDropdown = ({
   className,
   dropdownMenuClassName,
   onChange,
+  disabled = false,
 }: ISelectDropdownProps) => {
   const [optionSelected, setOptionSelected] = useState<TOption | {}>(
     defaultOption
   )
   const [showOptions, setShowOptions] = useState<boolean>(false)
   const ref = useRef(null)
-  const allClassNames = clsx(styles.base, className)
+  const allClassNames = clsx(
+    styles.base,
+    disabled && styles.disabled,
+    className
+  )
   const _optionSelected = optionSelected as TOption
 
   const handleClickOutside = () => setShowOptions(false)
@@ -58,7 +64,7 @@ const SelectDropdown = ({
       <div
         className={allClassNames}
         tabIndex={0}
-        onFocus={() => setShowOptions(true)}
+        onFocus={() => !disabled && setShowOptions(true)}
       >
         <div className="grow">
           {_optionSelected.label && _optionSelected.label}
@@ -85,7 +91,7 @@ const SelectDropdown = ({
                     'flex justify-between items-center whitespace-nowrap cursor-pointer transition-colors duration-200 px-3 py-2 hover:bg-gray-50',
                     isSelected && 'text-primary-400'
                   )}
-                  onClick={() => handleSelect({ value, label })}
+                  onClick={() => !disabled && handleSelect({ value, label })}
                 >
                   {label}
                 </li>

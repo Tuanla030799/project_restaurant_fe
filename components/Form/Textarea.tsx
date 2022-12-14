@@ -1,4 +1,4 @@
-import React, { ChangeEvent, forwardRef, useState } from 'react'
+import React, { ChangeEvent, forwardRef, TextareaHTMLAttributes } from 'react'
 import clsx from 'clsx'
 import { useFormContext } from 'react-hook-form'
 import { styles } from './Input.styled'
@@ -6,7 +6,7 @@ import { Typography } from '@/components'
 
 type TTextareaSizes = 'sm' | 'md'
 
-interface ITextareaProps extends React.HTMLAttributes<HTMLTextAreaElement> {
+interface ITextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   size?: TTextareaSizes
   name: string
   label?: string
