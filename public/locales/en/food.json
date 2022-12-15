@@ -12,6 +12,7 @@
     "total_result": "About {{count}} results",
     "search": "Search",
     "label_category": "Category",
+    "label_food_type": "Food Type",
     "add_filters": "Add filters",
     "reset": "Reset",
     "apply": "Apply"

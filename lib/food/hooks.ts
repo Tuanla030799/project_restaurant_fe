@@ -7,7 +7,7 @@ type response = {
   meta?: any
 }
 
-export const useFoods = (params) => {
+export const useFoods = (params?) => {
   return useSWR<response, any>(
     `${process.env.NEXT_PUBLIC_API_URL}/foods?` + params,
     axios,

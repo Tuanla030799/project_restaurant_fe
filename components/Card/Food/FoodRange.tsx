@@ -12,7 +12,7 @@ import {
 import { routes } from '@/constants/routes'
 import DefaultThumbnail from '@/public/images/course_default_thumbnail.jpeg'
 import Image from 'next/image'
-import {  Minus, Plus } from 'phosphor-react'
+import { Minus, Plus } from 'phosphor-react'
 import { FoodProps } from './food.type'
 import { FoodInventory } from '@/models'
 import { numberFormatPrice } from '@/utils'
@@ -35,6 +35,8 @@ const FoodRange = forwardRef<HTMLDivElement, FoodProps>(
       status,
       summary,
       type,
+      quantity,
+      onHandleQuantity,
       ...rest
     },
     ref
@@ -45,7 +47,7 @@ const FoodRange = forwardRef<HTMLDivElement, FoodProps>(
         ref={ref}
         // {...rest}
       >
-        <div className="basis-1/3 p-2">
+        <div className="grow basis-1/3 p-2">
           <CustomLink href={routes.detailFood.generatePath(slug)}>
             <AspectRatio ratio={1}>
               {image ? (
@@ -65,8 +67,8 @@ const FoodRange = forwardRef<HTMLDivElement, FoodProps>(
             </AspectRatio>
           </CustomLink>
         </div>
-        <div className="flex basis-2/3 flex-col grow py-2 pr-2">
-          <h2 className="grow line-clamp-2 text-lg text-gray-600 font-semibold">
+        <div className="flex basis-2/3 flex-col  py-2 pr-2">
+          <h2 className="grow line-clamp-2 text-lg text-gray-600 font-semibold text-left">
             <CustomLink href={routes.detailFood.generatePath(slug)}>
               {name}
             </CustomLink>
@@ -93,6 +95,8 @@ const FoodRange = forwardRef<HTMLDivElement, FoodProps>(
                 variant="outlined"
                 color="success"
                 className="w-7 h-7"
+                disabled={!quantity}
+                onClick={() => onHandleQuantity && onHandleQuantity(id, 'minus')}
               >
                 <Minus className="text-success-700" weight="bold" />
               </Button>
@@ -100,7 +104,8 @@ const FoodRange = forwardRef<HTMLDivElement, FoodProps>(
                 <input
                   name=""
                   type="number"
-                  className="w-full text-center outline-none text-gray-700 bg-white"
+                  value={quantity || 0}
+                  className="w-full text-center outline-none text-gray-600 font-semibold bg-white"
                   disabled
                 />
               </div>
@@ -109,6 +114,8 @@ const FoodRange = forwardRef<HTMLDivElement, FoodProps>(
                 variant="outlined"
                 color="success"
                 className="w-7 h-7 p-0 "
+                disabled={!quantity && Number(quantity) > 2}
+                onClick={() => onHandleQuantity && onHandleQuantity(id, 'plus')}
               >
                 <Plus className="text-success-700" weight="bold" />
               </Button>

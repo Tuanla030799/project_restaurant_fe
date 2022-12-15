@@ -26,12 +26,15 @@ import { useHeaderData } from '@/lib/header'
 import { OrderProps } from './types'
 import format from 'date-fns/format'
 import { validationSchema } from './function'
+import { useToggle } from '@/hooks'
+import ListFoodModal from './ListFoodModal'
 const Orders = () => {
   const { profile } = useHeaderData()
   const { mutate } = useHeaderData()
   const { t } = useTranslation(['common', 'order'])
   const { setToast } = useToast()
   const router = useRouter()
+  const [showListFoodModal, setShowListFoodModal] = useToggle()
 
   const INITIAL_VAL_BOOKING_FORM = useMemo<OrderProps>(() => {
     return {
@@ -110,7 +113,7 @@ const Orders = () => {
                     </Typography>
 
                     <div className="w-fit">
-                      <Button size="md" variant="outlined" className="mt-2">
+                      <Button size="md" variant="outlined" className="mt-2" onClick={setShowListFoodModal}>
                         {t('action.order', { ns: 'order' })}
                       </Button>
                     </div>
@@ -259,6 +262,12 @@ const Orders = () => {
         <Wrapper className="my-3 pb-12">
           <InstructionBooking />
         </Wrapper>
+        {showListFoodModal && (
+          <ListFoodModal
+            showModal={showListFoodModal}
+            setShowModal={setShowListFoodModal}
+          />
+        )}
       </Container>
     </div>
   )

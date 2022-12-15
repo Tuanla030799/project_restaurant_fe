@@ -19,13 +19,14 @@ interface ModalConfirmProps {
   title?: string
   image?: TImage
   type: ModalConfirmTypes
-  rejectMessage: string
-  confirmMessage: string
+  rejectMessage?: string
+  confirmMessage?: string
   children: ReactNode
   isOpen: boolean
   preventClickOutsideToClose?: boolean
   isCentered?: boolean
   imageClassName?: string
+  target?: HTMLElement | null
   toggle: () => void
   onReject?: () => void
   onConfirm?: () => void
@@ -61,6 +62,7 @@ const ModalConfirm = forwardRef<HTMLDivElement, ModalConfirmProps>(
       children,
       isCentered,
       imageClassName,
+      target,
       toggle,
       onReject,
       onConfirm,
@@ -160,16 +162,25 @@ const ModalConfirm = forwardRef<HTMLDivElement, ModalConfirmProps>(
               {children}
             </div>
             <div className="flex items-stretch gap-2 pt-2">
-              <Button size="lg" fluid onClick={handleConfirm}>
-                {confirmMessage}
-              </Button>
-              <Button size="lg" variant="outlined" fluid onClick={handleReject}>
-                {rejectMessage}
-              </Button>
+              {confirmMessage && (
+                <Button size="lg" fluid onClick={handleConfirm}>
+                  {confirmMessage}
+                </Button>
+              )}
+              {rejectMessage && (
+                <Button
+                  size="lg"
+                  variant="outlined"
+                  fluid
+                  onClick={handleReject}
+                >
+                  {rejectMessage}
+                </Button>
+              )}
             </div>
           </motion.div>
         </motion.div>,
-        document.body
+        target || document.body
       )
     )
   }

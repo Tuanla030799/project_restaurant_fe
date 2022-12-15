@@ -1,6 +1,6 @@
-import { X } from 'phosphor-react'
 import React, { ReactNode, useRef } from 'react'
 import { createPortal } from 'react-dom'
+import { X } from 'phosphor-react'
 import { Button, Typography } from '@/components'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
@@ -21,13 +21,17 @@ interface IModalProps {
   formButtonAccept?: string
   classNameContainer?: string
   isCentered?: boolean
-  toggle: () => void
-  onReject?: () => void
-  onAccept?: () => void
   size?: TModalSize
+  target?: HTMLElement | null
   classNameChildren?: string
   hasOnClickOutside?: boolean
   classButtonReject?: string
+  classNameWrapperModal?: string
+  classNameHeader?: string
+  classNameXButton?: string
+  toggle: () => void
+  onReject?: () => void
+  onAccept?: () => void
 }
 
 const Modal = ({
@@ -45,15 +49,18 @@ const Modal = ({
   onAccept,
   onReject,
   size = 'md',
+  target,
   classNameChildren = styles.children.base,
   hasOnClickOutside = true,
   classButtonReject,
+  classNameWrapperModal,
+  classNameHeader,
+  classNameXButton,
 }: IModalProps) => {
   const ref = useRef<HTMLDivElement>(null)
   useOnClickOutside(ref, toggle, hasOnClickOutside)
 
-  return (
-    isOpen &&
+  return isOpen ? (
     createPortal(
       <motion.div
         initial="hidden"
@@ -63,6 +70,7 @@ const Modal = ({
           visible: { opacity: 1 },
           hidden: { opacity: 0 },
         }}
+        className="relative z-elevate"
       >
         <div className="fixed inset-0 z-10 bg-black bg-opacity-60 h-full w-full">
           <div
@@ -76,8 +84,18 @@ const Modal = ({
               }
             )}
           >
-            <div className="shadow-lg rounded-md bg-white p-4 md:p-6">
-              <div className="flex justify-between items-center">
+            <div
+              className={clsx(
+                'shadow-lg rounded-md bg-white p-4 md:p-6',
+                classNameWrapperModal
+              )}
+            >
+              <div
+                className={clsx(
+                  'flex justify-between items-center',
+                  classNameHeader
+                )}
+              >
                 <>
                   <Typography
                     weight="bold"
@@ -89,7 +107,7 @@ const Modal = ({
                   {isDisplayXButton && (
                     <Button
                       variant="link"
-                      className="text-gray-500"
+                      className={clsx('text-gray-500', classNameXButton)}
                       onlyIcon
                       onClick={toggle}
                     >
@@ -99,40 +117,44 @@ const Modal = ({
                 </>
               </div>
               <div className={classNameChildren}>{children}</div>
-              <div className="flex justify-end items-center gap-2 pt-2">
-                {rejectMessage && (
-                  <Button
-                    size="sm"
-                    variant="outlined"
-                    className={classButtonReject}
-                    onClick={() => {
-                      toggle()
-                      onReject && onReject()
-                    }}
-                  >
-                    {rejectMessage}
-                  </Button>
-                )}
-                {acceptMessage && (
-                  <Button
-                    size="sm"
-                    type={typeButtonAccept}
-                    form={formButtonAccept}
-                    onClick={() => {
-                      typeButtonAccept !== 'submit' && toggle()
-                      onAccept && onAccept()
-                    }}
-                  >
-                    {acceptMessage}
-                  </Button>
-                )}
-              </div>
+              {(rejectMessage || acceptMessage) && (
+                <div className="flex justify-end items-center gap-2 pt-2">
+                  {rejectMessage && (
+                    <Button
+                      size="sm"
+                      variant="outlined"
+                      className={classButtonReject}
+                      onClick={() => {
+                        toggle()
+                        onReject && onReject()
+                      }}
+                    >
+                      {rejectMessage}
+                    </Button>
+                  )}
+                  {acceptMessage && (
+                    <Button
+                      size="sm"
+                      type={typeButtonAccept}
+                      form={formButtonAccept}
+                      onClick={() => {
+                        typeButtonAccept !== 'submit' && toggle()
+                        onAccept && onAccept()
+                      }}
+                    >
+                      {acceptMessage}
+                    </Button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
       </motion.div>,
-      document.body
+      target || document.body
     )
+  ) : (
+    <></>
   )
 }
 
