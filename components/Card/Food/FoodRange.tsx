@@ -12,7 +12,7 @@ import {
 import { routes } from '@/constants/routes'
 import DefaultThumbnail from '@/public/images/course_default_thumbnail.jpeg'
 import Image from 'next/image'
-import { Minus, Plus } from 'phosphor-react'
+import { Minus, Plus, Trash } from 'phosphor-react'
 import { FoodProps } from './food.type'
 import { FoodInventory } from '@/models'
 import { numberFormatPrice } from '@/utils'
@@ -37,6 +37,7 @@ const FoodRange = forwardRef<HTMLDivElement, FoodProps>(
       type,
       quantity,
       onHandleQuantity,
+      deleteFood,
       ...rest
     },
     ref
@@ -96,7 +97,9 @@ const FoodRange = forwardRef<HTMLDivElement, FoodProps>(
                 color="success"
                 className="w-7 h-7"
                 disabled={!quantity}
-                onClick={() => onHandleQuantity && onHandleQuantity(id, 'minus')}
+                onClick={() =>
+                  onHandleQuantity && onHandleQuantity(id, 'minus')
+                }
               >
                 <Minus className="text-success-700" weight="bold" />
               </Button>
@@ -120,7 +123,18 @@ const FoodRange = forwardRef<HTMLDivElement, FoodProps>(
                 <Plus className="text-success-700" weight="bold" />
               </Button>
             </div>
-            {inventory === FoodInventory.stocking ? (
+            {deleteFood ? (
+              <Button
+                size="xs"
+                variant="outlined"
+                color="error"
+                className="w-7 h-7 p-0"
+                disabled={!quantity && Number(quantity) > 2}
+                onClick={() => deleteFood && deleteFood(id)}
+              >
+                <Trash className="text-red-700" weight="bold" />
+              </Button>
+            ) : inventory === FoodInventory.stocking ? (
               <Badge size="sm" color="success">
                 {inventory?.toLowerCase()}
               </Badge>

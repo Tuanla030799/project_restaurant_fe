@@ -23,6 +23,10 @@
       "select_time": "Select time"
     }
   },
+  "message": {
+    "success": "Booking table success",
+    "error": "Booking table failure, please try again"
+  },
   "action": {
     "order": "Order",
     "booking_table": "Booking table",

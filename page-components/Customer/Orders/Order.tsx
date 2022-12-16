@@ -5,6 +5,7 @@ import {
   Button,
   Container,
   CustomDatePicker,
+  FoodRangeCard,
   Form,
   Input,
   InputTime,
@@ -15,8 +16,7 @@ import { routes } from '@/constants/routes'
 import Wrapper from 'components/Wrapper'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { House, Info } from 'phosphor-react'
-import { number, object, string } from 'yup'
+import { House } from 'phosphor-react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Controller, useForm } from 'react-hook-form'
 import InstructionBooking from 'components/InstructionBooking'
@@ -26,15 +26,40 @@ import { useHeaderData } from '@/lib/header'
 import { OrderProps } from './types'
 import format from 'date-fns/format'
 import { validationSchema } from './function'
-import { useToggle } from '@/hooks'
+import { useLoadingOverlayContext, useLocalStorage, useToggle } from '@/hooks'
 import ListFoodModal from './ListFoodModal'
+import { KEY_FOOD_ORDER } from '@/constants/keyLocalStorage'
+import { TFood } from 'providers/FoodProvider'
+import useFoodContext from '@/context/useFoodContext'
+import update from 'immutability-helper'
+import { OrderFoodPayload, OrderPayload } from '@/models'
+import { bookingTable } from 'apis/order'
+
 const Orders = () => {
   const { profile } = useHeaderData()
-  const { mutate } = useHeaderData()
   const { t } = useTranslation(['common', 'order'])
   const { setToast } = useToast()
+  const { toggleLoadingOverlay } = useLoadingOverlayContext()
   const router = useRouter()
   const [showListFoodModal, setShowListFoodModal] = useToggle()
+  const [valueLocalStorage, setValueLocalStorage] = useLocalStorage<
+    TFood[] | null
+  >(KEY_FOOD_ORDER, null)
+  const {
+    foods: listFoodAll,
+    resetOrder,
+    deleteFood,
+    handleQuantity,
+    getQuantity,
+  } = useFoodContext()
+
+  const [listFoods, setListFoods] = useState<TFood[]>([])
+
+  useEffect(() => {
+    if (listFoodAll) {
+      setListFoods(() => listFoodAll.filter((food) => food.quantity))
+    }
+  }, [listFoodAll])
 
   const INITIAL_VAL_BOOKING_FORM = useMemo<OrderProps>(() => {
     return {
@@ -69,7 +94,57 @@ const Orders = () => {
   }, [profile])
 
   const onSubmit = async (data) => {
-    console.log(data)
+    try {
+      const time = `${format(data.startTime, 'yyyy/MM/dd')} ${format(
+        data.startTime,
+        'HH:mm'
+      )}`
+      const orderDetails: OrderFoodPayload[] = listFoodAll
+        .filter((food) => food.quantity)
+        .map((food) => {
+          return {
+            foodId: +food.id,
+            price: food.price ? +food.price : 0,
+            quantity: +food.quantity,
+          }
+        })
+      const totalPrice = listFoodAll.reduce((acc: number, crr) => {
+        return (acc = acc + Number(crr.price))
+      }, 0)
+      let orders: OrderPayload = {}
+      orders.amount = data.amount
+      orders.fullName = data.name
+      orders.phone = data.phone
+      orders.totalPrice = totalPrice
+      orders.time = time
+      orders.note = data.note
+      orders.orderDetails = orderDetails
+
+      if (Object.keys(orders).length) {
+        toggleLoadingOverlay()
+        await bookingTable(orders)
+
+        setValueLocalStorage(null)
+
+        await router.push({
+          pathname: routes.home.generatePath(),
+        })
+
+        resetOrder()
+
+        setToast({
+          color: 'success',
+          title: t('message.success', { ns: 'order' }),
+        })
+      }
+    } catch (error) {
+      setToast({
+        color: 'error',
+        title: t('message.error', { ns: 'order' }),
+      })
+    } finally {
+      toggleLoadingOverlay()
+    }
   }
 
   return (
@@ -90,9 +165,9 @@ const Orders = () => {
 
                 <Form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="flex justify-between"
+                  className="flex flex-wrap justify-between"
                 >
-                  <div className="flex basis-1/2 py-4 flex-col items-center px-4 mb-10 gap-6 h-[624px]">
+                  <div className="flex grow basis-1/2 py-4 flex-col items-center px-4 mb-10 gap-6">
                     <Typography
                       variant="h1"
                       fontSize="display-xs"
@@ -104,21 +179,41 @@ const Orders = () => {
                       {t('order_food', { ns: 'order' })}
                     </Typography>
 
-                    <Typography
-                      className="text-gray-600 mt-7 font-semibold"
-                      align="center"
-                      gutter
-                    >
-                      {t('no_food', { ns: 'order' })}
-                    </Typography>
+                    <div className="grid grid-cols-1 gap-8 max-h-[700px] overflow-y-auto">
+                      {!!listFoods.length &&
+                        listFoods.map((food: TFood) => (
+                          <FoodRangeCard
+                            key={food.id}
+                            {...food}
+                            quantity={getQuantity(food.id)}
+                            onHandleQuantity={handleQuantity}
+                            deleteFood={deleteFood}
+                          />
+                        ))}
+                    </div>
+
+                    {!listFoods.length && (
+                      <Typography
+                        className="text-gray-600 mt-7 font-semibold"
+                        align="center"
+                        gutter
+                      >
+                        {t('no_food', { ns: 'order' })}
+                      </Typography>
+                    )}
 
                     <div className="w-fit">
-                      <Button size="md" variant="outlined" className="mt-2" onClick={setShowListFoodModal}>
+                      <Button
+                        size="md"
+                        variant="outlined"
+                        className="mt-2"
+                        onClick={setShowListFoodModal}
+                      >
                         {t('action.order', { ns: 'order' })}
                       </Button>
                     </div>
                   </div>
-                  <div className="flex basis-1/2 py-4 flex-col mb-10 gap-6 px-[5%]">
+                  <div className="flex grow basis-1/2 py-4 flex-col mb-10 gap-6 px-[5%]">
                     <Typography
                       variant="h1"
                       fontSize="display-xs"

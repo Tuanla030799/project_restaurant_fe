@@ -2,7 +2,7 @@ import { Food } from '@/models'
 import React from 'react'
 import { PropsSpread } from 'utils/PropsSpread'
 
-export type actionFoodType = "plus" | "minus" 
+export type actionFoodType = 'plus' | 'minus'
 export interface FoodProps
   extends PropsSpread<
     React.HTMLAttributes<HTMLDivElement>,
@@ -26,5 +26,6 @@ export interface FoodProps
       updatedAt?: string | null
       quantity?: number
       onHandleQuantity?: (quantity: number, action: actionFoodType) => void
+      deleteFood?: (id: number) => void
     }
   > {}

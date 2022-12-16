@@ -11,19 +11,17 @@ import {
   Stack,
 } from '@/components'
 import { useTranslation } from 'next-i18next'
-import { MY_FOODS_PER_PAGE } from '@/constants/paginate'
+import { MY_FOOD_RANGER_PER_PAGE } from '@/constants/paginate'
 import { useFoods } from '@/lib/food'
-import {
-  getCategoryItems,
-  getSelectOptions,
-  getUrlFromNestedObject,
-} from '@/utils'
+import { getSelectOptions, getUrlFromNestedObject } from '@/utils'
 import { Food } from '@/models'
 import { useDebounce, usePaginate } from '@/hooks'
 import { useCategories } from '@/lib/category'
-import update from 'immutability-helper'
 import { MagnifyingGlass } from 'phosphor-react'
-import { actionFoodType } from 'components/Card/Food/food.type'
+import useFoodContext from '@/context/useFoodContext'
+import useLocalStorage from 'hooks/useLocalStorage'
+import { KEY_FOOD_ORDER } from '@/constants/keyLocalStorage'
+import { TFood } from 'providers/FoodProvider'
 
 type ListFoodModalProps = {
   showModal: boolean
@@ -32,12 +30,7 @@ type ListFoodModalProps = {
 
 const initialParams = {
   page: 1,
-  perPage: MY_FOODS_PER_PAGE,
-}
-
-type OrderFoods = {
-  id: number
-  quantity: number
+  perPage: MY_FOOD_RANGER_PER_PAGE,
 }
 
 const ListFoodModal = ({ showModal, setShowModal }: ListFoodModalProps) => {
@@ -49,7 +42,15 @@ const ListFoodModal = ({ showModal, setShowModal }: ListFoodModalProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('')
   const [selectedType, setSelectedType] = useState<string>('')
   const debouncedSearchFood = useDebounce<string>(keyword)
-  const [orderFoods, setOrderFoods] = useState<OrderFoods[]>([])
+  const [valueLocalStorage, setValueLocalStorage] = useLocalStorage<
+    TFood[] | null
+  >(KEY_FOOD_ORDER, null)
+  const {
+    foods: listFoodAll,
+    // setFoods,
+    handleQuantity,
+    getQuantity,
+  } = useFoodContext()
 
   const categoryOptions = [
     { value: '', label: 'All' },
@@ -60,18 +61,6 @@ const ListFoodModal = ({ showModal, setShowModal }: ListFoodModalProps) => {
     data: { data: foods, meta: { pagination = {} } = {} } = {},
     isValidating: isValidatingFood,
   } = useFoods(getUrlFromNestedObject(params))
-
-  useEffect(() => {
-    if (!foods?.length) return
-    setOrderFoods(
-      foods?.map((food) => {
-        return {
-          id: +food.id,
-          quantity: 0,
-        }
-      })
-    )
-  }, [foods])
 
   const foodTypeOptions = useMemo(
     () => [
@@ -100,37 +89,6 @@ const ListFoodModal = ({ showModal, setShowModal }: ListFoodModalProps) => {
     setKeyword(value)
   }
 
-  const handleQuantity = (id: number, action: actionFoodType) => {
-    const foodIndex = orderFoods.findIndex((food) => food.id === id)
-    switch (action) {
-      case 'plus':
-        setOrderFoods(
-          update(orderFoods, {
-            [foodIndex]: {
-              quantity: {
-                $set: orderFoods[foodIndex].quantity + 1,
-              },
-            },
-          })
-        )
-        break
-      case 'minus':
-        setOrderFoods(
-          update(orderFoods, {
-            [foodIndex]: {
-              quantity: {
-                $set: orderFoods[foodIndex].quantity - 1,
-              },
-            },
-          })
-        )
-        break
-
-      default:
-        break
-    }
-  }
-
   return (
     <Modal
       isOpen={showModal}
@@ -139,6 +97,10 @@ const ListFoodModal = ({ showModal, setShowModal }: ListFoodModalProps) => {
       acceptMessage={t('action.save', { ns: 'common' })}
       rejectMessage={t('action.cancel', { ns: 'common' })}
       classNameContainer="max-w-full max-w-screen-md max-w-screen-lg max-w-screen-xl"
+      onAccept={() => {
+        const foodChanged = listFoodAll.filter((food) => food.quantity)
+        setValueLocalStorage(foodChanged)
+      }}
     >
       <Form className="py-4" onSubmit={(data) => setKeyword(data.learner)}>
         <div className="flex justify-between flex-wrap pb-8 gap-y-8">
@@ -190,7 +152,7 @@ const ListFoodModal = ({ showModal, setShowModal }: ListFoodModalProps) => {
           </div>
         </div>
 
-        <div className="min-h-[500px]">
+        <div className="h-[500px]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {isValidatingFood
               ? [...Array(8)].map((_, index) => (
@@ -202,7 +164,7 @@ const ListFoodModal = ({ showModal, setShowModal }: ListFoodModalProps) => {
                   <FoodRangeCard
                     key={food.id}
                     {...food}
-                    quantity={orderFoods[index]?.quantity | 0}
+                    quantity={getQuantity(food.id)}
                     onHandleQuantity={handleQuantity}
                   />
                 ))}
@@ -210,10 +172,10 @@ const ListFoodModal = ({ showModal, setShowModal }: ListFoodModalProps) => {
         </div>
 
         <div className="">
-          {pagination?.total > MY_FOODS_PER_PAGE && (
+          {pagination?.total > MY_FOOD_RANGER_PER_PAGE && (
             <Pagination
               totalItems={pagination.total}
-              pageSize={MY_FOODS_PER_PAGE}
+              pageSize={MY_FOOD_RANGER_PER_PAGE}
               currentPage={currentPage}
               onChange={handlePaginate}
             />

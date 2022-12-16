@@ -14,3 +14,11 @@ export const useFoods = (params?) => {
     { revalidateOnFocus: false }
   )
 }
+
+export const useFoodAll = () => {
+  return useSWR<response, any>(
+    `${process.env.NEXT_PUBLIC_API_URL}/foods?`,
+    axios,
+    { revalidateOnFocus: false }
+  )
+}

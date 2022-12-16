@@ -3,6 +3,7 @@ import { Provider, useCreateStore } from '@/lib/store'
 import LoadingOverlayProvider from './LoadingOverlay'
 import ToastProvider from './ToastProvider'
 import ErrorBoundary from 'components/ErrorBoundary'
+import FoodProvider from './FoodProvider'
 
 type ProvidersProps = {
   children: ReactNode
@@ -16,7 +17,9 @@ const Providers = ({ children, pageProps }: ProvidersProps) => {
     <ErrorBoundary>
       <Provider createStore={createStore}>
         <ToastProvider>
-          <LoadingOverlayProvider>{children}</LoadingOverlayProvider>
+          <LoadingOverlayProvider>
+            <FoodProvider>{children}</FoodProvider>
+          </LoadingOverlayProvider>
         </ToastProvider>
       </Provider>
     </ErrorBoundary>
