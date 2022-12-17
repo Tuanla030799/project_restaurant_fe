@@ -108,9 +108,11 @@ const Orders = () => {
             quantity: +food.quantity,
           }
         })
-      const totalPrice = listFoodAll.reduce((acc: number, crr) => {
-        return (acc = acc + Number(crr.price))
-      }, 0)
+      const totalPrice = listFoodAll
+        .filter((food) => food.quantity)
+        .reduce((acc: number, crr) => {
+          return (acc = acc + Number(crr.price)*Number(crr.quantity))
+        }, 0)
       let orders: OrderPayload = {}
       orders.amount = data.amount
       orders.fullName = data.name

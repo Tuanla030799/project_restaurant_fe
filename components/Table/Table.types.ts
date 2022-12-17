@@ -2,8 +2,10 @@ import { Dispatch, ReactElement, ReactNode, SetStateAction } from 'react'
 
 interface TableHeader {
   label: string
-  field: string
+  field?: string
   className?: string
+  leading?: ReactNode
+  trailing?: ReactNode
 }
 
 interface TableRowProps {
@@ -12,13 +14,13 @@ interface TableRowProps {
 }
 
 interface TableRowContent {
-  content: Record<string, string | number | ReactElement>
+  content: Record<string, string | number | ReactElement> | ReactNode
   className?: string
 }
 
 interface TableRow {
   data: Record<string, TableRowContent>
-  props: TableRowProps
+  props?: TableRowProps
 }
 
 export interface TableProps extends React.HTMLAttributes<HTMLInputElement> {
@@ -34,4 +36,6 @@ export interface TableProps extends React.HTMLAttributes<HTMLInputElement> {
   setCheckedData?: Dispatch<SetStateAction<number[]>>
   currentPage?: number
   pageSize?: number
+  checkClassName?: string
+  isOverflow?: boolean
 }

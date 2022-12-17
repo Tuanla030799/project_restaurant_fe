@@ -2,6 +2,8 @@ import React, { ChangeEvent, FC, useMemo, useState } from 'react'
 import { TableProps } from './Table.types'
 import clsx from 'clsx'
 import { Checkbox } from 'components/Form'
+import { Tooltip } from '@/components'
+import { Info } from 'phosphor-react'
 
 const Table: FC<TableProps> = ({
   headers,
@@ -16,6 +18,8 @@ const Table: FC<TableProps> = ({
   hasCheckData,
   checkedData,
   setCheckedData,
+  checkClassName,
+  isOverflow = true,
 }) => {
   const [isCheckAll, setIsCheckAll] = useState<boolean>(false)
   const handleCheckAll = () => {
@@ -27,7 +31,7 @@ const Table: FC<TableProps> = ({
       return
     }
 
-    setCheckedData && setCheckedData(rows.map(({ props }) => props.id))
+    setCheckedData && setCheckedData(rows?.map(({ props }) => props?.id!))
   }
 
   const isIndeterminate = useMemo(() => {
@@ -35,7 +39,7 @@ const Table: FC<TableProps> = ({
       setIsCheckAll(false)
     }
 
-    return checkedData?.length !== rows.length
+    return checkedData?.length !== rows?.length
   }, [checkedData])
 
   const handleCheckItem = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +57,9 @@ const Table: FC<TableProps> = ({
   }
 
   return (
-    <div className={clsx('overflow-x-auto relative', className)}>
+    <div
+      className={clsx('relative', isOverflow && 'overflow-x-auto', className)}
+    >
       <table className="w-full text-sm text-left text-gray-500">
         <thead className="text-base text-gray-400 border-b border-gray-300">
           <tr>
@@ -72,32 +78,34 @@ const Table: FC<TableProps> = ({
                 <span className="pl-4">#</span>
               </th>
             )}
-            {headers.map((item, index) => (
+            {headers.map(({ label, className, leading, trailing }, index) => (
               <th
                 scope="col"
-                className={clsx(headerClassName, item.className)}
+                className={clsx(headerClassName, className)}
                 key={index}
               >
-                {item.label}
+                {leading}
+                {label}
+                {trailing}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {rows.map(({ data, props }, index) => (
-            <tr className="even:bg-slate-50" key={props.id}>
+          {rows?.map(({ data, props }, index) => (
+            <tr className="even:bg-slate-50" key={props?.id || index}>
               {hasCheckData && (
-                <td>
+                <td className={checkClassName}>
                   <div className="flex p-2 content-center">
                     <Checkbox
                       size="sm"
-                      value={props.id}
+                      value={props?.id!}
                       onChange={handleCheckItem}
-                      isChecked={checkedData?.includes(props.id)}
+                      isChecked={checkedData?.includes(props?.id!)}
                     />
-                    <span className="pl-4">
+                    <div className="pl-4 w-10">
                       {index + 1 + Number(pageSize) * (Number(currentPage) - 1)}
-                    </span>
+                    </div>
                   </div>
                 </td>
               )}
@@ -111,11 +119,27 @@ const Table: FC<TableProps> = ({
                   key={cellIndex}
                   onClick={props?.handleClick}
                 >
-                  {val.content}
+                  <span
+                    className={clsx('grow inline-block', val.classNameContent)}
+                  >
+                    {val.content}
+                  </span>
+                  {val.tooltip && (
+                    <span className={clsx('inline-flex items-center')}>
+                      <Tooltip
+                        title={val.tooltip}
+                        maxWidth={320}
+                        noWrap={false}
+                        placement="bottom"
+                      >
+                        <Info className="text-gray-400 text-lg relative cursor-pointer hover:text-primary-400" />
+                      </Tooltip>
+                    </span>
+                  )}
                 </td>
               ))}
               {manageActions && (
-                <td className={actionClassName}>{manageActions(props.id)}</td>
+                <td className={actionClassName}>{manageActions(props?.id!)}</td>
               )}
             </tr>
           ))}

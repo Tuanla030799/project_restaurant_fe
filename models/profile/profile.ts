@@ -12,7 +12,7 @@ export interface Profile {
   deletedAt?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
-  roles: {
+  roles?: {
     data : Role[]
   },
   avatar?: string

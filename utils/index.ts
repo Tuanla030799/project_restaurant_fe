@@ -1,5 +1,9 @@
+import { DATE_FORMAT_DEFAULT } from '@/constants/common'
+import { DEFAULT_PER_PAGE } from '@/constants/paginate'
+import format from 'date-fns/format'
 import getHours from 'date-fns/getHours'
 import getMinutes from 'date-fns/getMinutes'
+import isDateValid from 'date-fns/isValid'
 
 export const getSelectOptions = (
   arr
@@ -103,7 +107,10 @@ export const getUrlFromNestedObject = (obj) => {
           return prev + url
         }
 
-        if (typeof values === 'string' && values.trim().length) {
+        if (
+          (typeof values === 'string' && values.trim().length) ||
+          typeof values === 'number'
+        ) {
           return prev + `${key}[${child}]=${values}&`
         }
 
@@ -192,6 +199,9 @@ export const convertTimeToMinute = (time: Date) =>
 export const convertSecondsToHHMMSS = (seconds: number) =>
   new Date(seconds * 1000).toISOString().substr(11, 8)
 
+export const convertSecondsToMMSS = (seconds: number) =>
+  new Date(seconds * 1000).toISOString().substr(14, 5)
+
 export const chunkArray = (arr, size: number) =>
   arr.length > size
     ? [arr.slice(0, size), ...chunkArray(arr.slice(size), size)]
@@ -226,7 +236,7 @@ export const getVideoDuration = (file: File) => {
       video.preload = 'metadata'
       video.onloadedmetadata = function () {
         //@ts-ignore
-        resolve(parseInt(this.duration))
+        resolve(this.duration)
       }
       video.src = window.URL.createObjectURL(file)
     } catch (e) {
@@ -238,4 +248,159 @@ export const getVideoDuration = (file: File) => {
 export const numberFormatPrice = (price: number) => {
   if (!price) return '0'
   return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price)
+}
+
+export const removeDigitCharacterOfString = (str: string): string =>
+  str.replace(/[0-9]/g, '')
+
+export const isObject = (obj: Record<string, any>): boolean => {
+  return obj === Object(obj) && !Array.isArray(obj) && typeof obj !== 'function'
+}
+
+export const convertSnakeToCamel = (
+  obj: Record<string, any>
+): Record<string, any> => {
+  if (isObject(obj)) {
+    const newObj = {}
+
+    Object.keys(obj).forEach((key) => {
+      newObj[
+        key.replace(/(\_\w)/g, function (k) {
+          return k[1].toUpperCase()
+        })
+      ] = convertSnakeToCamel(obj[key])
+    })
+
+    return newObj
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map((item) => convertSnakeToCamel(item))
+  }
+
+  return obj
+}
+
+export const dateToString = (date: Date, formatString?: string): string =>
+  isDateValid(date) ? format(date, formatString || DATE_FORMAT_DEFAULT) : ''
+
+export const convertDefaultTextToRaw = (text: string) => {
+  if (!text) return null
+
+  return {
+    blocks: [
+      {
+        key: 'random',
+        data: {},
+        depth: 0,
+        entityRanges: [],
+        text: text,
+        type: 'unstyled',
+      },
+    ],
+    entityMap: {},
+  }
+}
+
+export const handleParagraph = (paragraph) => {
+  if (!paragraph) return null
+
+  if (paragraph.blocks && Object.keys(paragraph.blocks).length) return paragraph
+
+  return convertDefaultTextToRaw(paragraph?.default_text)
+}
+
+export const isLink = (str: string) => {
+  let pattern = new RegExp('^(https?:\\/\\/).+', 'i')
+  return !!pattern.test(str)
+}
+
+export const addI18nToOptions = (
+  options: {
+    value: string | number
+    label: string
+  }[],
+  t
+) => {
+  return options.map(({ value, label }) => ({
+    value,
+    label: t(label),
+  }))
+}
+
+export const removeErrorByIndex = (errors, index) => {
+  return Object.entries(errors).reduce((previous, current) => {
+    const [key, value] = current
+    const _key = Number(key)
+
+    if (_key === index) return previous
+
+    if (_key > index) {
+      return {
+        ...previous,
+        [_key - 1]: value,
+      }
+    }
+
+    return { ...previous, [_key]: value }
+  }, {})
+}
+
+export const updateErrorByIndex = (errors, index) => {
+  return Object.entries(errors).reduce((previous, current) => {
+    const [key, value] = current
+    const _key = Number(key)
+
+    if (_key >= index) {
+      return {
+        ...previous,
+        [_key + 1]: value,
+      }
+    }
+
+    return { ...previous, [_key]: value }
+  }, {})
+}
+
+export const getRanges = (start: number, end: number) => {
+  const length = end - start + 1
+  return Array.from({ length }, (_, index) => index + start)
+}
+
+export const convertStringToDayMonYear = (time: string) => {
+  const date = new Date(time.replaceAll('/', '-'))
+  return date.toLocaleDateString('vi-VN')
+}
+
+export const formatLabelAction = (string: string): string => {
+  return capitalizeFirstLetter(
+    (string?.split('role_')?.[1] || string?.split('role_')?.[0])?.replaceAll(
+      '_',
+      ' '
+    ) || string
+  )
+}
+
+export const generateIndex = (
+  index: number,
+  page: number,
+  itemPerPage: number = DEFAULT_PER_PAGE
+) => {
+  return index + (page - 1) * itemPerPage
+}
+
+export const handleURLAvatar = (avatar: string | null) => {
+  if (!avatar) return
+
+  return isLink(avatar)
+    ? avatar
+    : `${process.env.NEXT_PUBLIC_RESOURCE_DOMAIN}/images/50x50/${avatar}`
+}
+
+export const createFile = async ({ url, name, type }) => {
+  const response = await fetch(url)
+  const data = await response.blob()
+  const fileData = new File([data], name, { type })
+
+  return fileData
 }

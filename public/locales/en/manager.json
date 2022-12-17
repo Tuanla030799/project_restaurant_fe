@@ -4,7 +4,54 @@
     "title": "Users"
   },
   "orders": {
-    "title": "Orders"
+    "title": "Orders",
+    "table": {
+      "id": "ID",
+      "name": "Name",
+      "phone": "Phone",
+      "amount": "Amount",
+      "status": "Status",
+      "note": "Note",
+      "time": "Time Booking",
+      "action": "Action"
+    },
+    "filter": {
+      "all": "All",
+      "show_items": "Show Items",
+      "view_by_status": "View by Status",
+      "placeholder": "Search by name or phone number...",
+      "status": {
+        "title": "Status",
+        "approve": "Approve",
+        "reject": "Reject",
+        "waiting": "Waiting"
+      },
+      "message": {
+        "success": "Update status success",
+        "error": "Update status failed"
+      }
+    },
+    "modal": {
+      "title": "Order Detail",
+      "order_food": "Ordered food",
+      "user_Name": "User Name",
+      "email": "Email",
+      "label": {
+        "amount": "Number of people",
+        "note": "Note",
+        "time": "Time",
+        "phone": "Phone",
+        "name": "Name",
+        "order_date": "Booking date"
+      },
+      "placeholder": {
+        "name": "Enter your name",
+        "note": "Enter your note",
+        "amount": "Enter your amount:",
+        "select_date": "Select date",
+        "select_time": "Select time"
+      }
+    }
   },
   "foots": {
     "title": "Foots"
