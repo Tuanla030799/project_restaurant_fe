@@ -4,6 +4,9 @@ import {
   Badge,
   Button,
   CustomLink,
+  Dropdown,
+  Menu,
+  MenuItem,
   Rating,
   Stack,
   Typography,
@@ -11,10 +14,21 @@ import {
 import { routes } from '@/constants/routes'
 import DefaultThumbnail from '@/public/images/course_default_thumbnail.jpeg'
 import Image from 'next/image'
-import { ChatCircleDots, CookingPot, ThumbsUp } from 'phosphor-react'
+import {
+  ChatCircleDots,
+  CookingPot,
+  DotsThreeOutlineVertical,
+  GearSix,
+  GlobeHemisphereWest,
+  PencilSimpleLine,
+  Prohibit,
+  ThumbsUp,
+} from 'phosphor-react'
 import { FoodProps } from './food.type'
-import { FoodInventory } from '@/models'
+import { FoodInventory, FoodStatus } from '@/models'
 import { numberFormatPrice } from '@/utils'
+import router from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 const Food = forwardRef<HTMLDivElement, FoodProps>(
   (
@@ -34,10 +48,13 @@ const Food = forwardRef<HTMLDivElement, FoodProps>(
       status,
       summary,
       type,
+      changeStatus,
+      isManagement = false,
       ...rest
     },
     ref
   ) => {
+    const { t } = useTranslation(['manager', 'common'])
     return (
       <div
         className="h-full flex flex-col shadow-md rounded-lg bg-white"
@@ -82,12 +99,67 @@ const Food = forwardRef<HTMLDivElement, FoodProps>(
           </CustomLink>
         </div>
         <div className="flex flex-col grow p-4">
-          <div className="flex items-center mb-3">
-            <span className="inline-block bg-success-500 rounded-full w-1 h-1 mr-1.5"></span>
-            <div className="text-xs text-gray-500 font-medium truncate">
-              <span className="ml-1">{'đồ nhậu,'}</span>
-              <span className="ml-1">{type?.toLowerCase()}</span>
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center">
+              <span className="inline-block bg-success-500 rounded-full w-1 h-1 mr-1.5"></span>
+              <div className="text-xs text-gray-500 font-medium truncate">
+                <span className="ml-1">{'đồ nhậu,'}</span>
+                <span className="ml-1">{type?.toLowerCase()}</span>
+              </div>
             </div>
+            {isManagement && (
+              <Dropdown
+                className="inline-flex shrink-0 ml-1.5 -mr-1.5"
+                overlay={
+                  <Menu maxWidth={160} placement="bottom-right">
+                    <>
+                      <MenuItem onClick={() => null}>
+                        <Stack spacing={12}>
+                          <PencilSimpleLine
+                            size={20}
+                            className="text-primary-400"
+                          />
+                          <span>{t('action.edit', { ns: 'common' })}</span>
+                        </Stack>
+                      </MenuItem>
+                    </>
+                    <>
+                      {isManagement && (
+                        <MenuItem
+                          onClick={() =>
+                            changeStatus && status && changeStatus(id, status)
+                          }
+                        >
+                          {status === FoodStatus.hide ? (
+                            <Stack spacing={12}>
+                              <GlobeHemisphereWest
+                                size={20}
+                                className="text-primary-400"
+                              />
+                              <span>
+                                {t('action.publish', { ns: 'common' })}
+                              </span>
+                            </Stack>
+                          ) : (
+                            <Stack spacing={12}>
+                              <Prohibit
+                                size={20}
+                                className="text-primary-400"
+                              />
+                              <span>{t('action.hide', { ns: 'common' })}</span>
+                            </Stack>
+                          )}
+                        </MenuItem>
+                      )}
+                    </>
+                  </Menu>
+                }
+              >
+                <Button variant="text" size="xs" color="gray" onlyIcon>
+                  <DotsThreeOutlineVertical weight="fill" size={20} />
+                </Button>
+              </Dropdown>
+            )}
           </div>
           <h2 className="grow line-clamp-2 text-lg text-gray-700 font-bold mb-3">
             <CustomLink href={routes.detailFood.generatePath(slug)}>
@@ -139,17 +211,27 @@ const Food = forwardRef<HTMLDivElement, FoodProps>(
           </div>
           {/* action */}
           <div className="flex justify-end items-center gap-2">
-            <Button
-              as="a"
-              size="xs"
-              variant="contained"
-              className="rounded-3xl"
-              href={routes.orders.generatePath()}
-            >
-              <Typography fontSize="text-xs" align="center">
-                Đặt bàn ngay
-              </Typography>
-            </Button>
+            {!isManagement ? (
+              <Button
+                as="a"
+                size="xs"
+                variant="contained"
+                className="rounded-3xl"
+                href={routes.orders.generatePath()}
+              >
+                <Typography fontSize="text-xs" align="center">
+                  Đặt bàn ngay
+                </Typography>
+              </Button>
+            ) : status === FoodStatus.hide ? (
+              <Badge size="sm" color="error">
+                {status}
+              </Badge>
+            ) : (
+              <Badge size="sm" color="success">
+                {status}
+              </Badge>
+            )}
           </div>
         </div>
       </div>

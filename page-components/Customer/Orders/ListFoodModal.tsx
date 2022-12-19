@@ -172,9 +172,9 @@ const ListFoodModal = ({ showModal, setShowModal }: ListFoodModalProps) => {
         </div>
 
         <div className="">
-          {pagination?.total > MY_FOOD_RANGER_PER_PAGE && (
+          {Number(pagination?.total) > MY_FOOD_RANGER_PER_PAGE && (
             <Pagination
-              totalItems={pagination.total}
+              totalItems={Number(pagination.total)}
               pageSize={MY_FOOD_RANGER_PER_PAGE}
               currentPage={currentPage}
               onChange={handlePaginate}

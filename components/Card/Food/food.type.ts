@@ -1,4 +1,4 @@
-import { Food } from '@/models'
+import { FoodStatus } from '@/models'
 import React from 'react'
 import { PropsSpread } from 'utils/PropsSpread'
 
@@ -18,14 +18,18 @@ export interface FoodProps
       price: number | null
       rating: number | null
       soldQuantity: number | null
-      status: string | null
+      status?: FoodStatus
       summary: string | null
       type: string | null
       deletedAt?: string | null
       createdAt?: string | null
       updatedAt?: string | null
       quantity?: number
+      isManagement?: boolean
+      changeStatus?: (id: number, status : FoodStatus) => void
       onHandleQuantity?: (quantity: number, action: actionFoodType) => void
       deleteFood?: (id: number) => void
     }
   > {}
+
+

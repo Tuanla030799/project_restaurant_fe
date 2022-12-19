@@ -7,7 +7,7 @@ import isValid from 'date-fns/isValid'
 import { Typography } from '..'
 
 type Props = {
-  onChange: (event: { target: { name: string; value: Date } }) => void
+  onChange: (event: { target: { name: string; value: Date | null } }) => void
   name: string
   value: string
   onBlur?: () => void
@@ -22,6 +22,10 @@ const InputTime = React.forwardRef<NumberFormat<Props>, Props>((props, ref) => {
 
   const handleChangeValue = (values) => {
     const { value } = values
+    if (value?.length === 0) {
+      onChange({ target: { name: props?.name, value: null } })
+      return
+    }
     if (value?.length === TIME_LENGTH) {
       const parseValue = parse(value, 'Hmm', new Date())
       isValid(parseValue) &&

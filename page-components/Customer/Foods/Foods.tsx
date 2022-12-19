@@ -287,9 +287,9 @@ const Foods = () => {
             : foods?.map((food: Food) => <FoodCard key={food.id} {...food} />)}
         </div>
         <div className="pt-4 pb-8">
-          {pagination?.total > MY_FOODS_PER_PAGE && (
+          {Number(pagination?.total) > MY_FOODS_PER_PAGE && (
             <Pagination
-              totalItems={pagination.total}
+              totalItems={Number(pagination?.total)}
               pageSize={MY_FOODS_PER_PAGE}
               currentPage={currentPage}
               onChange={handlePaginate}

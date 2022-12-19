@@ -28,7 +28,7 @@ export interface Food {
   rating: number | null,
   soldQuantity: number | null,
   quantity?: number
-  status: string | null,
+  status?: FoodStatus,
   summary: string | null,
   type: string | null,
   deletedAt?: string | null,

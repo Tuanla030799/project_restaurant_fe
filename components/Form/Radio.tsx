@@ -65,7 +65,7 @@ const Radio = forwardRef<HTMLInputElement, IRadioProps>(
 
         <span
           className={clsx(
-            'bg-white border border-gray-300 rounded-full',
+            'bg-white border border-gray-300 rounded-full shrink-0',
             clsx('shadow', styles.color[color]),
             styles.checked.base,
             styles.checked[size],

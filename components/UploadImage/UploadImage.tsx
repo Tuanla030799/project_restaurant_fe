@@ -71,11 +71,12 @@ const UploadImage = ({
 
   const handleDeleteImage = () => {
     inputFile.current.value = ''
+    setIsChangeImage && setIsChangeImage(false)
     setSelectedImage(null)
   }
 
   return (
-    <div>
+    <div className='text-left'>
       {label && (
         <label className={clsx(styles.label, isRequired && styles.required)}>
           {label}
@@ -94,7 +95,7 @@ const UploadImage = ({
           </div>
         )}
 
-        <div>
+        <div className='text-left'>
           <h2 className={styles.title}>{title}</h2>
           <p className={styles.description}>{description}</p>
 

@@ -1,6 +1,7 @@
 import { KEY_FOOD_ORDER } from '@/constants/keyLocalStorage'
 import { useLocalStorage } from '@/hooks'
 import { useFoodAll } from '@/lib/food'
+import { FoodStatus } from '@/models'
 import React, {
   Dispatch,
   ReactNode,
@@ -22,7 +23,7 @@ export type TFood = {
   rating: number | null
   soldQuantity: number | null
   quantity: number
-  status: string | null
+  status?: FoodStatus
   summary: string | null
   type: string | null
   deletedAt?: string | null

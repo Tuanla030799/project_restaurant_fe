@@ -11,27 +11,6 @@ export const routes = {
   orders: {
     generatePath: () => '/orders',
   },
-  courseType: {
-    generatePath: () => '/manager/course/type',
-  },
-  createNewCourseGeneral: {
-    generatePath: () => '/manager/course/new/general',
-  },
-  editCourse: {
-    generatePath: (id: number) => `/manager/course/${id}/edit`,
-  },
-  editContentCourse: {
-    generatePath: (id: number) => `/manager/course/${id}/content`,
-  },
-  createNewScorm: {
-    generatePath: () => '/manager/course/scorm/new',
-  },
-  editNewScorm: {
-    generatePath: (id: number) => `/manager/course/scorm/${id}/edit`,
-  },
-  createNewCourseStep2: {
-    generatePath: (id: number) => `/manager/course/new/${id}/content`,
-  },
   manager: {
     orders: {
       generatePath: () => '/manager/orders',

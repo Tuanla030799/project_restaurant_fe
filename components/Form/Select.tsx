@@ -1,4 +1,10 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react'
+import React, {
+  ChangeEvent,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import clsx from 'clsx'
 import { CaretUp, CaretDown, Check, MagnifyingGlass } from 'phosphor-react'
 import { useOnClickOutside, useOnScreen } from '@/hooks'
@@ -52,7 +58,8 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
     const [showClear, setShowClear] = useState<boolean>(false)
     const [hasVerticalScrollbar, setHasVerticalScrollbar] =
       useState<boolean>(false)
-    const [searchValue, setSearchValue] = useState<string>('')
+    const [searchValue, setSearchValue] =
+      useState<ChangeEvent<HTMLInputElement> | null>()
     const selectRef = useRef<HTMLDivElement>(null)
     const dropdownRef = useRef<HTMLUListElement>(null)
     const checkpointRef = useRef<HTMLLIElement>(null)
@@ -171,6 +178,11 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
         setShowClear(true)
         onChange && onChange(option)
       }
+
+      if (searchable && !isSearchDropdown && searchValue) {
+        searchValue.target.value = ''
+        onSearch && onSearch(searchValue)
+      }
     }
 
     const handleClear = () => {
@@ -197,11 +209,10 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
           className="bg-transparent outline-none placeholder:text-gray-500 w-full"
           placeholder={placeholder}
           ref={inputSearchRef}
-          value={searchValue}
           onChange={(e) => {
             if (!onSearch) return
             hasVerticalScrollbar && setHasVerticalScrollbar(false)
-            setSearchValue(e.target.value)
+            setSearchValue(e)
             onSearch(e)
           }}
           autoComplete="off"

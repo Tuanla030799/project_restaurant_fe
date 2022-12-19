@@ -53,8 +53,59 @@
       }
     }
   },
-  "foots": {
-    "title": "Foots"
+  "foods": {
+    "title": "Foods",
+    "foods_count": "{{count}} foods",
+    "action": {
+      "create_foot": "Create new food",
+      "publish": "Publish",
+      "draft": "Draft",
+      "edit": "Edit"
+    },
+    "message": {
+      "status": {
+        "success": "Update status success",
+        "error": "Update status failed"
+      }
+    },
+    "create": {
+      "title": "Create new food"
+    },
+    "edit": {
+      "title": "Edit food"
+    },
+    "filter": {
+      "title": "Filter",
+      "total_result": "About {{count}} results",
+      "search": "Search",
+      "thumbnail_description": "Use high-quality .jpeg, .jpg, .png, .gif or webpfiles less than or equal to 10MB",
+      "upload_image": "Upload image",
+      "label": {
+        "thumbnail": "Thumbnail",
+        "category": "Category",
+        "type": "Food type",
+        "status": "Status",
+        "amount": "Amount",
+        "discount": "Discount",
+        "price": "Price",
+        "rating": "Rating",
+        "name": "Name",
+        "inventory": "Inventory",
+        "summary": "Summary",
+        "content": "Content"
+      },
+      "placeholder": {
+        "name":"Enter your name",
+        "amount":"Enter your amount",
+        "price": "Enter your price",
+        "discount": "Enter your discount",
+        "summary": "Enter your summary",
+        "content": "Enter your content"
+      },
+      "add_filters": "Add filters",
+      "reset": "Reset",
+      "apply": "Apply"
+    }
   },
   "blogs": {
     "title": "Blogs"
