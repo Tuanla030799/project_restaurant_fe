@@ -241,7 +241,11 @@ const Foods = () => {
         </div>
       </div>
       {showFoodModal && (
-        <FoodModal showModal={showFoodModal} setShowModal={setShowFoodModal} />
+        <FoodModal
+          showModal={showFoodModal}
+          setShowModal={setShowFoodModal}
+          mutate={mutate}
+        />
       )}
     </>
   )

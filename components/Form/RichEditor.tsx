@@ -351,7 +351,7 @@ const RichEditor = ({
         </div>
         <div
           className={clsx(
-            'px-3 py-2',
+            'px-3 py-2 text-left',
             checkContent() && 'rich-editor-hide-placeholder',
             classNameInput
           )}

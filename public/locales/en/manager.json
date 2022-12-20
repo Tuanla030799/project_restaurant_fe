@@ -66,6 +66,14 @@
       "status": {
         "success": "Update status success",
         "error": "Update status failed"
+      },
+      "create": {
+        "success": "Create food success",
+        "error": "Create food failed"
+      },
+      "update": {
+        "success": "Update food success",
+        "error": "Update food failed"
       }
     },
     "create": {

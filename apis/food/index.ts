@@ -11,4 +11,8 @@ const updateFoodStatus = (id: number, status: FoodStatus) => {
   })
 }
 
-export { getFoodById, updateFoodStatus }
+const createFood = (data) => {
+  return axios.post(`/foods`, data)
+}
+
+export { getFoodById, updateFoodStatus, createFood }

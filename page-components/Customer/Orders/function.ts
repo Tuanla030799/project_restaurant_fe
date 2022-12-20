@@ -6,6 +6,7 @@ import isSameDay from 'date-fns/isSameDay'
 import subDays from 'date-fns/subDays'
 import { TestContextExtended } from 'utils/TestContextExtended'
 import { date, lazy, number, object, string } from 'yup'
+import { RawDraftContentState } from 'draft-js'
 
 function validateValidTime(this: any) {
   const ctx = this as unknown as TestContextExtended<{
@@ -74,3 +75,10 @@ export const validationSchema = lazy(() =>
       ),
   })
 )
+
+export const handleCheckCharacter = (characters: RawDraftContentState) => {
+  return characters.blocks.reduce(
+    (acc: number, crr) => acc + crr.text.length,
+    0
+  )
+}

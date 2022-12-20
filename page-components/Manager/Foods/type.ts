@@ -4,7 +4,7 @@ export type FoodProps = {
   name: string,
   categoryId: number | null,
   type: FoodType | null
-  image?: string,
+  image?: any,
   amount: number | null,
   summary: string | null,
   content: string | null,
