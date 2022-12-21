@@ -1,13 +1,14 @@
 import { FoodInventory, FoodStatus, FoodType } from "@/models"
 
 export type FoodProps = {
+  id?: number;
   name: string,
   categoryId: number | null,
   type: FoodType | null
   image?: any,
   amount: number | null,
-  summary: string | null,
-  content: string | null,
+  summary?: string | null,
+  content?: string | null,
   discount: number,
   inventory: FoodInventory | null,
   liked: number | null,

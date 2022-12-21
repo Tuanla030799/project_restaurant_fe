@@ -26,6 +26,7 @@ export interface FoodProps
       updatedAt?: string | null
       quantity?: number
       isManagement?: boolean
+      onHandleEdit?: (id: number) => void
       changeStatus?: (id: number, status : FoodStatus) => void
       onHandleQuantity?: (quantity: number, action: actionFoodType) => void
       deleteFood?: (id: number) => void

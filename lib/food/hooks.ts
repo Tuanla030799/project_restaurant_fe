@@ -25,3 +25,11 @@ export const useFoodAll = () => {
     { revalidateOnFocus: false }
   )
 }
+
+export const useFoodById = (id: number) => {
+  return useSWR<any, any>(
+    `${process.env.NEXT_PUBLIC_API_URL}/foods/${id}`,
+    axios,
+    { revalidateOnFocus: false }
+  )
+}

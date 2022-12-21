@@ -23,8 +23,9 @@ import { MY_FOODS_PER_PAGE } from '@/constants/paginate'
 import { useDebounce, usePaginate, useToggle } from '@/hooks'
 import { useCategories } from '@/lib/category'
 import { Food, FoodStatus } from '@/models'
-import { updateFoodStatus } from '@/apis'
+import { getFoodById, updateFoodStatus } from '@/apis'
 import FoodModal from './FoodModal'
+import { FoodProps } from './type'
 
 const initialParams = {
   page: 1,
@@ -43,6 +44,7 @@ const Foods = () => {
   const { data: { data: categories } = {} } = useCategories()
   const [showInputSearch, setShowInputSearch] = useToggle()
   const [showFoodModal, setShowFoodModal] = useToggle()
+  const [food, setFood] = useState<FoodProps | null>(null)
   const {
     data: { data: foods, meta: { pagination = {} } = {} } = {},
     isValidating: isValidatingFood,
@@ -106,6 +108,14 @@ const Foods = () => {
         title: t('foods.message.status.error', { ns: 'manager' }),
       })
     }
+  }
+
+  const handleEdit = async (id) => {
+    try {
+      const data = await getFoodById(id)
+      setFood(data.data)
+      setShowFoodModal()
+    } catch (error) {}
   }
 
   return (
@@ -205,7 +215,10 @@ const Foods = () => {
               )}
 
               <Button
-                onClick={setShowFoodModal}
+                onClick={() => {
+                  setFood(null)
+                  setShowFoodModal()
+                }}
                 leading={<Plus weight="bold" size={20} />}
               >
                 {t('foods.action.create_foot', { ns: 'manager' })}
@@ -226,6 +239,7 @@ const Foods = () => {
                   {...food}
                   isManagement={true}
                   changeStatus={handleChangeStatus}
+                  onHandleEdit={handleEdit}
                 />
               ))}
         </div>
@@ -244,6 +258,7 @@ const Foods = () => {
         <FoodModal
           showModal={showFoodModal}
           setShowModal={setShowFoodModal}
+          food={food}
           mutate={mutate}
         />
       )}

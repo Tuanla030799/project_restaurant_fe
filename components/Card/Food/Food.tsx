@@ -49,6 +49,7 @@ const Food = forwardRef<HTMLDivElement, FoodProps>(
       summary,
       type,
       changeStatus,
+      onHandleEdit,
       isManagement = false,
       ...rest
     },
@@ -113,7 +114,9 @@ const Food = forwardRef<HTMLDivElement, FoodProps>(
                 overlay={
                   <Menu maxWidth={160} placement="bottom-right">
                     <>
-                      <MenuItem onClick={() => null}>
+                      <MenuItem
+                        onClick={() => onHandleEdit && onHandleEdit(id)}
+                      >
                         <Stack spacing={12}>
                           <PencilSimpleLine
                             size={20}

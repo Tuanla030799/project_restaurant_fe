@@ -3,7 +3,6 @@ import {
   Form,
   Input,
   Modal,
-  RichEditor,
   Select,
   Stack,
   Textarea,
@@ -22,9 +21,10 @@ import { useError, useToast } from '@/lib/store'
 import update from 'immutability-helper'
 import { handleCheckCharacter } from '@/page-components/Customer/Orders/function'
 import { createFood } from '@/apis'
+import dynamic from 'next/dynamic'
 
 type FoodModalProps = {
-  foodID?: number
+  food: FoodProps | null
   showModal: boolean
   setShowModal: () => void
   mutate?: () => void
@@ -33,13 +33,12 @@ type FoodModalProps = {
 export const MAX_CHARACTER_LENGTH = 5000
 
 const FoodModal = ({
-  foodID,
+  food,
   showModal,
   setShowModal,
   mutate,
 }: FoodModalProps) => {
   const { t } = useTranslation(['common', 'manager', 'food'])
-  // const { data: order } = useOrderDetailById(foodID)
   const { data: { data: categories } = {} } = useCategories()
   const categoryOptions = getSelectOptions(categories)
   const [content, setContent] = useState<any>(null)
@@ -48,6 +47,10 @@ const FoodModal = ({
   const { error, setError, resetError } = useError()
   const { setToast } = useToast()
 
+  const RichEditor = dynamic(
+    () => import('../../../components/Form/RichEditor'),
+    { ssr: false }
+  )
   const foodTypeOptions = useMemo(
     () => [
       { value: 'FOOD', label: 'Food' },
@@ -81,8 +84,6 @@ const FoodModal = ({
       type: null,
       image: null,
       amount: 999,
-      summary: '',
-      content: '',
       discount: 0.1,
       inventory: null,
       liked: 5,
@@ -102,47 +103,16 @@ const FoodModal = ({
     formState: { errors },
   } = useForm<FoodProps>({
     mode: 'onSubmit',
-    defaultValues: INITIAL_VAL_FOOD,
+    defaultValues: food ? food : INITIAL_VAL_FOOD,
     resolver: yupResolver(validationSchema),
   })
 
-  // useEffect(() => {
-  //   setValue('summary', summary)
-  // }, [summary])
-
-  // useEffect(() => {
-  //   setValue('content', content)
-  // }, [content])
-
   useEffect(() => {
-    console.log('errors', errors)
-  }, [errors])
-
-  // useEffect(() => {
-  //   if (order) {
-  //     setValue('name', order.fullName)
-  //     setValue('phone', order.phone)
-  //     setValue('amount', order.amount)
-  //     setValue('note', order.note)
-  //     setValue(
-  //       'startDate',
-  //       new Date(format(new Date(order.time), 'yyyy/MM/dd'))
-  //     )
-  //     setValue(
-  //       'startTime',
-  //       new Date(format(new Date(order.time), 'yyyy/MM/dd HH:mm'))
-  //     )
-
-  //     const startDate = getValues().startDate || new Date()
-
-  //     setIsPast(
-  //       isBefore(
-  //         new Date(format(startDate, 'yyyy/MM/dd')),
-  //         new Date(format(new Date(), 'yyyy/MM/dd'))
-  //       )
-  //     )
-  //   }
-  // }, [order])
+    if (!food) return
+    const content = food.content
+    if (content && JSON.parse(content))
+      setContent(convertFromRaw(JSON.parse(content)))
+  }, [food])
 
   const onSubmit = async (data) => {
     const {
@@ -280,6 +250,11 @@ const FoodModal = ({
                         ns: 'manager',
                       })}
                       options={categoryOptions}
+                      defaultOption={() =>
+                        categoryOptions.find(
+                          (option) => +option.value === value
+                        ) || {}
+                      }
                       isRequired
                       className="w-full"
                       onChange={(data) => onChange(data.value)}
@@ -299,18 +274,25 @@ const FoodModal = ({
                 <Controller
                   control={control}
                   name="inventory"
-                  render={({ field: { value, onChange } }) => (
-                    <Select
-                      name="inventory"
-                      label={t('foods.filter.label.inventory', {
-                        ns: 'manager',
-                      })}
-                      isRequired
-                      options={inventoryOptions}
-                      className="w-full"
-                      onChange={(data) => onChange(data.value)}
-                    />
-                  )}
+                  render={({ field: { value, onChange } }) => {
+                    return (
+                      <Select
+                        name="inventory"
+                        label={t('foods.filter.label.inventory', {
+                          ns: 'manager',
+                        })}
+                        isRequired
+                        options={inventoryOptions}
+                        defaultOption={() =>
+                          inventoryOptions.find(
+                            (option) => option.value === value
+                          ) || {}
+                        }
+                        className="w-full"
+                        onChange={(data) => onChange(data.value)}
+                      />
+                    )
+                  }}
                 />
                 {errors?.inventory && (
                   <Typography
@@ -331,6 +313,11 @@ const FoodModal = ({
                       label={t('foods.filter.label.status', { ns: 'manager' })}
                       isRequired
                       options={statusOptions}
+                      defaultOption={() =>
+                        statusOptions.find(
+                          (option) => option.value === value
+                        ) || {}
+                      }
                       className="w-full"
                       onChange={(data) => onChange(data.value)}
                     />
@@ -357,6 +344,11 @@ const FoodModal = ({
                       label={t('foods.filter.label.type', { ns: 'manager' })}
                       isRequired
                       options={foodTypeOptions}
+                      defaultOption={() =>
+                        foodTypeOptions.find(
+                          (option) => option.value === value
+                        ) || {}
+                      }
                       className="w-full"
                       onChange={(data) => onChange(data.value)}
                     />
@@ -422,12 +414,7 @@ const FoodModal = ({
                 label={t('foods.filter.label.content', { ns: 'manager' })}
                 minHeight={105}
                 onChange={setContent}
-                defaultValue={
-                  content &&
-                  content?.blocks &&
-                  Object.keys(content?.blocks).length &&
-                  convertFromRaw(content)
-                }
+                defaultValue={content}
                 isResetValue={resetContent}
                 onResetValue={setResetContent}
                 error={error?.content}
