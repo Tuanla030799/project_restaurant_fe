@@ -26,7 +26,7 @@ const Seat = forwardRef<HTMLDivElement, SeatProps>(
           onClick: () => {},
         },
       ],
-      []
+      [isReady]
     )
 
     const status = useMemo(() => {

@@ -15,8 +15,10 @@ const Seats = () => {
   const { data: { data: seats } = {}, mutate } = useSeats()
 
   const handleUpdateStatus = async (id: number, status: boolean) => {
+   
     try {
-      await updateSeatStatus(id, status)
+      console.log("status", status)
+      await updateSeatStatus(id, !status)
       await mutate()
       setToast({
         color: 'success',

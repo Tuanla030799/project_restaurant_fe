@@ -16,7 +16,7 @@ import {
   Plus,
   Trash,
 } from 'phosphor-react'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useMemo, useState } from 'react'
 
 type FilterFormProps = {
   isReset: boolean
@@ -26,8 +26,16 @@ type FilterFormProps = {
 const FilterForm = ({ isReset, onResetFilter }: FilterFormProps) => {
   const [filters, setFilters] = useState<any>([])
   const { t } = useTranslation(['food'])
-  const { data: { data: categories } = {}, isValidating } = useCategories()
-  const categoryOptions = getSelectOptions(categories)
+
+  const foodTypeOptions = useMemo(
+    () => [
+      { value: 'FOOD', label: 'Food' },
+      { value: 'DRINK', label: 'Drink' },
+      { value: 'FAST', label: 'Fast' },
+      { value: 'SNACKS', label: 'Snacks' },
+    ],
+    []
+  )
 
   const handleAddFilter = () => {
     setFilters([...filters, {}])
@@ -40,15 +48,13 @@ const FilterForm = ({ isReset, onResetFilter }: FilterFormProps) => {
 
   return (
     <div className="flex flex-wrap justify-between items-end gap-2.5">
-      <div className='flex flex-wrap gap-8'>
+      <div className="flex flex-wrap gap-8">
         <div className="min-w-[16%] shrink">
           <Select
-            name="categories"
-            label={t('filter.label_category', { ns: 'food' })}
-            options={categoryOptions}
-            shouldReset={isReset}
-            multiple
-            hasClear
+            name="type"
+            label={t('filter.label_food_type', { ns: 'food' })}
+            options={foodTypeOptions}
+            className="w-full"
           />
         </div>
         {filters.map((filter, index) => {

@@ -67,7 +67,7 @@ const Foods = () => {
 
   const navItems = useMemo(() => {
     return [
-      { id: 0, label: t('food_type.all', { ns: 'food' }), href: 'all' },
+      { id: '', label: t('food_type.all', { ns: 'food' }), href: 'all' },
       ...getCategoryItems(categories),
     ]
   }, [!!categories])
@@ -145,10 +145,7 @@ const Foods = () => {
     setParams(
       update(params, {
         $merge: {
-          q: {
-            ...params.q,
-            attendees_status_in: [id] as any,
-          },
+          categoryId: id,
         },
       })
     )
@@ -277,14 +274,20 @@ const Foods = () => {
             </div>
           </motion.div>
         </Form>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {!foods && isValidatingFood
-            ? [...Array(8)].map((_, index) => (
+        <div className="min-h-[calc(100vh-350px)]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {!foods && isValidatingFood ? (
+              [...Array(8)].map((_, index) => (
                 <AspectRatio ratio={316 / 420} key={index}>
                   <Skeleton variant="rounded" width={'100%'} />
                 </AspectRatio>
               ))
-            : foods?.map((food: Food) => <FoodCard key={food.id} {...food} />)}
+            ) : foods?.length ? (
+              foods?.map((food: Food) => <FoodCard key={food.id} {...food} />)
+            ) : (
+              <Typography className='p-3.5'>No value</Typography>
+            )}
+          </div>
         </div>
         <div className="pt-4 pb-8">
           {Number(pagination?.total) > MY_FOODS_PER_PAGE && (
