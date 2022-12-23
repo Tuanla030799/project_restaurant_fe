@@ -4,7 +4,7 @@ import { Food } from '@/models'
 import useSWR from 'swr'
 
 type response = {
-  data: Food[],
+  data: Food[]
   meta?: {
     pagination: PaginationType
   }
@@ -26,9 +26,9 @@ export const useFoodAll = () => {
   )
 }
 
-export const useFoodById = (id: number) => {
-  return useSWR<any, any>(
-    `${process.env.NEXT_PUBLIC_API_URL}/foods/${id}`,
+export const useFoodBySlug = (slug: string) => {
+  return useSWR<{ data: Food }, any>(
+    `${process.env.NEXT_PUBLIC_API_URL}/foods/${slug}/foodDetails`,
     axios,
     { revalidateOnFocus: false }
   )
