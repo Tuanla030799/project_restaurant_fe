@@ -16,7 +16,7 @@ export const Seo = ({ data }: SeoProps) => {
   const { title, description, url, thumbnailUrl } = data
   return (
     <Head>
-      <title>FatFood Restaurant</title>
+      <title>{title}</title>
       <meta name="title" content={title} />
       <meta
         name="description"
