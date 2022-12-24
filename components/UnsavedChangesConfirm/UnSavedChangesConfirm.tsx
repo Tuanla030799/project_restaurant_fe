@@ -15,17 +15,22 @@ const UnsavedChangesConfirm = ({
   message,
   callback,
 }: UnsavedChangesConfirmProps) => {
+  const router = useRouter()
+  const { locales } = router
   const { t } = useTranslation('common')
   const [shouldShowLeaveConfirmDialog, setShouldShowLeaveConfirmDialog] =
     useToggle()
   const [nextRouterPath, setNextRouterPath] = useState<string | null>()
-  const router = useRouter()
 
   const onRouteChangeStart = useCallback(
     (nextPath: string) => {
       if (!shouldConfirmLeave) return
 
-      const nextPathCustom = nextPath.split('/').slice(3).join('/')
+      const arrayPath = nextPath.split('/')
+
+      const nextPathCustom = arrayPath
+        .slice(locales?.includes(arrayPath[2]) ? 3 : 2)
+        .join('/')
 
       setShouldShowLeaveConfirmDialog()
       setNextRouterPath('/' + nextPathCustom)

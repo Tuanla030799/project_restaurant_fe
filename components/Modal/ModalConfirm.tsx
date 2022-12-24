@@ -22,12 +22,12 @@ interface ModalConfirmProps {
   rejectMessage?: string
   confirmMessage?: string
   children: ReactNode
-  isOpen: boolean
+  isOpen: any
   preventClickOutsideToClose?: boolean
   isCentered?: boolean
   imageClassName?: string
   target?: HTMLElement | null
-  toggle: () => void
+  toggle?: () => void
   onReject?: () => void
   onConfirm?: () => void
   onOpen?: () => void
@@ -86,20 +86,20 @@ const ModalConfirm = forwardRef<HTMLDivElement, ModalConfirmProps>(
     const handleConfirm = () => {
       onConfirm && onConfirm()
       onClose && onClose()
-      toggle()
+      toggle && toggle()
     }
 
     const handleReject = () => {
       onReject && onReject()
       onClose && onClose()
-      toggle()
+      toggle && toggle()
     }
 
     const handleBackdropClick = () => {
       if (preventClickOutsideToClose) return
 
       onClose && onClose()
-      toggle()
+      toggle && toggle()
     }
 
     return (
