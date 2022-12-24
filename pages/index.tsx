@@ -11,7 +11,8 @@ const HomePage = () => {
           description:
             'FatFood là nhà hàng NGON, đa dạng, uy tín và chất lượng. Giúp thực khách đặt bàn dễ dàng, được tặng kèm ưu đãi mà không cần mua Deal, Voucher. Giải pháp đột phá mới cho câu chuyện ăn gì, ở đâu!',
           url: 'https://fatfood.vercel.app/',
-          thumbnailUrl: 'https://d1sag4ddilekf6.azureedge.net/cuisine/147/icons/Salad_1641af887e2b4092a81f8e27ccdac0dc_1547819244890107512.jpg',
+          thumbnailUrl:
+            'https://cdn.pixabay.com/photo/2021/04/09/08/12/steamer-6163747_1280.png',
         }}
       />
       <Home />
@@ -23,7 +24,7 @@ HomePage.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>
 }
 
-export const getStaticProps = async ({ locale }: { locale: string }) => ({
+export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common'])),
   },
