@@ -24,7 +24,7 @@ HomePage.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>
 }
 
-export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+export const getStaticProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common'])),
   },
