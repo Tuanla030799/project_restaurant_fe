@@ -7,11 +7,11 @@ const HomePage = () => {
     <>
       <Seo
         data={{
-          title: 'FatFood Restaurant',
+          title: 'FatFood Restaurant | Đặt bàn online',
           description:
             'FatFood là nhà hàng NGON, đa dạng, uy tín và chất lượng. Giúp thực khách đặt bàn dễ dàng, được tặng kèm ưu đãi mà không cần mua Deal, Voucher. Giải pháp đột phá mới cho câu chuyện ăn gì, ở đâu!',
-          url: 'https://jamja.vn/assets/images/jamja-logo-2018-2x.png',
-          thumbnailUrl: '',
+          url: 'https://fatfood.vercel.app/',
+          thumbnailUrl: 'https://fatfood.vercel.app/_next/image/?url=%2F_next%2Fstatic%2Fmedia%2FBanner.33238d70.jpg&w=1920&q=75',
         }}
       />
       <Home />
