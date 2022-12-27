@@ -116,18 +116,6 @@ const Foods = () => {
 
       setTabSelected(hrefSelected as string)
       setTabHeading(titles[hrefSelected as string])
-
-      navItem &&
-        setParams(
-          update(params, {
-            $merge: {
-              q: {
-                ...params.q,
-                attendees_status_in: navItem.id,
-              },
-            },
-          })
-        )
     }
   }, [router.query, !!categories])
 
@@ -173,7 +161,7 @@ const Foods = () => {
   }
 
   const onSubmit = async (data) => {
-    // TODO:
+    setParams({ ...params, type: data.type.value })
   }
 
   return (
