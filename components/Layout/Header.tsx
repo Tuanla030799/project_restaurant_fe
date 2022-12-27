@@ -35,9 +35,10 @@ import { routes } from '@/constants/routes'
 import AvatarImgDefault from 'public/images/avatar.png'
 import { useHeaderData } from '@/lib/header'
 import Link from 'next/link'
+import { logout } from 'apis/authorization'
 
 const SearchInputWithFilter = () => {
-  const [inputSearch, setInputSearch] = useState<string>()
+  const [inputSearch, setInputSearch] = useState<string>('')
   const [valueLocalStorage, setValueLocalStorage] = useLocalStorage<string>(
     KEY_INPUT_SEARCH_HEADER,
     ''
@@ -48,9 +49,9 @@ const SearchInputWithFilter = () => {
   const router = useRouter()
 
   const options = [
-    { value: 'title', label: t('filter.foodName') },
-    { value: 'food_type', label: t('filter.foodType') },
-    { value: 'categories_name', label: t('filter.category') }
+    { value: 'search', label: t('filter.foodName') },
+    { value: 'type', label: t('filter.foodType') },
+    { value: 'categoryId', label: t('filter.category') },
   ]
 
   const defaultOption =
@@ -89,32 +90,28 @@ const SearchInputWithFilter = () => {
 const Header = () => {
   const { t } = useTranslation('common')
   const { profile } = useHeaderData()
+  const role = profile?.roles?.data[0].slug
 
   const router = useRouter()
   const subMenuAccounts = profile
     ? [
         { url: '/', label: t('header.accounts_dropdown.profile'), icon: User },
-        {
-          url: '/',
-          label: t('header.accounts_dropdown.my_courses'),
-          icon: BookBookmark,
-        },
-        {
-          url: '/',
+        role === 'admin' && {
+          url: '/manager',
           label: t('header.accounts_dropdown.management'),
           icon: House,
         },
-        {
+        role === 'admin' && {
           url: '/',
           label: t('header.accounts_dropdown.dashboard'),
           icon: ChartLine,
         },
         {
           url: '/',
-          label: t('header.accounts_dropdown.settings'),
-          icon: GearSix,
+          label: t('header.accounts_dropdown.logout'),
+          icon: SignOut,
+          onClick: () => console.log('123'),
         },
-        { url: '/', label: t('header.accounts_dropdown.logout'), icon: SignOut },
       ]
     : [
         {
@@ -133,13 +130,13 @@ const Header = () => {
     const { query, filter_by } = data
 
     const params = {
-      q: {
-        [`${filter_by}_cont`]: query && encodeURIComponent(query.trim()),
-      },
+      [filter_by]: query && encodeURIComponent(query.trim()),
     }
 
     router.push(
-      routes.listFood.generatePath('all') + '?' + getUrlFromNestedObject(params),
+      routes.listFood.generatePath('all') +
+        '?' +
+        getUrlFromNestedObject(params),
       undefined,
       {
         shallow: true,
@@ -239,18 +236,19 @@ const Header = () => {
                     <div className="flex gap-2.5 items-center px-[16px] py-[12px]"></div>
                   )}
                   <MenuDivider className="my-[0px]" />
-                  {subMenuAccounts
-                    .filter(Boolean)
-                    .map(({ url, label, icon: Icon }, index) => (
-                      <MenuItem className="cursor-pointer" key={index}>
-                        <Link href={url}>
-                          <a className="flex gap-4 justify-start items-center">
-                            <Icon size={20} />
-                            <span className="text-sm">{label}</span>
-                          </a>
-                        </Link>
-                      </MenuItem>
-                    ))}
+                  {subMenuAccounts.filter(Boolean).map((data, index) => {
+                    if (data)
+                      return (
+                        <MenuItem className="cursor-pointer" key={index}>
+                          <Link href={data.url}>
+                            <a className="flex gap-4 justify-start items-center">
+                              <data.icon size={20} />
+                              <span className="text-sm">{data.label}</span>
+                            </a>
+                          </Link>
+                        </MenuItem>
+                      )
+                  })}
                 </Menu>
               }
             >

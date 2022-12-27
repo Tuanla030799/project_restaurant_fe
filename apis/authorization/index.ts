@@ -21,7 +21,7 @@ const signUp = async (payload: RegisterPayload) => {
 }
 
 const logout = () => {
-  return axios.post('auth/logout')
+  Cookies.set('jwt_token', '')
 }
 
 export { login, logout, signUp }

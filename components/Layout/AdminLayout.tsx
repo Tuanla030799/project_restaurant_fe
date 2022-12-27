@@ -30,7 +30,7 @@ const AdminLayout = ({ children }: TLayoutProps) => {
     return <></>
   }
 
-  if (profile && profile?.roles?.data[0].slug !== 'admin') {
+  if (profile?.roles?.data[0].slug !== 'admin') {
     router.push({
       pathname: routes.home.generatePath(),
     })

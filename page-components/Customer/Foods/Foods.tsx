@@ -45,6 +45,7 @@ const Foods = () => {
   const [tabHeading, setTabHeading] = useState('')
   const [showFilter, setShowFilter] = useToggle()
   const [params, setParams] = useState<any>(initialParams)
+  const [search, setSearch] = useState<string>('')
   const [showInputSearch, setShowInputSearch] = useToggle()
   const { t } = useTranslation(['common', 'food'])
   const router = useRouter()
@@ -129,6 +130,15 @@ const Foods = () => {
         )
     }
   }, [router.query, !!categories])
+
+  useEffect(() => {
+    const search = (router?.query?.search as string) || ''
+    setSearch(search)
+  }, [router?.query])
+
+  useEffect(() => {
+    setParams({ ...params, search })
+  }, [search])
 
   const shallowRouting = (url) => {
     router.push(
@@ -224,6 +234,8 @@ const Foods = () => {
                         <MagnifyingGlass size={20} className="text-gray-700" />
                       </button>
                     }
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                 ) : (
                   <Button
@@ -285,7 +297,7 @@ const Foods = () => {
             ) : foods?.length ? (
               foods?.map((food: Food) => <FoodCard key={food.id} {...food} />)
             ) : (
-              <Typography className='p-3.5'>No value</Typography>
+              <Typography className="p-3.5">No value</Typography>
             )}
           </div>
         </div>
