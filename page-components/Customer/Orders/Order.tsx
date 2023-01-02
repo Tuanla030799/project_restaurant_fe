@@ -42,6 +42,9 @@ const Orders = () => {
   const { toggleLoadingOverlay } = useLoadingOverlayContext()
   const router = useRouter()
   const [showListFoodModal, setShowListFoodModal] = useToggle()
+  const [dateSelected, setDateSelected] = useState<Date>(
+    new Date(format(new Date(), 'yyyy/MM/dd'))
+  )
   const [valueLocalStorage, setValueLocalStorage] = useLocalStorage<
     TFood[] | null
   >(KEY_FOOD_ORDER, null)
@@ -67,7 +70,7 @@ const Orders = () => {
       phone: '',
       amount: 0,
       note: '',
-      startDate: new Date(format(new Date(), 'yyyy/MM/dd')),
+      startDate: dateSelected,
       startTime: new Date(format(new Date(), 'yyyy/MM/dd HH:mm')),
       totalPrice: 0,
       orderDetails: [],
@@ -95,7 +98,7 @@ const Orders = () => {
 
   const onSubmit = async (data) => {
     try {
-      const time = `${format(data.startTime, 'yyyy/MM/dd')} ${format(
+      const time = `${format(dateSelected, 'yyyy/MM/dd')} ${format(
         data.startTime,
         'HH:mm'
       )}`
@@ -111,7 +114,7 @@ const Orders = () => {
       const totalPrice = listFoodAll
         .filter((food) => food.quantity)
         .reduce((acc: number, crr) => {
-          return (acc = acc + Number(crr.price)*Number(crr.quantity))
+          return (acc = acc + Number(crr.price) * Number(crr.quantity))
         }, 0)
       let orders: OrderPayload = {}
       orders.amount = data.amount
@@ -274,7 +277,14 @@ const Orders = () => {
                                       ns: 'order',
                                     }
                                   )}
-                                  onChange={(newDate) => onChange(newDate)}
+                                  onChange={(newDate) => {
+                                    if (newDate) {
+                                      setDateSelected(
+                                        new Date(format(newDate, 'yyyy/MM/dd'))
+                                      )
+                                      onChange(newDate)
+                                    }
+                                  }}
                                   daySelected={value}
                                   onClear={() => onChange(null)}
                                   onResetToday={() => onChange(new Date())}

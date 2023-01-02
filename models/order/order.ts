@@ -7,6 +7,7 @@ export interface OrderPayload {
   fullName?: string
   phone?: string
   orderDetails?: OrderFoodPayload[]
+  seatIds?: SeatId[]
 }
 
 export interface OrderFoodPayload {

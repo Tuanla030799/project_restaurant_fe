@@ -6,6 +6,7 @@ import {
   Input,
   InputTime,
   Modal,
+  Select,
   Textarea,
   Typography,
 } from '@/components'
@@ -17,7 +18,11 @@ import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'next-i18next'
 import { useOrderDetailById } from '@/lib/order'
 import isBefore from 'date-fns/isBefore'
-import { numberFormatPrice } from '@/utils'
+import { getSelectOptions, numberFormatPrice } from '@/utils'
+import { OrderPayload } from '@/models'
+import { useLoadingOverlayContext } from '@/hooks'
+import { useToast } from '@/lib/store'
+import { updateOrder } from 'apis/order'
 
 type OrderModalProps = {
   orderID: number
@@ -26,9 +31,12 @@ type OrderModalProps = {
 }
 
 const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
-  const { t } = useTranslation(['common', 'manager', 'food'])
+  const { t } = useTranslation(['common', 'manager', 'food', 'order'])
+  const { setToast } = useToast()
+  const { toggleLoadingOverlay } = useLoadingOverlayContext()
   const { data: order } = useOrderDetailById(orderID)
   const [isPast, setIsPast] = useState<boolean>(true)
+  const seatOptions = getSelectOptions(order?.seats)
 
   const INITIAL_VAL_BOOKING_FORM = useMemo<OrderProps>(() => {
     return {
@@ -40,6 +48,7 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
       startTime: new Date(format(new Date(), 'yyyy/MM/dd HH:mm')),
       totalPrice: 0,
       orderDetails: [],
+      seatIds: [],
     }
   }, [])
 
@@ -82,7 +91,52 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
     }
   }, [order])
 
-  const onSubmit = async (data) => {}
+  const onSubmit = async (data) => {
+    try {
+      const time = `${format(data.startDate, 'yyyy/MM/dd')} ${format(
+        data.startTime,
+        'HH:mm'
+      )}`
+      // const orderDetails: OrderFoodPayload[] = listFoodAll
+      //   .filter((food) => food.quantity)
+      //   .map((food) => {
+      //     return {
+      //       foodId: +food.id,
+      //       price: food.price ? +food.price : 0,
+      //       quantity: +food.quantity,
+      //     }
+      //   })
+      // const totalPrice = listFoodAll
+      //   .filter((food) => food.quantity)
+      //   .reduce((acc: number, crr) => {
+      //     return (acc = acc + Number(crr.price) * Number(crr.quantity))
+      //   }, 0)
+      let orders: OrderPayload = {}
+      orders.amount = data.amount
+      orders.fullName = data.name
+      orders.phone = data.phone
+      orders.time = time
+      orders.note = data.note
+      orders.seatIds = data.seatIds
+
+      if (Object.keys(orders).length) {
+        toggleLoadingOverlay()
+        await updateOrder(orderID, orders)
+
+        setToast({
+          color: 'success',
+          title: t('message.success', { ns: 'order' }),
+        })
+      }
+    } catch (error) {
+      setToast({
+        color: 'error',
+        title: t('message.error', { ns: 'order' }),
+      })
+    } finally {
+      toggleLoadingOverlay()
+    }
+  }
   return (
     <Modal
       isOpen={showModal}
@@ -91,9 +145,8 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
       acceptMessage={t('action.save', { ns: 'common' })}
       rejectMessage={t('action.cancel', { ns: 'common' })}
       classNameContainer="max-w-full max-w-screen-md max-w-screen-lg max-w-screen-xl"
-      onAccept={() => {
-        if (isPast) return
-      }}
+      typeButtonAccept="submit"
+      formButtonAccept="order_detail_form"
     >
       <div className="max-h-[calc(100vh-350px)] overflow-y-auto">
         <div className="flex flex-wrap gap-8">
@@ -110,6 +163,7 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
         </div>
         <Form
           onSubmit={handleSubmit(onSubmit)}
+          id="order_detail_form"
           className="flex flex-wrap justify-between"
         >
           <div className="flex grow basis-1/2 py-4 flex-col mb-10 gap-2 px-[5%]">
@@ -145,7 +199,7 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
                   ns: 'manager',
                 })}
               </label>
-              <div className="flex gap-4 relative">
+              <div className="flex gap-4 flex-wrap relative">
                 <div className="">
                   <Controller
                     control={control}
@@ -175,16 +229,49 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
                     </span>
                   )}
                 </div>
-                <Controller
-                  control={control}
-                  name="startTime"
-                  render={({ field }) => (
-                    <InputTime
-                      {...field}
-                      value={field?.value ? format(field?.value, 'HH:mm') : ''}
+                <div className="mr-6">
+                  <Controller
+                    control={control}
+                    name="startTime"
+                    render={({ field }) => (
+                      <InputTime
+                        {...field}
+                        value={
+                          field?.value ? format(field?.value, 'HH:mm') : ''
+                        }
+                      />
+                    )}
+                  />
+                </div>
+                {!!seatOptions.length && !!order?.seats?.length && (
+                  <div>
+                    <Controller
+                      control={control}
+                      name="seatIds"
+                      render={({ field: { value, onChange } }) => (
+                        <Select
+                          name="seatIds"
+                          dropdownMinWidth={200}
+                          placeholder="Select table"
+                          options={seatOptions}
+                          defaultOption={
+                            order?.seats?.find((data) => data.isChoose)
+                              ? getSelectOptions(
+                                  order?.seats.filter((data) => data.isChoose)
+                                )
+                              : undefined
+                          }
+                          className="w-full"
+                          onChange={(data) => {
+                            onChange(data.map((data) => data.value))
+                          }}
+                          loading
+                          multiple
+                        />
+                      )}
                     />
-                  )}
-                />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -235,9 +322,9 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
                     </div>
                   </div>
                   <div className="table-row-group">
-                    {order.orderDetails.map((food) => {
+                    {order.orderDetails.map((food, index) => {
                       return (
-                        <div className="table-row">
+                        <div className="table-row" key={index}>
                           <div className="table-cell text-left p-3">
                             {food.foodId}
                           </div>

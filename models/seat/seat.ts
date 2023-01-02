@@ -4,6 +4,7 @@ export interface Seat {
   isReady: boolean
   position: number
   image: string | null
+  isChoose?: boolean
   deletedAt?: string | null
   createdAt?: string | null
   updatedAt?: string | null

@@ -7,6 +7,7 @@ export type OrderProps = {
   startTime: Date | null,
   totalPrice: number,
   orderDetails: OrderDetailProps[] | [],
+  seatIds?: number[]
 }
 
 export type OrderDetailProps = {

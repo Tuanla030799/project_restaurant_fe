@@ -97,8 +97,8 @@ const Orders = () => {
                 color="gray"
                 variant="text"
                 className={status === Status.APPROVE ? 'hidden' : ''}
-                onClick={() => {
-                  handleChangeStatus(statusActions.APPROVE, id)
+                onClick={(event) => {
+                  handleChangeStatus(event ,statusActions.APPROVE, id)
                 }}
               >
                 <span
@@ -119,8 +119,8 @@ const Orders = () => {
                 color="gray"
                 variant="text"
                 className={status === Status.REJECT ? 'hidden' : ''}
-                onClick={() => {
-                  handleChangeStatus(statusActions.REJECT, id)
+                onClick={(event) => {
+                  handleChangeStatus(event, statusActions.REJECT, id)
                 }}
               >
                 <span
@@ -203,7 +203,8 @@ const Orders = () => {
     setKeyword(value)
   }
 
-  const handleChangeStatus = async (type: TypeHandler, id) => {
+  const handleChangeStatus = async (event, type: TypeHandler, id) => {
+    event.stopPropagation();
     try {
       switch (type) {
         case 'Approve':

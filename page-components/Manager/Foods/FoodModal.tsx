@@ -30,6 +30,11 @@ type FoodModalProps = {
   mutate?: () => void
 }
 
+const RichEditor = dynamic(
+  () => import('../../../components/Form/RichEditor'),
+  { ssr: false }
+)
+
 export const MAX_CHARACTER_LENGTH = 5000
 
 const FoodModal = ({
@@ -47,10 +52,6 @@ const FoodModal = ({
   const { error, setError, resetError } = useError()
   const { setToast } = useToast()
 
-  const RichEditor = dynamic(
-    () => import('../../../components/Form/RichEditor'),
-    { ssr: false }
-  )
   const foodTypeOptions = useMemo(
     () => [
       { value: 'FOOD', label: 'Food' },

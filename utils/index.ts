@@ -9,9 +9,9 @@ export const getSelectOptions = (
   arr
 ): { value: string; label: string }[] | [] => {
   return arr
-    ? arr.map(({ id, name, title }) => ({
+    ? arr.map(({ id, name, title, content }) => ({
         value: id,
-        label: name || title,
+        label: name || title || content,
       }))
     : []
 }
