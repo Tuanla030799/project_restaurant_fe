@@ -11,18 +11,18 @@ const Footer = () => {
           <Stack direction="column">
             <Stack>
               <Link href="./">
-                <a className="">FatFood</a>
+                <a className="">FastFood</a>
               </Link>
             </Stack>
             <Typography fontSize="text-sm" className="text-gray-400 pt-3">
-              FatFood là nhà hàng NGON, đa dạng, uy tín và chất lượng. Giúp thực
+              FastFood là nhà hàng NGON, đa dạng, uy tín và chất lượng. Giúp thực
               khách đặt bàn dễ dàng, được tặng kèm ưu đãi mà không cần mua Deal,
               Voucher. Giải pháp đột phá mới cho câu chuyện ăn gì, ở đâu!
             </Typography>
           </Stack>
           <Stack>
             <Typography variant="h3" className="font-bold">
-              Về FatFood
+              Về FastFood
             </Typography>
             <Stack className="mt-3" align="flex-start" direction="column">
               <Link href="./">
@@ -137,7 +137,7 @@ const Footer = () => {
           © Copyright 2010 PasGo.jsc, All rights reserved
         </Typography>
         <Link href="./">
-          <a className="text-blue-700 text-sm">Công ty cổ phần FatFood</a>
+          <a className="text-blue-700 text-sm">Công ty cổ phần FastFood</a>
         </Link>
         <Typography className="mt-2.5 text-xs text-gray-400">
           Mã số doanh nghiệp: 0106329034 do Sở Kế hoạch đầu tư TP Hà Nội cấp

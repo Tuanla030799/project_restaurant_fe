@@ -80,7 +80,7 @@ const Home = () => {
               align="center"
               className="flex items-center"
             >
-              Mới nhất trên FatFood <CaretRight size={16} weight="bold" />
+              Mới nhất trên FastFood <CaretRight size={16} weight="bold" />
             </Typography>
 
             <Link href="/collection">
