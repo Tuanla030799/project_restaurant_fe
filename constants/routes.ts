@@ -11,6 +11,9 @@ export const routes = {
   orders: {
     generatePath: () => '/orders',
   },
+  order: {
+    generatePath: () => '/order',
+  },
   manager: {
     orders: {
       generatePath: () => '/manager/orders',

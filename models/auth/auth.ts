@@ -10,4 +10,5 @@ export interface RegisterPayload {
   firstName: string
   lastName: string
   status?: string
+  phone?: string
 }

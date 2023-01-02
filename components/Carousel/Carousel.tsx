@@ -48,7 +48,7 @@ export default function Carousel({ images }) {
           color="success"
           variant="contained"
           className="rounded animate-bounce"
-          href={routes.orders.generatePath()}
+          href={routes.order.generatePath()}
         >
           <Typography fontSize="text-sm" align="center" weight="semibold">
             Đặt bàn ngay

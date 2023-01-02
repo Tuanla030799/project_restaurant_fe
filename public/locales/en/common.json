@@ -6,6 +6,7 @@
     "user_name": "Username",
     "accounts_dropdown": {
       "profile": "Profile",
+      "orders": "Orders",
       "my_courses": "My courses",
       "management": "Management",
       "dashboard": "Dashboard",

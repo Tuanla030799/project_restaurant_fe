@@ -1,11 +1,11 @@
 import { AuthLayout } from '@/components'
-import Orders from '@/page-components/Customer/Orders/Orders'
+import Order from '@/page-components/Customer/Order/Order'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
 
 const OrdersPage = () => {
-  return <Orders />
+  return <Order />
 }
 
 OrdersPage.getLayout = function getLayout(page) {
@@ -19,7 +19,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => {
 
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'manager'])),
+      ...(await serverSideTranslations(locale, ['common', 'order', 'food'])),
     },
   }
 }

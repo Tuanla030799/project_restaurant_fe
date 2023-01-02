@@ -1,13 +1,11 @@
-import { PaginationType } from '@/global/types'
+import { TPagination } from '@/global/types'
 import { axios } from '@/lib/axios'
 import { Order } from '@/models'
 import useSWR from 'swr'
 
 type response = {
-  data: Order[]
-  meta?: {
-    pagination: PaginationType
-  }
+  items: Order[]
+  meta?: TPagination
 }
 
 export const useOrders = (params) => {
@@ -16,6 +14,7 @@ export const useOrders = (params) => {
     axios
   )
 }
+
 export const useOrderDetailById = (id: number) => {
   return useSWR<Order, any>(
     `${process.env.NEXT_PUBLIC_API_URL}/orders/${id}`,
@@ -23,3 +22,9 @@ export const useOrderDetailById = (id: number) => {
   )
 }
 
+export const useUserOrders = (params) => {
+  return useSWR<response, any>(
+    `${process.env.NEXT_PUBLIC_API_URL}/profile/orders?` + params,
+    axios
+  )
+}

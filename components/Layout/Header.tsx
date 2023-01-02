@@ -22,6 +22,7 @@ import {
   BookBookmark,
   CaretDown,
   ChartLine,
+  CookingPot,
   DotsNine,
   GearSix,
   House,
@@ -90,12 +91,17 @@ const SearchInputWithFilter = () => {
 const Header = () => {
   const { t } = useTranslation('common')
   const { profile } = useHeaderData()
-  const role = profile?.roles?.data[0].slug
+  const role = profile?.roles?.data[0]?.slug
 
   const router = useRouter()
   const subMenuAccounts = profile
     ? [
-        { url: '/', label: t('header.accounts_dropdown.profile'), icon: User },
+        // { url: '/', label: t('header.accounts_dropdown.profile'), icon: User },
+        {
+          url: '/orders',
+          label: t('header.accounts_dropdown.orders'),
+          icon: CookingPot,
+        },
         role === 'admin' && {
           url: '/manager',
           label: t('header.accounts_dropdown.management'),
@@ -107,10 +113,9 @@ const Header = () => {
           icon: ChartLine,
         },
         {
-          url: '/',
+          url: '/login',
           label: t('header.accounts_dropdown.logout'),
           icon: SignOut,
-          onClick: () => console.log('123'),
         },
       ]
     : [

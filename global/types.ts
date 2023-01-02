@@ -11,3 +11,11 @@ export type PaginationType = {
   currentPage?: string
   totalPages?: number
 }
+
+export type TPagination = {
+  totalItems?: number
+  currentPage?: number
+  itemCount?: number
+  itemsPerPage?: number
+  totalPages?: number
+}

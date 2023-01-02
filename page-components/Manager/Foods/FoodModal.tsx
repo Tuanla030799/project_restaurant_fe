@@ -19,7 +19,7 @@ import { useCategories } from '@/lib/category'
 import { convertFromRaw, convertToRaw } from 'draft-js'
 import { useError, useToast } from '@/lib/store'
 import update from 'immutability-helper'
-import { handleCheckCharacter } from '@/page-components/Customer/Orders/function'
+import { handleCheckCharacter } from '@/page-components/Customer/Order/function'
 import { createFood } from '@/apis'
 import dynamic from 'next/dynamic'
 

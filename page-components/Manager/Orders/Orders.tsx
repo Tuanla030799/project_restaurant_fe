@@ -3,6 +3,7 @@ import {
   Breadcrumbs,
   Button,
   Container,
+  CustomDatePicker,
   Form,
   Input,
   Pagination,
@@ -38,6 +39,7 @@ import { useDebounce, usePaginate, useToggle } from '@/hooks'
 import { useToast } from '@/lib/store'
 import { updateOrderStatus } from 'apis/order'
 import OrderModal from './OrderModal'
+import format from 'date-fns/format'
 
 const DD_MM_YYYY_HH_MM_DATE_FORMAT = 'dd/MM/yyyy  HH:mm'
 
@@ -53,8 +55,9 @@ const Orders = () => {
   const [currentPage, handlePaginate] = usePaginate(DEFAULT_PAGE)
   const debouncedSearchLearner = useDebounce<string>(keyword)
   const [selectedStatus, setSelectedStatus] = useState<string>('')
+  const [dateSelected, setDateSelected] = useState<Date | null>(null)
   const {
-    data: { data: orders = [], meta: { pagination = {} } = {} } = {},
+    data: { items: orders = [], meta: pagination = {} } = {},
     mutate,
     isValidating,
   } = useOrders(getUrlFromNestedObject(params))
@@ -76,8 +79,10 @@ const Orders = () => {
       perPage: pageSize,
       search: encodeURIComponent(debouncedSearchLearner),
       status: selectedStatus,
+      orderStartTime: dateSelected ? format(dateSelected, 'dd/MM/yyyy') : "",
+      orderEndTime: dateSelected ? format(dateSelected, 'dd/MM/yyyy') : ""
     })
-  }, [currentPage, pageSize, debouncedSearchLearner, selectedStatus])
+  }, [currentPage, pageSize, debouncedSearchLearner, selectedStatus, dateSelected])
 
   const renderActions = (status, id) => {
     const { rejectedButton, approvedButton } = getColor(status)
@@ -98,7 +103,7 @@ const Orders = () => {
                 variant="text"
                 className={status === Status.APPROVE ? 'hidden' : ''}
                 onClick={(event) => {
-                  handleChangeStatus(event ,statusActions.APPROVE, id)
+                  handleChangeStatus(event, statusActions.APPROVE, id)
                 }}
               >
                 <span
@@ -187,7 +192,7 @@ const Orders = () => {
       },
       props: {
         id: id,
-        handleClick: () => handleOrderDetail(id)
+        handleClick: () => handleOrderDetail(id),
       },
     })
   )
@@ -204,7 +209,7 @@ const Orders = () => {
   }
 
   const handleChangeStatus = async (event, type: TypeHandler, id) => {
-    event.stopPropagation();
+    event.stopPropagation()
     try {
       switch (type) {
         case 'Approve':
@@ -269,19 +274,20 @@ const Orders = () => {
                 direction="row"
                 options={statusOptions}
                 defaultOption={statusOptions[0]}
-                dropdownMinWidth={136}
                 loading={true}
                 onChange={(data) => setSelectedStatus(data.value)}
               />
-              <Select
-                className="w-25"
-                name="show_items"
-                label={t('orders.filter.show_items')}
-                direction="row"
-                options={pageOptions}
-                defaultOption={pageOptions[0]}
-                dropdownMinWidth={80}
-                onChange={(data) => setPageSize(Number(data.value))}
+              <CustomDatePicker
+                className="mr-6"
+                placeholder={t('orders.modal.placeholder.select_date', {
+                  ns: 'manager',
+                })}
+                onChange={(newDate) => {
+                  if (newDate) setDateSelected(newDate)
+                }}
+                daySelected={dateSelected}
+                onClear={() => setDateSelected(null)}
+                onResetToday={() => setDateSelected(new Date())}
               />
             </Stack>
             <div>
@@ -303,6 +309,18 @@ const Orders = () => {
               />
             </div>
           </div>
+          <div>
+            <Select
+              className="w-25"
+              name="show_items"
+              label={t('orders.filter.show_items')}
+              direction="row"
+              options={pageOptions}
+              defaultOption={pageOptions[0]}
+              dropdownMinWidth={80}
+              onChange={(data) => setPageSize(Number(data.value))}
+            />
+          </div>
         </Form>
 
         <div>
@@ -320,14 +338,12 @@ const Orders = () => {
               pageSize={pageSize}
             />
           ) : (
-            <Typography className="text-gray-700 pt-6">
-              {t('enrollment.no_request')}
-            </Typography>
+            <Typography className="text-gray-700 pt-6">No order</Typography>
           )}
-          {!!pagination?.total && (
+          {!!pagination?.totalPages && (
             <Pagination
               className="mt-6"
-              totalItems={Number(pagination.total)}
+              totalItems={Number(pagination.totalItems)}
               pageSize={pageSize}
               currentPage={currentPage}
               onChange={handlePaginate}
@@ -336,12 +352,12 @@ const Orders = () => {
         </div>
       </div>
       {showOrderDetail && (
-          <OrderModal
-            orderID = {orderID}
-            showModal={showOrderDetail}
-            setShowModal={setShowOrderDetail}
-          />
-        )}
+        <OrderModal
+          orderID={orderID}
+          showModal={showOrderDetail}
+          setShowModal={setShowOrderDetail}
+        />
+      )}
     </>
   )
 }

@@ -35,7 +35,7 @@ import update from 'immutability-helper'
 import { OrderFoodPayload, OrderPayload } from '@/models'
 import { bookingTable } from 'apis/order'
 
-const Orders = () => {
+const Order = () => {
   const { profile } = useHeaderData()
   const { t } = useTranslation(['common', 'order'])
   const { setToast } = useToast()
@@ -132,7 +132,7 @@ const Orders = () => {
         setValueLocalStorage(null)
 
         await router.push({
-          pathname: routes.home.generatePath(),
+          pathname: routes.order.generatePath(),
         })
 
         resetOrder()
@@ -380,4 +380,4 @@ const Orders = () => {
   )
 }
 
-export default Orders
+export default Order

@@ -22,6 +22,7 @@ import { useLoading, useToast } from '@/lib/store'
 import { useRouter } from 'next/router'
 import { slowLoading } from '@/utils'
 import { RegisterPayload } from '@/models'
+import { useHeaderData } from '@/lib/header'
 
 const INITIAL_VAL_REGISTER_FORM = {
   email: '',
@@ -43,9 +44,14 @@ const validationSchema = object().shape({
   username: string()
     .required('Please enter username')
     .min(3, 'username is required to have at least 3 characters'),
+
+  phone: string()
+    .required('Please enter phone')
+    .min(9, 'Phone is required to have at least 9 characters'),
 })
 
 const Register = () => {
+  const { mutate } = useHeaderData()
   const { t } = useTranslation(['common', 'auth'])
   const { loading, setLoading } = useLoading()
   const { setToast } = useToast()
@@ -63,7 +69,7 @@ const Register = () => {
 
   const onSubmit = async (data: RegisterPayload) => {
     try {
-      data["status"] = "ACTIVE";
+      data['status'] = 'ACTIVE'
       await signUp(data)
 
       setToast({
@@ -75,15 +81,19 @@ const Register = () => {
 
       await slowLoading(500)
 
+      await mutate()
+
       await router.push({
         pathname: routes.home.generatePath(),
       })
     } catch (error: any) {
       setToast({
         color: 'error',
-        title: error?.response?.data?.message as string || t('login.message.error', {
-          ns: 'auth',
-        }),
+        title:
+          (error?.response?.data?.message as string) ||
+          t('login.message.error', {
+            ns: 'auth',
+          }),
       })
     } finally {
       setLoading('register', false)
@@ -123,25 +133,19 @@ const Register = () => {
                 >
                   <div className="flex py-4 flex-col px-4 mb-10 gap-6 w-[624px]">
                     <Input
-                      label={t('label.email', { ns: 'auth' })}
-                      type="email"
-                      placeholder={t('placeholder.email', { ns: 'auth' })}
-                      error={errors.email && (errors.email?.message as string)}
-                      // isUsedInForm={false}
+                      label={t('label.firstName', { ns: 'auth' })}
+                      type="text"
+                      placeholder={t('placeholder.firstName', { ns: 'auth' })}
                       isRequired
-                      {...register('email')}
+                      {...register('firstName')}
                     />
 
                     <Input
-                      label={t('label.password', { ns: 'auth' })}
-                      type="password"
-                      placeholder={t('placeholder.password', { ns: 'auth' })}
-                      // isUsedInForm={false}
-                      error={
-                        errors.password && (errors.password?.message as string)
-                      }
+                      label={t('label.lastName', { ns: 'auth' })}
+                      type="text"
+                      placeholder={t('placeholder.lastName', { ns: 'auth' })}
                       isRequired
-                      {...register('password')}
+                      {...register('lastName')}
                     />
 
                     <Input
@@ -151,27 +155,37 @@ const Register = () => {
                       error={
                         errors.username && (errors.username?.message as string)
                       }
-                      // isUsedInForm={false}
                       isRequired
                       {...register('username')}
                     />
 
                     <Input
-                      label={t('label.firstName', { ns: 'auth' })}
+                      label="phone"
                       type="text"
-                      placeholder={t('placeholder.firstName', { ns: 'auth' })}
-                      // isUsedInForm={false}
+                      placeholder="Enter your phone"
+                      error={errors.phone && (errors.phone?.message as string)}
                       isRequired
-                      {...register('firstName')}
+                      {...register('phone')}
                     />
 
                     <Input
-                      label={t('label.lastName', { ns: 'auth' })}
-                      type="text"
-                      placeholder={t('placeholder.lastName', { ns: 'auth' })}
-                      // isUsedInForm={false}
+                      label={t('label.email', { ns: 'auth' })}
+                      type="email"
+                      placeholder={t('placeholder.email', { ns: 'auth' })}
+                      error={errors.email && (errors.email?.message as string)}
                       isRequired
-                      {...register('lastName')}
+                      {...register('email')}
+                    />
+
+                    <Input
+                      label={t('label.password', { ns: 'auth' })}
+                      type="password"
+                      placeholder={t('placeholder.password', { ns: 'auth' })}
+                      error={
+                        errors.password && (errors.password?.message as string)
+                      }
+                      isRequired
+                      {...register('password')}
                     />
 
                     <Button

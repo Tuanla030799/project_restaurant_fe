@@ -17,12 +17,7 @@ import { validationSchema } from '@/page-components/Customer/Order/function'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'next-i18next'
 import { useOrderDetailById } from '@/lib/order'
-import isBefore from 'date-fns/isBefore'
 import { getSelectOptions, numberFormatPrice } from '@/utils'
-import { OrderPayload } from '@/models'
-import { useLoadingOverlayContext } from '@/hooks'
-import { useToast } from '@/lib/store'
-import { updateOrder } from 'apis/order'
 
 type OrderModalProps = {
   orderID: number
@@ -32,11 +27,8 @@ type OrderModalProps = {
 
 const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
   const { t } = useTranslation(['common', 'manager', 'food', 'order'])
-  const { setToast } = useToast()
-  const { toggleLoadingOverlay } = useLoadingOverlayContext()
-  const { data: order, mutate } = useOrderDetailById(orderID)
-  const [isPast, setIsPast] = useState<boolean>(true)
-  const seatOptions = getSelectOptions(order?.seats)
+  const [table, setTable] = useState<number | string>('')
+  const { data: order } = useOrderDetailById(orderID)
 
   const INITIAL_VAL_BOOKING_FORM = useMemo<OrderProps>(() => {
     return {
@@ -52,17 +44,9 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
     }
   }, [])
 
-  const {
-    handleSubmit,
-    getValues,
-    setValue,
-    control,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm<OrderProps>({
+  const { setValue, control, register } = useForm<OrderProps>({
     mode: 'onSubmit',
     defaultValues: INITIAL_VAL_BOOKING_FORM,
-    resolver: yupResolver(validationSchema),
   })
 
   useEffect(() => {
@@ -79,78 +63,18 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
         'startTime',
         new Date(format(new Date(order.time), 'yyyy/MM/dd HH:mm'))
       )
-
-      const startDate = getValues().startDate || new Date()
-
-      setIsPast(
-        isBefore(
-          new Date(format(startDate, 'yyyy/MM/dd')),
-          new Date(format(new Date(), 'yyyy/MM/dd'))
-        )
-      )
+      const tableInfo = order?.seats?.find((data) => data.isChoose)
+      if (tableInfo) setTable(tableInfo?.position)
     }
   }, [order])
 
-  const onSubmit = async (data) => {
-    try {
-      const time = `${format(data.startDate, 'yyyy/MM/dd')} ${format(
-        data.startTime,
-        'HH:mm'
-      )}`
-      // const orderDetails: OrderFoodPayload[] = listFoodAll
-      //   .filter((food) => food.quantity)
-      //   .map((food) => {
-      //     return {
-      //       foodId: +food.id,
-      //       price: food.price ? +food.price : 0,
-      //       quantity: +food.quantity,
-      //     }
-      //   })
-      // const totalPrice = listFoodAll
-      //   .filter((food) => food.quantity)
-      //   .reduce((acc: number, crr) => {
-      //     return (acc = acc + Number(crr.price) * Number(crr.quantity))
-      //   }, 0)
-      let orders: OrderPayload = {}
-      orders.amount = data.amount
-      orders.fullName = data.name
-      orders.phone = data.phone
-      orders.time = time
-      orders.note = data.note
-      orders.seatIds = data.seatIds
-
-      if (Object.keys(orders).length) {
-        toggleLoadingOverlay()
-        await updateOrder(orderID, orders)
-
-        setToast({
-          color: 'success',
-          title: t('message.success', { ns: 'order' }),
-        })
-
-        mutate()
-
-        setShowModal()
-      }
-    } catch (error) {
-      setToast({
-        color: 'error',
-        title: t('message.error', { ns: 'order' }),
-      })
-    } finally {
-      toggleLoadingOverlay()
-    }
-  }
   return (
     <Modal
       isOpen={showModal}
       title={t('orders.modal.title', { ns: 'manager' })}
       toggle={setShowModal}
-      acceptMessage={t('action.save', { ns: 'common' })}
       rejectMessage={t('action.cancel', { ns: 'common' })}
       classNameContainer="max-w-full max-w-screen-md max-w-screen-lg max-w-screen-xl"
-      typeButtonAccept="submit"
-      formButtonAccept="order_detail_form"
     >
       <div className="max-h-[calc(100vh-350px)] overflow-y-auto">
         <div className="flex flex-wrap gap-8">
@@ -164,12 +88,11 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
               ns: 'manager',
             })}: ${!!order?.user && order.user.email}`}
           </Typography>
+          <Typography fontSize="text-sm" weight="semibold">
+            {`Table: ${table}`}
+          </Typography>
         </div>
-        <Form
-          onSubmit={handleSubmit(onSubmit)}
-          id="order_detail_form"
-          className="flex flex-wrap justify-between"
-        >
+        <Form id="order_detail_form" className="flex flex-wrap justify-between">
           <div className="flex grow basis-1/2 py-4 flex-col mb-10 gap-2 px-[5%]">
             <div>
               <Input
@@ -177,8 +100,7 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
                 placeholder={t('orders.modal.label.name', {
                   ns: 'manager',
                 })}
-                disabled={isPast}
-                error={errors.name && (errors.name?.message as string)}
+                disabled={true}
                 isRequired
                 {...register('name')}
               />
@@ -190,8 +112,7 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
                 placeholder={t('orders.modal.label.phone', {
                   ns: 'manager',
                 })}
-                disabled={isPast}
-                error={errors.phone && (errors.phone?.message as string)}
+                disabled={true}
                 isRequired
                 {...register('phone')}
               />
@@ -218,20 +139,9 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
                         daySelected={value}
                         onClear={() => onChange(null)}
                         onResetToday={() => onChange(new Date())}
-                        error={!!errors?.startDate}
                       />
                     )}
                   />
-                  {!!errors?.startDate && (
-                    <span className="absolute text-xs text-red-600 left-0 top-12">
-                      {t(errors?.startDate?.message as string)}
-                    </span>
-                  )}
-                  {!errors?.startDate && !!errors?.startTime && (
-                    <span className="absolute text-xs text-red-600 left-0 top-12">
-                      {t(errors?.startTime?.message as string)}
-                    </span>
-                  )}
                 </div>
                 <div className="mr-6">
                   <Controller
@@ -247,35 +157,6 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
                     )}
                   />
                 </div>
-                {!!seatOptions.length && !!order?.seats?.length && (
-                  <div>
-                    <Controller
-                      control={control}
-                      name="seatIds"
-                      render={({ field: { value, onChange } }) => (
-                        <Select
-                          name="seatIds"
-                          dropdownMinWidth={200}
-                          placeholder="Select table"
-                          options={seatOptions}
-                          defaultOption={
-                            order?.seats?.find((data) => data.isChoose)
-                              ? getSelectOptions(
-                                  order?.seats.filter((data) => data.isChoose)
-                                )
-                              : undefined
-                          }
-                          className="w-full"
-                          onChange={(data) => {
-                            onChange(data.map((data) => data.value))
-                          }}
-                          loading
-                          multiple
-                        />
-                      )}
-                    />
-                  </div>
-                )}
               </div>
             </div>
 
@@ -283,11 +164,10 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
               <Input
                 label={t('orders.modal.label.amount', { ns: 'manager' })}
                 type="number"
-                disabled={isPast}
+                disabled={true}
                 placeholder={t('orders.modal.label.amount', {
                   ns: 'manager',
                 })}
-                error={errors.amount && (errors.amount?.message as string)}
                 isRequired
                 {...register('amount')}
               />
@@ -299,8 +179,7 @@ const OrderModal = ({ orderID, showModal, setShowModal }: OrderModalProps) => {
                 placeholder={t('orders.modal.label.note', {
                   ns: 'manager',
                 })}
-                disabled={isPast}
-                error={errors.note && (errors.note?.message as string)}
+                disabled={true}
                 {...register('note')}
               />
             </div>
