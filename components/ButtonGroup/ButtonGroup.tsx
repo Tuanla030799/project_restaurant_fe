@@ -1,6 +1,6 @@
+import clsx from 'clsx'
 import React, { useState, useEffect } from 'react'
 import { styles } from './ButtonGroup.styled'
-import clsx from 'clsx'
 
 export type ButtonGroupColor = 'primary'
 

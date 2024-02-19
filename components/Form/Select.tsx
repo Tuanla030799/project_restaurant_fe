@@ -1,3 +1,6 @@
+import clsx from 'clsx'
+import { useTranslation } from 'next-i18next'
+import { CaretUp, CaretDown, Check, MagnifyingGlass } from 'phosphor-react'
 import React, {
   ChangeEvent,
   forwardRef,
@@ -5,14 +8,11 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import clsx from 'clsx'
-import { CaretUp, CaretDown, Check, MagnifyingGlass } from 'phosphor-react'
-import { useOnClickOutside, useOnScreen } from '@/hooks'
-import { Typography, Tag, Button, Spinner, Stack, Input } from '@/components'
-import { styles } from './Select.styled'
 import { useFormContext } from 'react-hook-form'
+import { styles } from './Select.styled'
 import { Option, SelectProps } from './Select.types'
-import { useTranslation } from 'next-i18next'
+import { Typography, Tag, Button, Spinner, Stack, Input } from '@/components'
+import { useOnClickOutside, useOnScreen } from '@/hooks'
 
 const Select = forwardRef<HTMLInputElement, SelectProps>(
   (
@@ -51,7 +51,7 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
   ) => {
     const { t } = useTranslation(['common'])
     const [optionSelected, setOptionSelected] = useState<
-      Option | Option[] | {}
+      Option | Option[] | object
     >(defaultOption ? defaultOption : multiple ? [] : {})
 
     const [showOptions, setShowOptions] = useState<boolean>(false)
@@ -72,8 +72,8 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
       error
         ? styles.states.error
         : disabled
-        ? styles.states.disabled
-        : styles.states.enabled,
+          ? styles.states.disabled
+          : styles.states.enabled,
       className
     )
     const _optionSelected = optionSelected as Option
@@ -107,8 +107,8 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
         const optionSelected = defaultOption
           ? defaultOption
           : multiple
-          ? []
-          : {}
+            ? []
+            : {}
 
         setValue(name, optionSelected)
         setOptionSelected(optionSelected)

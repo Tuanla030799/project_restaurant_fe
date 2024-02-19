@@ -1,13 +1,11 @@
-import React from 'react'
-import { AdminLayout } from '@/components'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React from 'react'
+import { AdminLayout } from '@/components'
 import Users from '@/page-components/Manager/Users/Users'
 
 const UsersPage = () => {
-  return (
-    <Users />
-  )
+  return <Users />
 }
 
 UsersPage.getLayout = function getLayout(page) {
@@ -25,6 +23,5 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => {
     },
   }
 }
-
 
 export default UsersPage

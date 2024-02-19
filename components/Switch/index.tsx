@@ -1,5 +1,5 @@
-import React, { ChangeEvent, FC } from 'react'
 import clsx from 'clsx'
+import React, { ChangeEvent, FC } from 'react'
 
 type PropTypes = {
   label?: string

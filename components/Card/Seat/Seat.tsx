@@ -1,4 +1,8 @@
+import clsx from 'clsx'
+import { useTranslation } from 'next-i18next'
+import { DotsThreeVertical } from 'phosphor-react'
 import React, { forwardRef, useMemo } from 'react'
+import { SeatProps } from './seat.type'
 import {
   Badge,
   Button,
@@ -7,10 +11,6 @@ import {
   MenuItem,
   Typography,
 } from '@/components'
-import { SeatProps } from './seat.type'
-import { useTranslation } from 'next-i18next'
-import { DotsThreeVertical } from 'phosphor-react'
-import clsx from 'clsx'
 
 const Seat = forwardRef<HTMLDivElement, SeatProps>(
   ({ id, content, isReady, image, position, updateStatus, ...rest }, ref) => {
@@ -23,7 +23,9 @@ const Seat = forwardRef<HTMLDivElement, SeatProps>(
         },
         {
           label: t('seats.action.edit', { ns: 'manager' }),
-          onClick: () => {},
+          onClick: () => {
+            console.log('click edit')
+          },
         },
       ],
       [isReady]
@@ -79,10 +81,7 @@ const Seat = forwardRef<HTMLDivElement, SeatProps>(
               <Menu maxWidth={172} placement="bottom-right">
                 {seatActions.map((item, index) => (
                   <div key={index}>
-                    <MenuItem
-                      className="text-gray-700"
-                      onClick={item.onClick}
-                    >
+                    <MenuItem className="text-gray-700" onClick={item.onClick}>
                       {item.label}
                     </MenuItem>
                   </div>

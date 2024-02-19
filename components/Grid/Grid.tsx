@@ -1,6 +1,6 @@
+import clsx from 'clsx'
 import React, { forwardRef } from 'react'
 import styles from './Grid.module.css'
-import clsx from 'clsx'
 import { GridProps } from './Grid.types'
 
 const Grid = forwardRef<HTMLDivElement, GridProps>(

@@ -1,6 +1,6 @@
+import useSWR from 'swr'
 import { axios } from '@/lib/axios'
 import { Profile } from '@/models'
-import useSWR from 'swr'
 // import { fetcher } from '../fetcher'
 
 export const useHeaderData = () => {

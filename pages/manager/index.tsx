@@ -1,9 +1,9 @@
-import { AdminLayout } from '@/components'
-import React from 'react'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { routes } from '@/constants/routes'
 import { useRouter } from 'next/router'
+import React from 'react'
+import { AdminLayout } from '@/components'
+import { routes } from '@/constants/routes'
 
 const MainPage = () => {
   const router = useRouter()

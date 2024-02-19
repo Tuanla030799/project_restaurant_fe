@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import React, { forwardRef, useState } from 'react'
+import TabPanel from './TabPanel/TabPanel'
 import { styles } from './Tabs.styles'
 import { TabsProps } from './Tabs.types'
 import { Stack } from '@/components'
-import TabPanel from './TabPanel/TabPanel'
 import { ForwardRefWithStaticComponent } from 'utils/ForwardRefWithStaticComponent'
 
 type TabsComponent = ForwardRefWithStaticComponent<
@@ -76,8 +76,8 @@ const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
                   props.disabled
                     ? styles.types[type].states.disabled
                     : isActive
-                    ? styles.types[type].states.active
-                    : styles.types[type].states.default,
+                      ? styles.types[type].states.active
+                      : styles.types[type].states.default,
                   fluid && 'flex-1',
                   labelClassName
                 )}

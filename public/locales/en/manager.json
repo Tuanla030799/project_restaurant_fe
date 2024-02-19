@@ -103,8 +103,8 @@
         "content": "Content"
       },
       "placeholder": {
-        "name":"Enter your name",
-        "amount":"Enter your amount",
+        "name": "Enter your name",
+        "amount": "Enter your amount",
         "price": "Enter your price",
         "discount": "Enter your discount",
         "summary": "Enter your summary",

@@ -1,5 +1,5 @@
-import React, { forwardRef } from 'react'
 import clsx from 'clsx'
+import React, { forwardRef } from 'react'
 import { AspectProps } from './AspectRatio.types'
 
 const AspectRatio = forwardRef<HTMLDivElement, AspectProps>(

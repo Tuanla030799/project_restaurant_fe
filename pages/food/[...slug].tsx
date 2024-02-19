@@ -1,13 +1,11 @@
-import { Layout } from '@/components'
-import FoodDetail from '@/page-components/Customer/Foods/FoodDetail'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
+import { Layout } from '@/components'
+import FoodDetail from '@/page-components/Customer/Foods/FoodDetail'
 
 const FoodDetailPage = () => {
-  return (
-    <FoodDetail />
-  )
+  return <FoodDetail />
 }
 
 FoodDetailPage.getLayout = function getLayout(page) {

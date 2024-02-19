@@ -16,11 +16,7 @@ export const ZIP_FILE_EXTENSIONS = [
   'x-zip',
 ]
 
-export const EXCEL_FILE_EXTENSIONS = [
-  'xlsm',
-  'xls',
-  'xlsx',
-]
+export const EXCEL_FILE_EXTENSIONS = ['xlsm', 'xls', 'xlsx']
 
 export const BREAKPOINTS = {
   SM: 640,

@@ -21,8 +21,11 @@ axios.interceptors.response.use(
     return response.data
   },
   (error) => {
-    console.log("error", error)
-    if(error.response.data.statusCode === 401 || error.response.data.message === 'Unauthorized') {
+    console.log('error', error)
+    if (
+      error.response.data.statusCode === 401 ||
+      error.response.data.message === 'Unauthorized'
+    ) {
       // window.location.href = './login'
     }
     // return error.response

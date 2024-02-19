@@ -18,12 +18,12 @@ export const getSelectOptions = (
 
 export const getCategoryItems = (
   arr
-): { id: number , href: string; label: string }[] | [] => {
+): { id: number; href: string; label: string }[] | [] => {
   return arr
     ? arr.map(({ id, name, title, slug }) => ({
         id,
         label: name || title,
-        href: slug
+        href: slug,
       }))
     : []
 }
@@ -247,7 +247,10 @@ export const getVideoDuration = (file: File) => {
 
 export const numberFormatPrice = (price: number) => {
   if (!price) return '0'
-  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price)
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  }).format(price)
 }
 
 export const removeDigitCharacterOfString = (str: string): string =>

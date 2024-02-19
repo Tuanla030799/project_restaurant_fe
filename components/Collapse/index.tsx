@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
-import useToggle from 'hooks/useToggle'
 import { CaretUp, CaretDown } from 'phosphor-react'
 import React, { ReactNode } from 'react'
+import useToggle from 'hooks/useToggle'
 
 interface IProps {
   isOpen?: boolean

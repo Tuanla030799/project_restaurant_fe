@@ -1,6 +1,6 @@
 import React from 'react'
-import { AspectRatio, AvatarGroup } from '@/components'
 import Skeleton from './Skeleton'
+import { AspectRatio, AvatarGroup } from '@/components'
 
 const CourseCard = () => {
   return (

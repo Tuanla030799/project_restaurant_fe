@@ -1,7 +1,7 @@
-import React from 'react'
 import clsx from 'clsx'
-import Logo from 'public/images/logo.png'
+import React from 'react'
 import { AspectRatio } from 'components/AspectRatio'
+import Logo from 'public/images/logo.png'
 
 interface IEdxLogoProps {
   className?: string

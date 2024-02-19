@@ -1,8 +1,8 @@
-import { AuthLayout } from '@/components'
-import Order from '@/page-components/Customer/Order/Order'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
+import { AuthLayout } from '@/components'
+import Order from '@/page-components/Customer/Order/Order'
 
 const OrdersPage = () => {
   return <Order />

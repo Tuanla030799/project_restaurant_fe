@@ -1,9 +1,9 @@
+import clsx from 'clsx'
+import isValid from 'date-fns/isValid'
+import parse from 'date-fns/parse'
+import { Clock } from 'phosphor-react'
 import React from 'react'
 import NumberFormat from 'react-number-format'
-import clsx from 'clsx'
-import { Clock } from 'phosphor-react'
-import parse from 'date-fns/parse'
-import isValid from 'date-fns/isValid'
 import { Typography } from '..'
 
 type Props = {

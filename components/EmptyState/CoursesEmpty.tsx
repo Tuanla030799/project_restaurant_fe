@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react'
-import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
+import Image from 'next/image'
+import React, { ReactNode } from 'react'
 import { Typography } from '@/components'
 import EmptyState from '@/public/images/course_empty_state.png'
 

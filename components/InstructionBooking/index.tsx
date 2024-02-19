@@ -1,9 +1,9 @@
-import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
 import InstructionBookingImg from '@/public/images/intruction-booking.png'
 import { Typography } from 'components/Typography'
 import Wrapper from 'components/Wrapper'
-import Link from 'next/link'
 
 const InstructionBooking = () => {
   return (

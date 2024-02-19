@@ -1,11 +1,11 @@
-import React, { forwardRef, ReactNode, useEffect } from 'react'
-import { createPortal } from 'react-dom'
-import { CheckCircle, Info, X } from 'phosphor-react'
-import { Button } from '..'
-import { styles } from './ModalConfirm.styled'
+import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import clsx from 'clsx'
+import { CheckCircle, Info, X } from 'phosphor-react'
+import React, { forwardRef, ReactNode, useEffect } from 'react'
+import { createPortal } from 'react-dom'
+import { Button } from '..'
+import { styles } from './ModalConfirm.styled'
 
 type ModalConfirmTypes = 'error' | 'warning' | 'success' | 'info' | 'image'
 

@@ -111,7 +111,7 @@ const FoodModal = ({
   useEffect(() => {
     if (!food) return
     const content = food.content
-    if (content && content.includes("blocks"))
+    if (content && content.includes('blocks'))
       setContent(convertFromRaw(JSON.parse(content)))
   }, [food])
 

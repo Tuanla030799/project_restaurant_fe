@@ -43,18 +43,17 @@ export type TypographyTransforms =
   | 'uppercase'
   | 'capitalize'
 
-export interface TypographyProps
-  extends PropsSpread<
-    React.HTMLAttributes<HTMLElement>,
-    {
-      children: ReactNode
-      variant?: TypographyVariants
-      weight?: TypographyWeights
-      align?: TypographyAligns
-      fontSize?: TypographyFontSizes
-      transform?: TypographyTransforms
-      gutter?: boolean
-      noWrap?: boolean
-      className?: string
-    }
-  > {}
+export type TypographyProps = PropsSpread<
+  React.HTMLAttributes<HTMLElement>,
+  {
+    children: ReactNode
+    variant?: TypographyVariants
+    weight?: TypographyWeights
+    align?: TypographyAligns
+    fontSize?: TypographyFontSizes
+    transform?: TypographyTransforms
+    gutter?: boolean
+    noWrap?: boolean
+    className?: string
+  }
+>

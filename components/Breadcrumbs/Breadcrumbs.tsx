@@ -1,8 +1,8 @@
-import React, { Fragment, ReactNode, useState } from 'react'
+import clsx from 'clsx'
 import { CaretRight, DotsThree } from 'phosphor-react'
+import React, { Fragment, ReactNode, useState } from 'react'
 import { styles } from './Breadcrumbs.styled'
 import { Button } from '@/components'
-import clsx from 'clsx'
 
 interface IBreadcrumbsProps {
   divider?: ReactNode

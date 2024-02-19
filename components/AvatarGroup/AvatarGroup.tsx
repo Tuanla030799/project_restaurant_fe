@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, {
   forwardRef,
   ReactNode,
@@ -5,7 +6,6 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import clsx from 'clsx'
 import { styles } from './AvatarGroup.styled'
 
 type TAvatarGroupVariants = 'circular' | 'rounded' | 'square'

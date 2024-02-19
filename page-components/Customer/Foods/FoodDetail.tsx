@@ -89,7 +89,9 @@ const FoodDetail = () => {
           </div>
         </div>
         <div>
-          <Typography className='mt-4' fontSize="text-md">{food?.content}</Typography>
+          <Typography className="mt-4" fontSize="text-md">
+            {food?.content}
+          </Typography>
         </div>
       </Container>
     </>

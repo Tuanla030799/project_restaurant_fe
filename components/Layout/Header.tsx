@@ -1,22 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import {
-  Avatar,
-  Button,
-  CustomLink,
-  Dropdown,
-  Logo,
-  Form,
-  Menu,
-  MenuDivider,
-  MenuItem,
-  SearchInput,
-  Stack,
-} from '@/components'
-import { useFormContext } from 'react-hook-form'
 import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useLocalStorage } from '@/hooks'
-import { KEY_INPUT_SEARCH_HEADER } from '@/constants/keyLocalStorage'
 import {
   Bell,
   BookBookmark,
@@ -31,12 +15,28 @@ import {
   SignOut,
   User,
 } from 'phosphor-react'
-import { getUrlFromNestedObject } from '@/utils'
+import React, { useEffect, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
+import {
+  Avatar,
+  Button,
+  CustomLink,
+  Dropdown,
+  Logo,
+  Form,
+  Menu,
+  MenuDivider,
+  MenuItem,
+  SearchInput,
+  Stack,
+} from '@/components'
+import { KEY_INPUT_SEARCH_HEADER } from '@/constants/keyLocalStorage'
 import { routes } from '@/constants/routes'
-import AvatarImgDefault from 'public/images/avatar.png'
+import { useLocalStorage } from '@/hooks'
 import { useHeaderData } from '@/lib/header'
-import Link from 'next/link'
+import { getUrlFromNestedObject } from '@/utils'
 import { logout } from 'apis/authorization'
+import AvatarImgDefault from 'public/images/avatar.png'
 
 const SearchInputWithFilter = () => {
   const [inputSearch, setInputSearch] = useState<string>('')

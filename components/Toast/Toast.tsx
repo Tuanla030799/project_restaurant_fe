@@ -1,10 +1,10 @@
-import React, { forwardRef, useState } from 'react'
-import { Info, Warning, WarningCircle, CheckCircle, X } from 'phosphor-react'
 import clsx from 'clsx'
-import { useInterval } from '@/hooks'
-import { styles } from './Toast.styled'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Info, Warning, WarningCircle, CheckCircle, X } from 'phosphor-react'
+import React, { forwardRef, useState } from 'react'
+import { styles } from './Toast.styled'
 import { ToastProps } from './Toast.types'
+import { useInterval } from '@/hooks'
 
 const toastIcons = {
   primary: <Info size={24} />,

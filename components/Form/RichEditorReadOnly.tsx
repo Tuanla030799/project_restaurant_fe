@@ -1,10 +1,10 @@
-import React from 'react'
 import {
   Editor,
   EditorState,
   convertFromRaw,
   CompositeDecorator,
 } from 'draft-js'
+import React from 'react'
 import {
   findLinkEntities,
   getBlockStyle,

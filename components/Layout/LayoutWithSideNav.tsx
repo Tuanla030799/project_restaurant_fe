@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router'
 import React, { ReactNode } from 'react'
 import { SideNav, Stack } from '@/components'
-import { useRouter } from 'next/router'
 
 interface LayoutWithSideNavProps {
   title?: string

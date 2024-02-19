@@ -1,7 +1,7 @@
+import useSWR from 'swr'
 import { TPagination } from '@/global/types'
 import { axios } from '@/lib/axios'
 import { Order } from '@/models'
-import useSWR from 'swr'
 
 type response = {
   items: Order[]

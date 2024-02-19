@@ -17,7 +17,7 @@
       "@/styles/*": ["styles/*"],
       "@/utils": ["utils"],
       "@/config": ["config"],
-      "@/store": ["store"],
+      "@/store": ["store"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

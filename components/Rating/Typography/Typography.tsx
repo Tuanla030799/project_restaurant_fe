@@ -1,5 +1,5 @@
-import React, { forwardRef } from 'react'
 import clsx from 'clsx'
+import React, { forwardRef } from 'react'
 import { styles } from './Typography.styled'
 import { TypographyProps } from './Typography.types'
 

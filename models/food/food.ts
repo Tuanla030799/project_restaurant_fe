@@ -16,22 +16,22 @@ export enum FoodType {
 }
 
 export interface Food {
-  id: number,
-  name: string,
-  slug: string,
-  image: string | null,
-  content: string | null,
-  discount: number | null,
-  inventory: string | null,
-  liked: number | null,
-  price: number | null,
-  rating: number | null,
-  soldQuantity: number | null,
+  id: number
+  name: string
+  slug: string
+  image: string | null
+  content: string | null
+  discount: number | null
+  inventory: string | null
+  liked: number | null
+  price: number | null
+  rating: number | null
+  soldQuantity: number | null
   quantity?: number
-  status?: FoodStatus,
-  summary: string | null,
-  type: string | null,
-  deletedAt?: string | null,
-  createdAt?: string | null,
-  updatedAt?: string | null,
+  status?: FoodStatus
+  summary: string | null
+  type: string | null
+  deletedAt?: string | null
+  createdAt?: string | null
+  updatedAt?: string | null
 }

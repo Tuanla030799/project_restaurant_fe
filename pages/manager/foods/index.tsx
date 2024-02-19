@@ -1,13 +1,11 @@
-import React from 'react'
-import { AdminLayout } from '@/components'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React from 'react'
+import { AdminLayout } from '@/components'
 import Foods from '@/page-components/Manager/Foods/Foods'
 
 const FoodsPage = () => {
-  return (
-    <Foods />
-  )
+  return <Foods />
 }
 
 FoodsPage.getLayout = function getLayout(page) {
@@ -25,6 +23,5 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => {
     },
   }
 }
-
 
 export default FoodsPage

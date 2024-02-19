@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, {
   Fragment,
   ReactElement,
@@ -5,9 +6,8 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import clsx from 'clsx'
-import { useOnClickOutside } from '@/hooks'
 import { styles } from './Dropdown.styled'
+import { useOnClickOutside } from '@/hooks'
 
 type TMenuPlacements =
   | 'top'
