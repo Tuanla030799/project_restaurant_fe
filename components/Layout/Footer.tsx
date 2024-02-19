@@ -1,7 +1,7 @@
-import React from 'react'
-import { Button, Container, Stack, Typography } from '@/components'
 import Link from 'next/link'
 import { FacebookLogo, YoutubeLogo, TwitterLogo, Share } from 'phosphor-react'
+import React from 'react'
+import { Button, Container, Stack, Typography } from '@/components'
 
 const Footer = () => {
   return (
@@ -15,9 +15,9 @@ const Footer = () => {
               </Link>
             </Stack>
             <Typography fontSize="text-sm" className="text-gray-400 pt-3">
-              FastFood là nhà hàng NGON, đa dạng, uy tín và chất lượng. Giúp thực
-              khách đặt bàn dễ dàng, được tặng kèm ưu đãi mà không cần mua Deal,
-              Voucher. Giải pháp đột phá mới cho câu chuyện ăn gì, ở đâu!
+              FastFood là nhà hàng NGON, đa dạng, uy tín và chất lượng. Giúp
+              thực khách đặt bàn dễ dàng, được tặng kèm ưu đãi mà không cần mua
+              Deal, Voucher. Giải pháp đột phá mới cho câu chuyện ăn gì, ở đâu!
             </Typography>
           </Stack>
           <Stack>

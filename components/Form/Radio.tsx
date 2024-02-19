@@ -1,7 +1,7 @@
+import clsx from 'clsx'
 import React, { ChangeEvent, forwardRef } from 'react'
 import { Typography } from '..'
 import { styles } from './Radio.styled'
-import clsx from 'clsx'
 
 type TRadioSize = 'sm' | 'md'
 

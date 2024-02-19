@@ -1,6 +1,6 @@
-import React, { forwardRef, useState } from 'react'
 import clsx from 'clsx'
 import { Star } from 'phosphor-react'
+import React, { forwardRef, useState } from 'react'
 import { styles } from './Rating.styled'
 import { RatingProps } from './Rating.types'
 

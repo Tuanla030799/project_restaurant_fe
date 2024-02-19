@@ -65,7 +65,7 @@ const Tooltip = ({
     styles.base,
     styles.themes[theme],
     styles.placements[placement],
-    isFixed && `!fixed !translate-x-0 left-[unset] bottom-[unset]`,
+    isFixed && '!fixed !translate-x-0 left-[unset] bottom-[unset]',
     !zIndex && 'z-sticky',
     noWrap ? 'w-auto whitespace-nowrap' : 'w-screen',
     className
@@ -77,7 +77,7 @@ const Tooltip = ({
 
   useEffect(() => {
     if (isFixed) {
-      //@ts-ignore
+      // eslint-disable-next-line no-unsafe-optional-chaining
       const { top, height } = children?.ref?.current?.getBoundingClientRect()
       setOffset({
         top,

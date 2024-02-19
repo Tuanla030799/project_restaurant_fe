@@ -24,7 +24,7 @@ export type DirectionType = 'row' | 'column'
 export interface SelectProps extends React.HTMLAttributes<HTMLInputElement> {
   options: Option[]
   size?: SelectSizes
-  defaultOption?: Option | Option[] | {} | []
+  defaultOption?: Option | Option[] | object | []
   label?: string
   hasClear?: boolean
   name: string

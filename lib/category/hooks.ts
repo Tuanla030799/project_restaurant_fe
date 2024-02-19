@@ -1,6 +1,6 @@
+import useSWR from 'swr'
 import { axios } from '@/lib/axios'
 import { Category } from '@/models'
-import useSWR from 'swr'
 
 type response = {
   data: Category[]

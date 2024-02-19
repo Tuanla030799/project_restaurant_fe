@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import { CaretUp, CaretDown, Check } from 'phosphor-react'
-import { useOnClickOutside } from '@/hooks'
+import React, { useEffect, useRef, useState } from 'react'
 import { styles } from './SelectDropdown.styled'
+import { useOnClickOutside } from '@/hooks'
 
 type TOption = {
   label: string
@@ -14,7 +14,7 @@ type TSelectDropdownSizes = 'sm' | 'md' | 'lg'
 interface ISelectDropdownProps {
   size?: TSelectDropdownSizes
   options: TOption[]
-  defaultOption?: TOption | {}
+  defaultOption?: TOption | object
   className?: string
   dropdownMenuClassName?: string
   onChange: any
@@ -30,7 +30,7 @@ const SelectDropdown = ({
   onChange,
   disabled = false,
 }: ISelectDropdownProps) => {
-  const [optionSelected, setOptionSelected] = useState<TOption | {}>(
+  const [optionSelected, setOptionSelected] = useState<TOption | object>(
     defaultOption
   )
   const [showOptions, setShowOptions] = useState<boolean>(false)

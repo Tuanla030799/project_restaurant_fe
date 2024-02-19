@@ -1,14 +1,14 @@
+import Image from 'next/image'
+import PropTypes from 'prop-types'
 import react, { useState } from 'react'
+import { Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { routes } from '@/constants/routes'
 import { AspectRatio } from 'components/AspectRatio'
 import { Button } from 'components/Button'
 import { Typography } from 'components/Typography'
-import Image from 'next/image'
-import PropTypes from 'prop-types'
-import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import { Pagination } from 'swiper/modules'
 
 Carousel.propTypes = {
   images: PropTypes.array.isRequired,

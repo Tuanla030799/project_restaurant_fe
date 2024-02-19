@@ -36,13 +36,13 @@ const Home = () => {
       <Container>
         <Wrapper className="mb-3">
           {/* <AspectRatio ratio={16 / 7} className="relative"> */}
-            {/* <Image
+          {/* <Image
               layout="fill"
               src={Banner}
               alt={'banner'}
               className="object-cover"
             /> */}
-            <Carousel images={[Banner, Banner2, Banner3]}/>
+          <Carousel images={[Banner, Banner2, Banner3]} />
           {/* </AspectRatio> */}
         </Wrapper>
         <Wrapper className="px-7 pb-12">

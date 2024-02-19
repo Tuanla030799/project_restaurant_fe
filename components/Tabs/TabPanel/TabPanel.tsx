@@ -1,7 +1,7 @@
-import React, { forwardRef } from 'react'
 import clsx from 'clsx'
-import { TabPanelProps } from './TabPanel.types'
+import React, { forwardRef } from 'react'
 import { styles } from './TabPanel.styles'
+import { TabPanelProps } from './TabPanel.types'
 
 const TabPanel = forwardRef<HTMLDivElement, TabPanelProps>(
   (

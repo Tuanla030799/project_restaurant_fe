@@ -1,13 +1,11 @@
+import { i18n } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
 import { AdminLayout } from '@/components'
 import Seats from '@/page-components/Manager/Seats/Seats'
-import { i18n } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const SeatsPage = () => {
-  return (
-    <Seats />
-  )
+  return <Seats />
 }
 
 SeatsPage.getLayout = function getLayout(page) {
@@ -25,6 +23,5 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => {
     },
   }
 }
-
 
 export default SeatsPage

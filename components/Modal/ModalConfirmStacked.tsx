@@ -1,6 +1,6 @@
 import React, { ComponentProps } from 'react'
-import { RequiredField } from 'utils/RequiredField'
 import ModalConfirm from './ModalConfirm'
+import { RequiredField } from 'utils/RequiredField'
 
 type ModalConfirmStackedProps = RequiredField<
   ComponentProps<typeof ModalConfirm>,

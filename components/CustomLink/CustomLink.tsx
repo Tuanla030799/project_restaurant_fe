@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react'
-import Link from 'next/link'
 import clsx from 'clsx'
+import Link from 'next/link'
+import React, { forwardRef } from 'react'
 import { styles } from './CustomLink.styled'
 import { CustomLinkProps } from './CustomLink.types'
 

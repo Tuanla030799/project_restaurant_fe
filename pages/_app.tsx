@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect, useState } from 'react'
-import type { AppProps } from 'next/app'
 import { NextPage } from 'next'
 import { appWithTranslation } from 'next-i18next'
+import type { AppProps } from 'next/app'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { Providers } from '@/providers'
 import 'react-datepicker/dist/react-datepicker.css'
 import '@/styles/tailwind.css'
@@ -9,7 +9,7 @@ import '@/styles/globals.css'
 import '@/styles/datePicker.css'
 
 type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactNode) => ReactNode
+  getLayout?: () => ReactNode
 }
 
 type AppPropsWithLayout = AppProps & {

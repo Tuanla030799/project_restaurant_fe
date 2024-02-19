@@ -28,7 +28,7 @@ export const ORDERS_USER_HEADER_TABLE = [
     label: 'orders.table.time',
     field: 'time',
     className: 'text-center',
-  }
+  },
 ]
 
 export const initialParams = {
@@ -47,4 +47,3 @@ export const COURSE_STATUSES = {
 }
 
 export type TypeHandler = 'Approve' | 'Reject'
-

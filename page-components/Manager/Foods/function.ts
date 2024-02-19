@@ -21,6 +21,6 @@ export const validationSchema = lazy(() =>
 
     price: number()
       .required('Please enter product quantity')
-      .min(1000, 'Amount must be at least 1000đ')
+      .min(1000, 'Amount must be at least 1000đ'),
   })
 )

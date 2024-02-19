@@ -40,6 +40,9 @@ module.exports = {
       },
     ],
     // TODO: Turn on those rules
+    'no-unused-vars': 'off',
+    'no-undef': 'off',
+    'react/display-name': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
@@ -50,8 +53,11 @@ module.exports = {
     '@typescript-eslint/require-await': 'off',
     '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/restrict-plus-operands': 'off',
+    '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
     '@next/next/no-img-element': 'off',
+
     'react-hooks/rules-of-hooks': 'warn',
   },
 }

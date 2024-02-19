@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import clsx from 'clsx'
 import {
   Editor,
   EditorState,
@@ -6,6 +6,7 @@ import {
   getDefaultKeyBinding,
   CompositeDecorator,
 } from 'draft-js'
+import { Map } from 'immutable'
 import {
   TextBolder,
   TextItalic,
@@ -22,11 +23,10 @@ import {
   LinkBreak,
   LinkSimple,
 } from 'phosphor-react'
+import React, { useEffect, useRef, useState } from 'react'
+import { styles } from './RichEditor.styled'
 import { Button, Tooltip, Typography } from '@/components'
 import { useOnClickOutside } from '@/hooks'
-import { styles } from './RichEditor.styled'
-import clsx from 'clsx'
-import { Map } from 'immutable'
 
 interface IRichEditorProps {
   classNameContainer?: string

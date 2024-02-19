@@ -1,13 +1,11 @@
-import { Layout } from '@/components'
-import Register from '@/page-components/Auth/Register/Register'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
+import { Layout } from '@/components'
+import Register from '@/page-components/Auth/Register/Register'
 
 const RegisterPage = () => {
-  return (
-    <Register />
-  )
+  return <Register />
 }
 
 RegisterPage.getLayout = function getLayout(page) {
@@ -25,6 +23,5 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => {
     },
   }
 }
-
 
 export default RegisterPage

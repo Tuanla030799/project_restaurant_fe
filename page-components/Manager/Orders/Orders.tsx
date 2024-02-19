@@ -79,10 +79,16 @@ const Orders = () => {
       perPage: pageSize,
       search: encodeURIComponent(debouncedSearchLearner),
       status: selectedStatus,
-      orderStartTime: dateSelected ? format(dateSelected, 'dd/MM/yyyy') : "",
-      orderEndTime: dateSelected ? format(dateSelected, 'dd/MM/yyyy') : ""
+      orderStartTime: dateSelected ? format(dateSelected, 'dd/MM/yyyy') : '',
+      orderEndTime: dateSelected ? format(dateSelected, 'dd/MM/yyyy') : '',
     })
-  }, [currentPage, pageSize, debouncedSearchLearner, selectedStatus, dateSelected])
+  }, [
+    currentPage,
+    pageSize,
+    debouncedSearchLearner,
+    selectedStatus,
+    dateSelected,
+  ])
 
   const renderActions = (status, id) => {
     const { rejectedButton, approvedButton } = getColor(status)

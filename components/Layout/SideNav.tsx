@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react'
-import Link from 'next/link'
-import { Typography, Stack } from '@/components'
 import clsx from 'clsx'
+import Link from 'next/link'
+import React, { ReactNode } from 'react'
+import { Typography, Stack } from '@/components'
 
 interface SideNavProps {
   title?: string

@@ -1,4 +1,7 @@
+import Image from 'next/image'
+import { Minus, Plus, Trash } from 'phosphor-react'
 import React, { forwardRef } from 'react'
+import { FoodProps } from './food.type'
 import {
   AspectRatio,
   Badge,
@@ -10,11 +13,8 @@ import {
   Typography,
 } from '@/components'
 import { routes } from '@/constants/routes'
-import DefaultThumbnail from '@/public/images/course_default_thumbnail.jpeg'
-import Image from 'next/image'
-import { Minus, Plus, Trash } from 'phosphor-react'
-import { FoodProps } from './food.type'
 import { FoodInventory } from '@/models'
+import DefaultThumbnail from '@/public/images/course_default_thumbnail.jpeg'
 import { numberFormatPrice } from '@/utils'
 
 const FoodRange = forwardRef<HTMLDivElement, FoodProps>(

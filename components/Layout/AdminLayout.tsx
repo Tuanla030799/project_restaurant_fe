@@ -1,5 +1,3 @@
-import { routes } from '@/constants/routes'
-import { useHeaderData } from '@/lib/header'
 import { useTranslation } from 'next-i18next'
 import router from 'next/router'
 import {
@@ -12,6 +10,8 @@ import {
 import React, { ReactNode, useEffect, useMemo } from 'react'
 import Header from './Header'
 import { LayoutWithSideNav } from '@/components'
+import { routes } from '@/constants/routes'
+import { useHeaderData } from '@/lib/header'
 
 type TLayoutProps = {
   children: ReactNode

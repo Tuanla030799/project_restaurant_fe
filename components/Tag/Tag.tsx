@@ -1,7 +1,7 @@
-import React from 'react'
 import clsx from 'clsx'
-import { styles } from './Tag.styled'
 import { X } from 'phosphor-react'
+import React from 'react'
+import { styles } from './Tag.styled'
 
 type TTagAction = 'text' | 'close' | 'count'
 

@@ -1,5 +1,5 @@
-import React, { forwardRef } from 'react'
 import clsx from 'clsx'
+import React, { forwardRef } from 'react'
 import { styles } from './Skeleton.styled'
 import { SkeletonProps } from './Skeleton.types'
 

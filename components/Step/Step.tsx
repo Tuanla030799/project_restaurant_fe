@@ -1,7 +1,7 @@
-import React from 'react'
 import clsx from 'clsx'
-import { styles } from './Step.styled'
 import { Check } from 'phosphor-react'
+import React from 'react'
+import { styles } from './Step.styled'
 
 type TStep = {
   step: number
@@ -56,8 +56,8 @@ const Step = ({ steps, currentStep, onChange }: IStepProps) => {
                 step < currentStep
                   ? 'bg-primary-400 text-white'
                   : isActive
-                  ? 'bg-white text-primary-300'
-                  : 'bg-gray-100 text-gray-400'
+                    ? 'bg-white text-primary-300'
+                    : 'bg-gray-100 text-gray-400'
               )}
             >
               {step < currentStep ? <Check size={24} weight="bold" /> : step}

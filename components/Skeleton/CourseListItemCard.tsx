@@ -1,6 +1,6 @@
 import React from 'react'
-import { AspectRatio, Stack } from '@/components'
 import Skeleton from './Skeleton'
+import { AspectRatio, Stack } from '@/components'
 
 const CourseListItemCard = () => {
   return (

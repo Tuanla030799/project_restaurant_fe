@@ -1,5 +1,12 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
+import { useTranslation, Trans } from 'next-i18next'
+import { CheckCircle, Trash } from 'phosphor-react'
+import React, { forwardRef, useEffect, useRef, useState } from 'react'
+import { useDrop } from 'react-dnd'
+import type { DropTargetMonitor } from 'react-dnd'
+import { NativeTypes } from 'react-dnd-html5-backend'
+import { styles } from './FileUploader.styled'
+import { FileUploaderProps } from './FileUploader.types'
 import {
   Input,
   Textarea,
@@ -8,13 +15,6 @@ import {
   Typography,
 } from '@/components'
 import { bytesToSize } from '@/utils'
-import { styles } from './FileUploader.styled'
-import { CheckCircle, Trash } from 'phosphor-react'
-import { useTranslation, Trans } from 'next-i18next'
-import { useDrop } from 'react-dnd'
-import { NativeTypes } from 'react-dnd-html5-backend'
-import type { DropTargetMonitor } from 'react-dnd'
-import { FileUploaderProps } from './FileUploader.types'
 
 const UPLOAD_STATUS_UPLOADING = 'uploading'
 const UPLOAD_STATUS_COMPLETE = 'complete'
@@ -231,7 +231,7 @@ const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
       setFileProgress({
         progress: 0,
       })
-      inputFile.current && ((inputFile.current as any).value = '')
+      inputFile.current && (inputFile.current.value = '')
     }
 
     const isReadytoPreview = (type) => {

@@ -1,8 +1,7 @@
-import React from 'react'
-import { AdminLayout } from '@/components'
-import Seats from '@/page-components/Manager/Seats/Seats'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React from 'react'
+import { AdminLayout } from '@/components'
 import Blogs from '@/page-components/Manager/Blogs/Blogs'
 
 const BlogsPage = () => {

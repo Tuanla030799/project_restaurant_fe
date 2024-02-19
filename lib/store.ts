@@ -2,8 +2,8 @@ import { ReactNode, useLayoutEffect } from 'react'
 import create from 'zustand'
 import createContext from 'zustand/context'
 import shallow from 'zustand/shallow'
-import { ToastColors } from 'components/Toast/Toast.types'
 import { slowLoading } from '@/utils'
+import { ToastColors } from 'components/Toast/Toast.types'
 
 type Toast = {
   color: ToastColors

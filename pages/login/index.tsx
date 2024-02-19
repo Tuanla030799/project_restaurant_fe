@@ -1,15 +1,11 @@
-import { Layout } from '@/components'
-import Login from '@/page-components/Auth/Login/Login'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
-
-type Props = {}
+import { Layout } from '@/components'
+import Login from '@/page-components/Auth/Login/Login'
 
 const LoginPage = () => {
-  return (
-    <Login />
-  )
+  return <Login />
 }
 
 LoginPage.getLayout = function getLayout(page) {
@@ -27,6 +23,5 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => {
     },
   }
 }
-
 
 export default LoginPage

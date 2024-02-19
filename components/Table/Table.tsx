@@ -1,9 +1,9 @@
+import clsx from 'clsx'
+import { Info } from 'phosphor-react'
 import React, { ChangeEvent, FC, useMemo, useState } from 'react'
 import { TableProps } from './Table.types'
-import clsx from 'clsx'
-import { Checkbox } from 'components/Form'
 import { Tooltip } from '@/components'
-import { Info } from 'phosphor-react'
+import { Checkbox } from 'components/Form'
 
 const Table: FC<TableProps> = ({
   headers,
@@ -99,7 +99,7 @@ const Table: FC<TableProps> = ({
                   <div className="flex p-2 content-center">
                     <Checkbox
                       size="sm"
-                      value={props?.id!}
+                      value={props?.id}
                       onChange={handleCheckItem}
                       isChecked={checkedData?.includes(props?.id!)}
                     />

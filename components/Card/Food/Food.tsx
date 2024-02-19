@@ -1,4 +1,18 @@
+import { useTranslation } from 'next-i18next'
+import Image from 'next/image'
+import router from 'next/router'
+import {
+  ChatCircleDots,
+  CookingPot,
+  DotsThreeOutlineVertical,
+  GearSix,
+  GlobeHemisphereWest,
+  PencilSimpleLine,
+  Prohibit,
+  ThumbsUp,
+} from 'phosphor-react'
 import React, { forwardRef } from 'react'
+import { FoodProps } from './food.type'
 import {
   AspectRatio,
   Badge,
@@ -12,23 +26,9 @@ import {
   Typography,
 } from '@/components'
 import { routes } from '@/constants/routes'
-import DefaultThumbnail from '@/public/images/course_default_thumbnail.jpeg'
-import Image from 'next/image'
-import {
-  ChatCircleDots,
-  CookingPot,
-  DotsThreeOutlineVertical,
-  GearSix,
-  GlobeHemisphereWest,
-  PencilSimpleLine,
-  Prohibit,
-  ThumbsUp,
-} from 'phosphor-react'
-import { FoodProps } from './food.type'
 import { FoodInventory, FoodStatus } from '@/models'
+import DefaultThumbnail from '@/public/images/course_default_thumbnail.jpeg'
 import { numberFormatPrice } from '@/utils'
-import router from 'next/router'
-import { useTranslation } from 'next-i18next'
 
 const Food = forwardRef<HTMLDivElement, FoodProps>(
   (

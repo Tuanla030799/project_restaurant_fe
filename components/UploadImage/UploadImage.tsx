@@ -1,10 +1,10 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
-import { Paperclip, Trash, UploadSimple } from 'phosphor-react'
-import uploadImage from '../../public/images/upload.svg'
-import { Button } from '@/components'
-import { styles } from './UploadImage.styled'
 import clsx from 'clsx'
 import { useTranslation } from 'next-i18next'
+import { Paperclip, Trash, UploadSimple } from 'phosphor-react'
+import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
+import uploadImage from '../../public/images/upload.svg'
+import { styles } from './UploadImage.styled'
+import { Button } from '@/components'
 
 interface IUploadImageProps extends React.HTMLAttributes<HTMLInputElement> {
   name?: string
@@ -76,7 +76,7 @@ const UploadImage = ({
   }
 
   return (
-    <div className='text-left'>
+    <div className="text-left">
       {label && (
         <label className={clsx(styles.label, isRequired && styles.required)}>
           {label}
@@ -95,7 +95,7 @@ const UploadImage = ({
           </div>
         )}
 
-        <div className='text-left'>
+        <div className="text-left">
           <h2 className={styles.title}>{title}</h2>
           <p className={styles.description}>{description}</p>
 

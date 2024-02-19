@@ -1,7 +1,7 @@
+import useSWR from 'swr'
 import { PaginationType } from '@/global/types'
 import { axios } from '@/lib/axios'
 import { Food } from '@/models'
-import useSWR from 'swr'
 
 type response = {
   data: Food[]

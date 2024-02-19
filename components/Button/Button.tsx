@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react'
-import Link, { LinkProps } from 'next/link'
 import clsx from 'clsx'
+import Link, { LinkProps } from 'next/link'
+import React, { ReactNode } from 'react'
 import { styles } from './Button.styled'
 import { Spinner } from '@/components'
 

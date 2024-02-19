@@ -1,5 +1,5 @@
-import React, { ChangeEvent, forwardRef, TextareaHTMLAttributes } from 'react'
 import clsx from 'clsx'
+import React, { ChangeEvent, forwardRef, TextareaHTMLAttributes } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { styles } from './Input.styled'
 import { Typography } from '@/components'
@@ -48,8 +48,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
       error
         ? styles.states.error
         : disabled || readOnly
-        ? styles.states.disabled
-        : styles.states.enabled,
+          ? styles.states.disabled
+          : styles.states.enabled,
       className
     )
     const { setValue } = useFormContext()

@@ -48,7 +48,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'course-detail': "url('../public/images/course_detail_bg.png')",
-        'management': "url('../public/images/management_bg.png')",
+        management: "url('../public/images/management_bg.png')",
       },
       boxShadow: {
         xs: 'var(--shadow-xs)',
