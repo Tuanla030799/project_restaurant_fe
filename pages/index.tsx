@@ -1,6 +1,8 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Layout, Seo } from '@/components'
 import { Home } from '@/page-components/Customer/Home'
+import { GetServerSideProps } from 'next/types'
+import { i18n } from 'next-i18next'
 
 const HomePage = () => {
   return (
@@ -24,10 +26,18 @@ HomePage.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>
 }
 
-export const getStaticProps = async ({ locale }: { locale: string }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
+export const getServerSideProps: GetServerSideProps = async ({
+  locale,
+}) => {
+  if (process.env.NODE_ENV === 'development') {
+    await i18n?.reloadResources()
+  }
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? '', ['common'])),
+    },
+  }
+}
 
 export default HomePage

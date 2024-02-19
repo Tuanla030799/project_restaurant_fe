@@ -1,0 +1,24 @@
+name: CI for storiesbook
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.15.0
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint # yarn lint:es & yarn lint:style
+      - run: yarn build

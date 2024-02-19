@@ -21,26 +21,22 @@ const AdminLayout = ({ children }: TLayoutProps) => {
   const { t } = useTranslation(['manager'])
   const { profile, error } = useHeaderData()
 
-  // useEffect(() => {
-  if (error?.response?.statusText === 'Unauthorized') {
-    router.push({
-      pathname: routes.auth.login.generatePath(),
-    })
+  useEffect(() => {
+    if (error?.response?.statusText === 'Unauthorized') {
+      router.push({
+        pathname: routes.auth.login.generatePath(),
+      })
+    }
 
-    return <></>
-  }
+    if (profile?.roles?.data[0].slug !== 'admin') {
+      router.push({
+        pathname: routes.home.generatePath(),
+      })
+    }
+  }, [profile, error])
 
-  if (profile?.roles?.data[0].slug !== 'admin') {
-    router.push({
-      pathname: routes.home.generatePath(),
-    })
-
-    return <></>
-  }
-  // }, [profile, error])
-
-  const navLinks = useMemo(() => {
-    return [
+  const navLinks = useMemo(
+    () => [
       {
         label: t('orders.title', { ns: 'manager' }),
         href: routes.manager.orders.generatePath(),
@@ -66,8 +62,9 @@ const AdminLayout = ({ children }: TLayoutProps) => {
         href: routes.manager.blogs.generatePath(),
         icon: <BookOpen size={24} />,
       },
-    ]
-  }, [])
+    ],
+    []
+  )
 
   return (
     <div className="flex flex-col items-stretch min-w-full min-h-screen">
