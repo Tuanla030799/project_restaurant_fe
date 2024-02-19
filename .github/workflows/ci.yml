@@ -1,4 +1,4 @@
-name: CI for storiesbook
+name: CI for booking_table
 
 on:
   push:
@@ -19,6 +19,6 @@ jobs:
         with:
           node-version: 18.15.0
           cache: yarn
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
       - run: yarn lint # yarn lint:es & yarn lint:style
       - run: yarn build
