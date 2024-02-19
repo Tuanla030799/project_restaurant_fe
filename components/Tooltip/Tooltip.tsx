@@ -1,6 +1,12 @@
 import clsx from 'clsx'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ReactElement, ReactNode, useEffect, useState } from 'react'
+import {
+  MutableRefObject,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react'
 import { styles } from './Tooltip.styled'
 
 type TTooltipPlacements =
@@ -20,7 +26,7 @@ type TTooltipPlacements =
 type TTooltipThemes = 'light' | 'dark'
 
 type TTooltipProps = {
-  children: ReactElement
+  children: ReactElement & { ref?: MutableRefObject<HTMLElement> }
   theme?: TTooltipThemes
   title: ReactNode
   description?: ReactNode
@@ -78,7 +84,9 @@ const Tooltip = ({
   useEffect(() => {
     if (isFixed) {
       // eslint-disable-next-line no-unsafe-optional-chaining
-      const { top, height } = children?.ref?.current?.getBoundingClientRect()
+      const rect = children?.ref?.current?.getBoundingClientRect()
+      if (!rect) return
+      const { top, height } = rect
       setOffset({
         top,
         height,
